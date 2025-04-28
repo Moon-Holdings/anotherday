@@ -1,0 +1,308 @@
+
+import { Task, TaskList, ScheduleItem, DepartmentProgress, User } from '@/types';
+
+export const mockUser: User = {
+  id: '1',
+  name: 'Brandon',
+  employeeNumber: '1001',
+  role: 'manager',
+  department: 'floor'
+};
+
+export const mockDepartmentProgress: DepartmentProgress[] = [
+  {
+    department: 'floor',
+    completed: 5,
+    total: 13,
+    progress: (5/13) * 100
+  },
+  {
+    department: 'takeaway',
+    completed: 4,
+    total: 20,
+    progress: (4/20) * 100
+  },
+  {
+    department: 'bar',
+    completed: 9,
+    total: 18,
+    progress: (9/18) * 100
+  },
+  {
+    department: 'kitchen',
+    completed: 17,
+    total: 18,
+    progress: (17/18) * 100
+  }
+];
+
+export const mockOpeningTasks: Task[] = [
+  {
+    id: '1',
+    name: 'Taking all chairs down',
+    description: 'Remove covers and position properly',
+    department: 'floor',
+    assignmentType: 'role',
+    completionMethod: 'checkmark',
+    type: 'role',
+    recurrence: 'repeating',
+    isCompleted: false
+  },
+  {
+    id: '2',
+    name: 'Clean all tables',
+    department: 'floor',
+    assignmentType: 'role',
+    completionMethod: 'checkmark',
+    type: 'role',
+    recurrence: 'repeating',
+    deadline: new Date(new Date().setHours(11, 0, 0, 0)).toISOString(),
+    isCompleted: false
+  },
+  {
+    id: '3',
+    name: 'Clean windows and doors',
+    department: 'floor',
+    assignmentType: 'role',
+    completionMethod: 'photo',
+    type: 'role',
+    recurrence: 'repeating',
+    isCompleted: false
+  },
+  {
+    id: '4',
+    name: 'Fill-up waiters stations',
+    department: 'floor',
+    assignmentType: 'role',
+    completionMethod: 'checkmark',
+    type: 'role',
+    recurrence: 'repeating',
+    isCompleted: false
+  },
+  {
+    id: '5',
+    name: 'Setting up linens, silverware and glasses',
+    department: 'floor',
+    assignmentType: 'role',
+    completionMethod: 'checkmark',
+    type: 'role',
+    recurrence: 'repeating',
+    isCompleted: false
+  },
+  {
+    id: '6',
+    name: 'Packing chili sauce',
+    department: 'kitchen',
+    assignmentType: 'role',
+    completionMethod: 'quantity',
+    type: 'role',
+    recurrence: 'repeating',
+    quantityRequired: 17,
+    quantityOnHand: 13,
+    isCompleted: false
+  },
+  {
+    id: '7',
+    name: 'Clean all bar shelves',
+    department: 'bar',
+    assignmentType: 'role',
+    completionMethod: 'photo',
+    type: 'role',
+    recurrence: 'repeating',
+    isCompleted: false
+  }
+];
+
+export const mockManagerTasks: Task[] = [
+  {
+    id: 'm1',
+    name: 'Count the counter',
+    department: 'floor',
+    assignmentType: 'role',
+    completionMethod: 'checkmark',
+    type: 'role',
+    recurrence: 'repeating',
+    isCompleted: false
+  },
+  {
+    id: 'm2',
+    name: 'Place waiters in designated areas',
+    department: 'floor',
+    assignmentType: 'role',
+    completionMethod: 'checkmark',
+    type: 'role',
+    recurrence: 'repeating',
+    isCompleted: false
+  },
+  {
+    id: 'm3',
+    name: "Update today's specials",
+    department: 'floor',
+    assignmentType: 'role',
+    completionMethod: 'checkmark',
+    type: 'role',
+    recurrence: 'repeating',
+    isCompleted: false
+  },
+  {
+    id: 'm4',
+    name: 'Open sunshades',
+    department: 'floor',
+    assignmentType: 'role',
+    completionMethod: 'checkmark',
+    type: 'role',
+    recurrence: 'repeating',
+    isCompleted: false
+  }
+];
+
+export const mockPersonalTasks: Task[] = [
+  {
+    id: 'p1',
+    name: 'Decide on valentines dessert',
+    assignmentType: 'user',
+    assignedTo: '1',
+    completionMethod: 'checkmark',
+    type: 'personal',
+    recurrence: 'one-time',
+    isCompleted: false
+  },
+  {
+    id: 'p2',
+    name: 'Get toilet paper',
+    assignmentType: 'user',
+    assignedTo: '1',
+    completionMethod: 'checkmark',
+    type: 'personal',
+    recurrence: 'one-time',
+    isCompleted: false
+  },
+  {
+    id: 'p3',
+    name: 'Advertise on Google',
+    assignmentType: 'user',
+    assignedTo: '1',
+    completionMethod: 'checkmark',
+    type: 'personal',
+    recurrence: 'one-time',
+    isCompleted: false
+  },
+  {
+    id: 'p4',
+    name: 'Book a photographer for new menu',
+    assignmentType: 'user',
+    assignedTo: '1',
+    completionMethod: 'checkmark',
+    type: 'personal',
+    recurrence: 'one-time',
+    isCompleted: false
+  }
+];
+
+export const mockTeamTasks: Task[] = [
+  {
+    id: 't1',
+    name: 'Buy milk',
+    assignmentType: 'user',
+    assignedTo: 'john',
+    completionMethod: 'checkmark',
+    type: 'personal',
+    recurrence: 'one-time',
+    isCompleted: true
+  },
+  {
+    id: 't2',
+    name: 'Update website menu',
+    assignmentType: 'user',
+    assignedTo: 'shirley',
+    completionMethod: 'checkmark',
+    type: 'personal',
+    recurrence: 'one-time',
+    isCompleted: false
+  },
+  {
+    id: 't3',
+    name: 'Updating evening playlist',
+    assignmentType: 'user',
+    assignedTo: 'owen',
+    completionMethod: 'checkmark',
+    type: 'personal',
+    recurrence: 'one-time',
+    isCompleted: false
+  },
+  {
+    id: 't4',
+    name: 'Fing a new cutlery supplier',
+    assignmentType: 'user',
+    assignedTo: 'branda',
+    completionMethod: 'checkmark',
+    type: 'personal',
+    recurrence: 'one-time',
+    isCompleted: false
+  }
+];
+
+export const mockScheduleItems: ScheduleItem[] = [
+  {
+    id: 's1',
+    title: 'Starting morning managers opening',
+    description: 'Mark everything, finish by 10:00',
+    time: new Date(new Date().setHours(9, 0, 0, 0)).toISOString(),
+    isCompleted: true
+  },
+  {
+    id: 's2',
+    title: 'Finish morning managers opening',
+    description: 'Make sure to complete everything',
+    time: new Date(new Date().setHours(11, 0, 0, 0)).toISOString(),
+    isCompleted: true
+  },
+  {
+    id: 's3',
+    title: 'Start morning bar and waiters opening',
+    description: 'Mark everything, finish by 11:50',
+    time: new Date(new Date().setHours(11, 15, 0, 0)).toISOString(),
+    isCompleted: true
+  },
+  {
+    id: 's4',
+    title: 'Staff brief',
+    description: 'Bring aprons and tablets',
+    time: new Date(new Date().setHours(11, 50, 0, 0)).toISOString(),
+    isCompleted: false
+  },
+  {
+    id: 's5',
+    title: 'Turn on music',
+    description: '"Calm Afternoon" Playlist',
+    time: new Date(new Date().setHours(12, 0, 0, 0)).toISOString(),
+    isCompleted: false
+  },
+  {
+    id: 's6',
+    title: 'Change to evening menus',
+    time: new Date(new Date().setHours(15, 0, 0, 0)).toISOString(),
+    isCompleted: false
+  },
+  {
+    id: 's7',
+    title: 'Evening shift brief',
+    description: 'Bring aprons and tablets',
+    time: new Date(new Date().setHours(17, 0, 0, 0)).toISOString(),
+    isCompleted: false
+  },
+  {
+    id: 's8',
+    title: 'Change to evening playlist',
+    description: '"night party" playlist',
+    time: new Date(new Date().setHours(18, 0, 0, 0)).toISOString(),
+    isCompleted: false
+  },
+  {
+    id: 's9',
+    title: 'Close kitchen',
+    description: 'pass throgh all tables and say: "hey, we are closing the kitchen, would you like anything else? (desserts and hot drinks are stil open)',
+    time: new Date(new Date().setHours(23, 0, 0, 0)).toISOString(),
+    isCompleted: false
+  }
+];
