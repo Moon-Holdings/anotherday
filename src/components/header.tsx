@@ -35,9 +35,34 @@ const Header = ({
     };
   }, []);
 
+  // Set active tab based on role when component mounts
+  useEffect(() => {
+    // If user is restricted to tasks, set active tab to tasks
+    if (['chef', 'cook'].includes(userRole)) {
+      setActiveTab('tasks');
+      // Redirect to restricted tasks if they're on a different page
+      if (window.location.pathname !== '/restricted-tasks') {
+        navigate('/restricted-tasks');
+      }
+    }
+  }, [userRole, navigate]);
+
   const handleTabChange = (tab: string) => {
+    // If user role is chef or cook, they can only access tasks
+    if (['chef', 'cook'].includes(userRole) && tab !== 'tasks') {
+      setActiveTab('tasks');
+      navigate('/restricted-tasks');
+      return;
+    }
+    
     setActiveTab(tab);
-    navigate(`/${tab}`);
+    
+    // Navigate to appropriate route based on role
+    if (tab === 'tasks' && ['chef', 'cook'].includes(userRole)) {
+      navigate('/restricted-tasks');
+    } else {
+      navigate(`/${tab}`);
+    }
   };
 
   // Define which tabs are accessible based on user role
