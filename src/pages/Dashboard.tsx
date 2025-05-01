@@ -13,8 +13,17 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   
-  // Selected department state
+  // Selected department state - map to department names correctly
   const [selectedDepartment, setSelectedDepartment] = useState(mockDepartmentProgress[0].department);
+
+  // Maps the department cards to their corresponding filter values
+  const departmentToFilterMap: Record<string, string> = {
+    floor: 'Waiters',
+    bar: 'Bar',
+    kitchen: 'Kitchen',
+    takeaway: 'Waiters',
+    management: 'Managers'
+  };
 
   // Icons for departments
   const getDepartmentIcon = (department: string) => {
@@ -94,18 +103,21 @@ const Dashboard = () => {
           <TaskListComponent 
             title="Afternoon Opening" 
             tasks={mockOpeningTasks}
+            selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'}
           />
           
           <TaskListComponent 
             title="Managers Tasks" 
             tasks={mockManagerTasks}
             filter={true}
+            selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'}
           />
 
           <TaskListComponent 
             title="Team Tasks" 
             tasks={mockTeamTasks}
             filter={true}
+            selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'}
           />
           
           <TaskListComponent 

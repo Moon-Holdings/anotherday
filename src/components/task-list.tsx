@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Task, TaskList } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
@@ -20,6 +20,7 @@ interface TaskListProps {
   showCompleted?: boolean;
   onAddTask?: () => void;
   filter?: boolean;
+  selectedDepartment?: string;
 }
 
 const TaskListComponent = ({ 
@@ -27,13 +28,19 @@ const TaskListComponent = ({
   tasks, 
   showCompleted = false,
   onAddTask,
-  filter = false
+  filter = false,
+  selectedDepartment = 'floor'
 }: TaskListProps) => {
   const [displayCompleted, setDisplayCompleted] = useState(showCompleted);
   const [selectedDay, setSelectedDay] = useState('Sunday');
   const [selectedShift, setSelectedShift] = useState('Afternoon Shift | Opening');
-  const [selectedDepartment, setSelectedDepartment] = useState('Waiters');
+  const [localSelectedDepartment, setLocalSelectedDepartment] = useState(selectedDepartment);
   const [selectedTitle, setSelectedTitle] = useState(title);
+
+  // Update local state when prop changes
+  useEffect(() => {
+    setLocalSelectedDepartment(selectedDepartment);
+  }, [selectedDepartment]);
 
   const listOptions = [
     'Afternoon Opening',
@@ -44,9 +51,17 @@ const TaskListComponent = ({
     'Evening Closing'
   ];
 
-  const filteredTasks = displayCompleted 
+  // Filter tasks by completion status
+  const tasksFilteredByCompletion = displayCompleted 
     ? tasks 
     : tasks.filter(task => !task.isCompleted);
+    
+  // Further filter by department if this is a horizontal layout
+  const filteredTasks = selectedTitle === 'Afternoon Opening'
+    ? tasksFilteredByCompletion.filter(task => 
+        !task.department || task.department === localSelectedDepartment || localSelectedDepartment === 'Everyone'
+      )
+    : tasksFilteredByCompletion;
 
   // Determine if we should display the tasks horizontally based on the title
   const isHorizontalLayout = selectedTitle === 'Afternoon Opening';
@@ -108,7 +123,7 @@ const TaskListComponent = ({
             </Select>
 
             {title === "Team Tasks" && (
-              <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
+              <Select value={localSelectedDepartment} onValueChange={setLocalSelectedDepartment}>
                 <SelectTrigger className="w-32 h-8 text-sm">
                   <SelectValue placeholder="Select department" />
                 </SelectTrigger>
