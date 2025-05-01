@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -9,6 +8,7 @@ import AddTaskModal from '@/components/add-task-modal';
 import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks, mockTeamTasks } from '@/data/mock-data';
 import { Task } from '@/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Card, CardContent } from '@/components/ui/card';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -80,41 +80,44 @@ const Dashboard = () => {
       <Header />
       
       <div className="container px-4 py-6">
-        {/* Afternoon Opening title and dropdown moved next to each other */}
-        <div className="flex items-center mb-4">
-          <h2 className="text-lg font-medium mr-4">Departments Tasks</h2>
-          <Select value={selectedShift} onValueChange={setSelectedShift}>
-            <SelectTrigger className="w-64 h-8 text-sm">
-              <SelectValue placeholder="Select shift" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
-              <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
-              <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
-              <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
-              <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
-              <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
-          {mockDepartmentProgress.map(dept => <DepartmentCard key={dept.department} department={dept.department} icon={getDepartmentIcon(dept.department)} completed={dept.completed} total={dept.total} isSelected={dept.department === selectedDepartment} onClick={() => setSelectedDepartment(dept.department)} />)}
-        </div>
-        
-        <div className="space-y-6">
-          {/* Horizontal tasks section that is influenced by the department selection */}
-          <div className="mb-2">
-            <div className="flex justify-end">
-              <div className="flex items-center space-x-2 text-sm">
-                <span className="text-gray-500">Show completed tasks</span>
-                <div className="h-4 w-8 bg-gray-200 rounded-full relative">
-                  <div className="absolute right-1 top-1/2 transform -translate-y-1/2 h-3 w-3 rounded-full bg-white"></div>
-                </div>
+        {/* Department Tasks Section - Added a container with a light background to visually group it */}
+        <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
+          {/* Afternoon Opening title and dropdown moved next to each other */}
+          <div className="flex items-center mb-4">
+            <h2 className="text-lg font-medium mr-4">Departments Tasks</h2>
+            <Select value={selectedShift} onValueChange={setSelectedShift}>
+              <SelectTrigger className="w-64 h-8 text-sm">
+                <SelectValue placeholder="Select shift" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
+                <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
+                <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
+                <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
+                <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
+                <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
+            {mockDepartmentProgress.map(dept => <DepartmentCard key={dept.department} department={dept.department} icon={getDepartmentIcon(dept.department)} completed={dept.completed} total={dept.total} isSelected={dept.department === selectedDepartment} onClick={() => setSelectedDepartment(dept.department)} />)}
+          </div>
+          
+          {/* Added a divider and a title to make the connection clearer */}
+          <div className="border-t border-gray-200 my-4"></div>
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-sm font-medium text-gray-700">{selectedShift} Department Tasks</h3>
+            
+            <div className="flex items-center space-x-2 text-sm">
+              <span className="text-gray-500">Show completed tasks</span>
+              <div className="h-4 w-8 bg-gray-200 rounded-full relative">
+                <div className="absolute right-1 top-1/2 transform -translate-y-1/2 h-3 w-3 rounded-full bg-white"></div>
               </div>
             </div>
           </div>
           
+          {/* The horizontal task list is now clearly part of the department tasks section */}
           <TaskListComponent 
             title="Afternoon Opening" 
             tasks={mockOpeningTasks} 
@@ -122,7 +125,9 @@ const Dashboard = () => {
             hideTitle={true} 
             displayForcedHorizontal={true}
           />
-
+        </div>
+        
+        <div className="space-y-6">
           <TaskListComponent 
             title="Team Tasks" 
             tasks={mockTeamTasks} 
