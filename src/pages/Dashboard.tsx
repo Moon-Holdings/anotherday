@@ -8,6 +8,7 @@ import AddTaskModal from '@/components/add-task-modal';
 import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks, mockTeamTasks } from '@/data/mock-data';
 import { Task } from '@/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
@@ -68,10 +69,12 @@ const Dashboard = () => {
           </div>;
     }
   };
+
   const handleAddTask = (newTask: Task) => {
     console.log('Adding new task:', newTask);
     // In a real app, we would add the task to our state or database
   };
+
   return <div className="min-h-screen bg-gray-50">
       <Header />
       
@@ -101,12 +104,38 @@ const Dashboard = () => {
         </div>
         
         <div className="space-y-6">
-          <TaskListComponent title="Afternoon Opening" tasks={mockOpeningTasks} selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} hideTitle={true} // Hide the title since we've moved it above
-        />
+          {/* Afternoon Opening Tasks with hideTitle=true to display tasks horizontally without the section title */}
+          <div className="mb-2">
+            <h2 className="text-lg font-medium">Afternoon Opening</h2>
+            <div className="flex justify-end">
+              <div className="flex items-center space-x-2 text-sm">
+                <span className="text-gray-500">Show completed tasks</span>
+                <div className="h-4 w-8 bg-gray-200 rounded-full relative">
+                  <div className="absolute right-1 top-1/2 transform -translate-y-1/2 h-3 w-3 rounded-full bg-white"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <TaskListComponent 
+            title="Afternoon Opening" 
+            tasks={mockOpeningTasks} 
+            selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
+            hideTitle={true}
+            displayForcedHorizontal={true} // Force horizontal display for these tasks
+          />
 
-          <TaskListComponent title="Team Tasks" tasks={mockTeamTasks} filter={true} selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} />
+          <TaskListComponent 
+            title="Team Tasks" 
+            tasks={mockTeamTasks} 
+            filter={true} 
+            selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
+          />
           
-          <TaskListComponent title="Personal Tasks" tasks={mockPersonalTasks} onAddTask={() => setIsAddTaskModalOpen(true)} />
+          <TaskListComponent 
+            title="Personal Tasks" 
+            tasks={mockPersonalTasks} 
+            onAddTask={() => setIsAddTaskModalOpen(true)} 
+          />
         </div>
       </div>
       
@@ -117,4 +146,5 @@ const Dashboard = () => {
       <AddTaskModal isOpen={isAddTaskModalOpen} onClose={() => setIsAddTaskModalOpen(false)} onAddTask={handleAddTask} />
     </div>;
 };
+
 export default Dashboard;

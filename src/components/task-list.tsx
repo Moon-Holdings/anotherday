@@ -14,7 +14,8 @@ interface TaskListProps {
   onAddTask?: () => void;
   filter?: boolean;
   selectedDepartment?: string;
-  hideTitle?: boolean; // Add new prop to optionally hide the title
+  hideTitle?: boolean;
+  displayForcedHorizontal?: boolean; // New prop to force horizontal display
 }
 
 const TaskListComponent = ({ 
@@ -24,7 +25,8 @@ const TaskListComponent = ({
   onAddTask,
   filter = false,
   selectedDepartment = 'floor',
-  hideTitle = false, // Default to showing title
+  hideTitle = false,
+  displayForcedHorizontal = false, // Default is false
 }: TaskListProps) => {
   const [displayCompleted, setDisplayCompleted] = useState(showCompleted);
   const [selectedDay, setSelectedDay] = useState('Sunday');
@@ -48,8 +50,8 @@ const TaskListComponent = ({
       )
     : tasksFilteredByCompletion;
 
-  // Determine if we should display the tasks horizontally based on the title
-  const isHorizontalLayout = title === 'Afternoon Opening';
+  // Determine if we should display the tasks horizontally based on title or forced prop
+  const isHorizontalLayout = title === 'Afternoon Opening' || displayForcedHorizontal;
 
   return (
     <div className="mb-6">
