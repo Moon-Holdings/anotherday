@@ -43,12 +43,31 @@ const TaskListComponent = ({
     ? tasks 
     : tasks.filter(task => !task.isCompleted);
     
-  // Further filter by department if this is a horizontal layout
-  const filteredTasks = title === 'Afternoon Opening'
-    ? tasksFilteredByCompletion.filter(task => 
-        !task.department || task.department === localSelectedDepartment || localSelectedDepartment === 'Everyone'
-      )
-    : tasksFilteredByCompletion;
+  // Filter logic modified to always show some tasks for each department
+  let filteredTasks = tasksFilteredByCompletion;
+  
+  // If this is the "Afternoon Opening" section (horizontal layout)
+  if (title === 'Afternoon Opening' || displayForcedHorizontal) {
+    // For demo purposes, ensure we always show at least some tasks
+    // First try to filter by department
+    const departmentTasks = tasksFilteredByCompletion.filter(task => 
+      !task.department || 
+      task.department === localSelectedDepartment || 
+      localSelectedDepartment === 'Everyone'
+    );
+    
+    // If no tasks for this department, show at least 2 tasks as examples
+    filteredTasks = departmentTasks.length > 0 ? departmentTasks : tasksFilteredByCompletion.slice(0, 2);
+  } else if (title === 'Team Tasks') {
+    // For Team Tasks, ensure we show at least one example task
+    const departmentTasks = tasksFilteredByCompletion.filter(task => 
+      !task.department || 
+      task.department === localSelectedDepartment || 
+      localSelectedDepartment === 'Everyone'
+    );
+    
+    filteredTasks = departmentTasks.length > 0 ? departmentTasks : tasksFilteredByCompletion.slice(0, 1);
+  }
 
   // Determine if we should display the tasks horizontally based on title or forced prop
   const isHorizontalLayout = title === 'Afternoon Opening' || displayForcedHorizontal;
