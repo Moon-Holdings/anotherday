@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Task, TaskList } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,7 +16,8 @@ interface TaskListProps {
   filter?: boolean;
   selectedDepartment?: string;
   hideTitle?: boolean;
-  displayForcedHorizontal?: boolean; // New prop to force horizontal display
+  displayForcedHorizontal?: boolean; 
+  description?: string; // Add a description prop
 }
 
 const TaskListComponent = ({ 
@@ -26,7 +28,8 @@ const TaskListComponent = ({
   filter = false,
   selectedDepartment = 'floor',
   hideTitle = false,
-  displayForcedHorizontal = false, // Default is false
+  displayForcedHorizontal = false,
+  description, // Default undefined
 }: TaskListProps) => {
   const [displayCompleted, setDisplayCompleted] = useState(showCompleted);
   const [selectedDay, setSelectedDay] = useState('Sunday');
@@ -69,7 +72,10 @@ const TaskListComponent = ({
       {/* Title section displayed outside the card, like in the design */}
       {!hideTitle && (
         <div className="flex items-center justify-between mb-2">
-          <h2 className="text-lg font-medium">{title}</h2>
+          <div>
+            <h2 className="text-lg font-medium">{title}</h2>
+            {description && <p className="text-sm text-gray-500">{description}</p>}
+          </div>
           
           {filter && (
             <div className="flex items-center space-x-2">

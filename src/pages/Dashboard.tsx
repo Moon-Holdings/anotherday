@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -125,6 +126,7 @@ const Dashboard = () => {
           <TaskListComponent 
             title="Team Tasks" 
             tasks={mockTeamTasks} 
+            description="Tasks assigned to team members under your management" 
             filter={true} 
             selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
           />
@@ -132,6 +134,7 @@ const Dashboard = () => {
           <TaskListComponent 
             title="Personal Tasks" 
             tasks={mockPersonalTasks} 
+            description="Your personal assigned tasks"
           />
         </div>
       </div>
