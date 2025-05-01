@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -81,7 +82,7 @@ const Dashboard = () => {
         <div className="flex items-center mb-4">
           <h2 className="text-lg font-medium mr-4">Departments Tasks</h2>
           <Select value={selectedShift} onValueChange={setSelectedShift}>
-            <SelectTrigger className="w-44 h-8 text-sm">
+            <SelectTrigger className="w-64 h-8 text-sm">
               <SelectValue placeholder="Select shift" />
             </SelectTrigger>
             <SelectContent>
