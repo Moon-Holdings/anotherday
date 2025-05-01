@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -6,7 +5,7 @@ import DepartmentCard from '@/components/department-card';
 import TaskListComponent from '@/components/task-list';
 import AddButton from '@/components/add-button';
 import AddTaskModal from '@/components/add-task-modal';
-import { mockDepartmentProgress, mockOpeningTasks, mockManagerTasks, mockPersonalTasks, mockTeamTasks } from '@/data/mock-data';
+import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks, mockTeamTasks } from '@/data/mock-data';
 import { Task } from '@/types';
 
 const Dashboard = () => {
@@ -103,13 +102,6 @@ const Dashboard = () => {
           <TaskListComponent 
             title="Afternoon Opening" 
             tasks={mockOpeningTasks}
-            selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'}
-          />
-          
-          <TaskListComponent 
-            title="Managers Tasks" 
-            tasks={mockManagerTasks}
-            filter={true}
             selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'}
           />
 
