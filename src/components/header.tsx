@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from './logo';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface HeaderProps {
   userName?: string;
@@ -49,19 +48,7 @@ const Header = ({
         </div>
         
         <div className="flex justify-end w-1/3">
-          <Select defaultValue={`${currentShift} | ${shiftAction}`}>
-            <SelectTrigger className="bg-white text-gray-800 max-w-[180px] border-0">
-              <SelectValue placeholder="Select Shift" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
-              <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
-              <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
-              <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
-              <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
-              <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
-            </SelectContent>
-          </Select>
+          {/* Shift selector dropdown removed */}
         </div>
       </div>
       
