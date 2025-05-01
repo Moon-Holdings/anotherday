@@ -84,6 +84,13 @@ const TaskListComponent = ({
     }
   }
 
+  // Get user name by ID - helper function
+  const getUserNameById = (userId?: string): string => {
+    if (!userId) return "Unassigned";
+    const user = mockUsers.find(user => user.id === userId);
+    return user ? user.name : "Unknown User";
+  };
+
   // Handle toggling user selection
   const toggleUserSelection = (userId: string) => {
     // Special handling for 'everyone'
@@ -117,6 +124,17 @@ const TaskListComponent = ({
 
   // Determine if we should display the tasks horizontally based on title or forced prop
   const isHorizontalLayout = displayForcedHorizontal;
+
+  // For each task in Team Tasks section, assign a random user if not assigned
+  // In a real app, this would come from the database
+  const tasksWithUsers = filteredTasks.map(task => {
+    if (title === "Team Tasks" && !task.assignedTo) {
+      // Assign a random user for demo purposes
+      const randomUserId = mockUsers[Math.floor(Math.random() * mockUsers.length)].id;
+      return {...task, assignedTo: randomUserId};
+    }
+    return task;
+  });
 
   return (
     <div className="mb-6">
@@ -184,12 +202,18 @@ const TaskListComponent = ({
       
       <Card>
         <CardContent className="pt-4">
-          {filteredTasks.length === 0 ? (
+          {tasksWithUsers.length === 0 ? (
             <p className="text-gray-500 text-center py-4">No tasks to display</p>
           ) : (
             <div className={isHorizontalLayout ? "flex flex-wrap gap-3" : ""}>
-              {filteredTasks.map(task => (
-                <TaskItem key={task.id} task={task} isHorizontal={isHorizontalLayout} />
+              {tasksWithUsers.map(task => (
+                <TaskItem 
+                  key={task.id} 
+                  task={task} 
+                  isHorizontal={isHorizontalLayout}
+                  // Pass the user name only for Team Tasks section
+                  assignedUserName={title === "Team Tasks" ? getUserNameById(task.assignedTo) : undefined}
+                />
               ))}
             </div>
           )}

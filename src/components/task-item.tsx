@@ -9,13 +9,15 @@ interface TaskItemProps {
   isHorizontal?: boolean;
   onComplete?: (taskId: string, completed: boolean) => void;
   onQuantityChange?: (taskId: string, quantity: number) => void;
+  assignedUserName?: string;
 }
 
 const TaskItem = ({ 
   task, 
   isHorizontal = false,
   onComplete,
-  onQuantityChange
+  onQuantityChange,
+  assignedUserName
 }: TaskItemProps) => {
   const [isCompleted, setIsCompleted] = useState(task.isCompleted);
   const [quantity, setQuantity] = useState(task.quantityOnHand || 0);
@@ -54,6 +56,7 @@ const TaskItem = ({
       quantity={quantity}
       onQuantityIncrease={increaseQuantity}
       onQuantityDecrease={decreaseQuantity}
+      assignedUserName={assignedUserName}
     />
   ) : (
     <VerticalTaskItem
@@ -63,6 +66,7 @@ const TaskItem = ({
       quantity={quantity}
       onQuantityIncrease={increaseQuantity}
       onQuantityDecrease={decreaseQuantity}
+      assignedUserName={assignedUserName}
     />
   );
 };

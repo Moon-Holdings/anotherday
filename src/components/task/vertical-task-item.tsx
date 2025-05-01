@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import QuantityControl from './quantity-control';
 import PhotoControl from './photo-control';
 import DeadlineDisplay from './deadline-display';
+import { Badge } from '@/components/ui/badge';
 
 interface VerticalTaskItemProps {
   task: Task;
@@ -13,6 +14,7 @@ interface VerticalTaskItemProps {
   quantity: number;
   onQuantityIncrease: () => void;
   onQuantityDecrease: () => void;
+  assignedUserName?: string;
 }
 
 const VerticalTaskItem = ({
@@ -21,7 +23,8 @@ const VerticalTaskItem = ({
   onCheckChange,
   quantity,
   onQuantityIncrease,
-  onQuantityDecrease
+  onQuantityDecrease,
+  assignedUserName
 }: VerticalTaskItemProps) => {
   return (
     <div className="flex items-start space-x-4 py-4 border-b last:border-b-0">
@@ -39,6 +42,13 @@ const VerticalTaskItem = ({
               <p className={`text-sm text-gray-500 ${isCompleted ? 'text-gray-300 line-through' : ''}`}>
                 {task.description}
               </p>
+            )}
+            
+            {/* Display assigned user name if provided */}
+            {assignedUserName && (
+              <Badge variant="outline" className="mt-2 text-xs bg-gray-50">
+                {assignedUserName}
+              </Badge>
             )}
           </div>
 
