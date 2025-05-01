@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from './logo';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
@@ -21,6 +21,7 @@ const Header = ({
   userRole = 'manager' // Default role is manager
 }: HeaderProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
@@ -35,17 +36,28 @@ const Header = ({
     };
   }, []);
 
-  // Set active tab based on role when component mounts
+  // Set active tab based on current route when component mounts or route changes
   useEffect(() => {
+    const path = location.pathname.substring(1); // Remove leading slash
+    if (path === '') {
+      setActiveTab('dashboard');
+    } else if (path === 'restricted-tasks') {
+      setActiveTab('tasks');
+    } else if (path.length > 0) {
+      setActiveTab(path);
+    } else {
+      setActiveTab('dashboard');
+    }
+    
     // If user is restricted to tasks, set active tab to tasks
     if (['chef', 'cook'].includes(userRole)) {
       setActiveTab('tasks');
       // Redirect to restricted tasks if they're on a different page
-      if (window.location.pathname !== '/restricted-tasks') {
+      if (location.pathname !== '/restricted-tasks') {
         navigate('/restricted-tasks');
       }
     }
-  }, [userRole, navigate]);
+  }, [location.pathname, userRole, navigate]);
 
   const handleTabChange = (tab: string) => {
     // If user role is chef or cook, they can only access tasks
@@ -98,7 +110,11 @@ const Header = ({
         {canAccessSchedule && (
           <Button 
             variant="ghost" 
-            className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${activeTab === 'schedule' ? 'border-b-2 border-rootina-teal' : ''}`}
+            className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${
+              activeTab === 'schedule' 
+                ? 'border-b-2 border-rootina-teal text-rootina-teal' 
+                : ''
+            }`}
             onClick={() => handleTabChange('schedule')}
           >
             Daily Schedule
@@ -107,7 +123,11 @@ const Header = ({
         
         <Button 
           variant="ghost" 
-          className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${activeTab === 'tasks' ? 'border-b-2 border-rootina-teal' : ''}`}
+          className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${
+            activeTab === 'tasks' 
+              ? 'border-b-2 border-rootina-teal text-rootina-teal' 
+              : ''
+          }`}
           onClick={() => handleTabChange('tasks')}
         >
           Tasks
@@ -116,7 +136,11 @@ const Header = ({
         {canAccessDashboard && (
           <Button 
             variant="ghost" 
-            className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${activeTab === 'dashboard' ? 'border-b-2 border-rootina-teal' : ''}`}
+            className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${
+              activeTab === 'dashboard' 
+                ? 'border-b-2 border-rootina-teal text-rootina-teal' 
+                : ''
+            }`}
             onClick={() => handleTabChange('dashboard')}
           >
             Dashboard
@@ -126,7 +150,11 @@ const Header = ({
         {canAccessAdmin && (
           <Button 
             variant="ghost" 
-            className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${activeTab === 'admin' ? 'border-b-2 border-rootina-teal' : ''}`}
+            className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${
+              activeTab === 'admin' 
+                ? 'border-b-2 border-rootina-teal text-rootina-teal' 
+                : ''
+            }`}
             onClick={() => handleTabChange('admin')}
           >
             Admin
