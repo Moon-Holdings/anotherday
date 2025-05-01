@@ -1,12 +1,12 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from './logo';
 import { Button } from '@/components/ui/button';
+import { format } from 'date-fns';
 
 interface HeaderProps {
   userName?: string;
-  date?: string;
   currentShift?: string;
   shiftAction?: string;
   onShiftChange?: (shift: string, action: string) => void;
@@ -15,7 +15,6 @@ interface HeaderProps {
 
 const Header = ({
   userName = 'Brandon',
-  date = '24.07.22',
   currentShift = 'Afternoon Shift',
   shiftAction = 'Opening',
   onShiftChange,
@@ -23,6 +22,18 @@ const Header = ({
 }: HeaderProps) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
+
+  // Update the time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -34,11 +45,17 @@ const Header = ({
   const canAccessSchedule = ['manager', 'bartender'].includes(userRole);
   const canAccessAdmin = userRole === 'manager';
 
+  // Format current date and time
+  const formattedDate = format(currentDateTime, 'dd.MM.yy');
+  const formattedTime = format(currentDateTime, 'HH:mm:ss');
+
   return (
     <header className="bg-rootina-blue text-white">
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center space-x-2 w-1/3">
-          <p className="text-sm">{date}</p>
+          <p className="text-sm">{formattedDate}</p>
+          <p className="text-sm">|</p>
+          <p className="text-sm">{formattedTime}</p>
           <p className="text-sm">|</p>
           <p className="text-sm">Good afternoon, {userName}</p>
         </div>
