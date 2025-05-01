@@ -8,6 +8,7 @@ import AddTaskModal from '@/components/add-task-modal';
 import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks, mockTeamTasks } from '@/data/mock-data';
 import { Task } from '@/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
@@ -76,9 +77,9 @@ const Dashboard = () => {
       <Header />
       
       <div className="container px-4 py-6">
-        {/* Afternoon Opening title and dropdown */}
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-medium">Departments Tasks</h2>
+        {/* Afternoon Opening title and dropdown moved next to each other */}
+        <div className="flex items-center mb-4">
+          <h2 className="text-lg font-medium mr-4">Departments Tasks</h2>
           <Select value={selectedShift} onValueChange={setSelectedShift}>
             <SelectTrigger className="w-44 h-8 text-sm">
               <SelectValue placeholder="Select shift" />
