@@ -82,21 +82,19 @@ const Dashboard = () => {
         {/* Afternoon Opening title and dropdown */}
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-medium">Departments Tasks</h2>
-          <div className="flex items-center">
-            <Select value={selectedShift} onValueChange={setSelectedShift}>
-              <SelectTrigger className="w-44 h-8 text-sm">
-                <SelectValue placeholder="Select shift" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
-                <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
-                <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
-                <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
-                <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
-                <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <Select value={selectedShift} onValueChange={setSelectedShift}>
+            <SelectTrigger className="w-44 h-8 text-sm">
+              <SelectValue placeholder="Select shift" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
+              <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
+              <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
+              <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
+              <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
+              <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
