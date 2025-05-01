@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -70,10 +69,12 @@ const Dashboard = () => {
           </div>;
     }
   };
+  
   const handleAddTask = (newTask: Task) => {
     console.log('Adding new task:', newTask);
     // In a real app, we would add the task to our state or database
   };
+  
   return <div className="min-h-screen bg-gray-50">
       <Header />
       
@@ -101,9 +102,8 @@ const Dashboard = () => {
         </div>
         
         <div className="space-y-6">
-          {/* Afternoon Opening Tasks with hideTitle=true to display tasks horizontally without the section title */}
+          {/* Horizontal tasks section that is influenced by the department selection */}
           <div className="mb-2">
-            
             <div className="flex justify-end">
               <div className="flex items-center space-x-2 text-sm">
                 <span className="text-gray-500">Show completed tasks</span>
@@ -113,12 +113,27 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <TaskListComponent title="Afternoon Opening" tasks={mockOpeningTasks} selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} hideTitle={true} displayForcedHorizontal={true} // Force horizontal display for these tasks
-        />
-
-          <TaskListComponent title="Team Tasks" tasks={mockTeamTasks} filter={true} selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} />
           
-          <TaskListComponent title="Personal Tasks" tasks={mockPersonalTasks} onAddTask={() => setIsAddTaskModalOpen(true)} />
+          <TaskListComponent 
+            title="Afternoon Opening" 
+            tasks={mockOpeningTasks} 
+            selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
+            hideTitle={true} 
+            displayForcedHorizontal={true}
+          />
+
+          <TaskListComponent 
+            title="Team Tasks" 
+            tasks={mockTeamTasks} 
+            filter={true} 
+            selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
+          />
+          
+          <TaskListComponent 
+            title="Personal Tasks" 
+            tasks={mockPersonalTasks} 
+            onAddTask={() => setIsAddTaskModalOpen(true)} 
+          />
         </div>
       </div>
       

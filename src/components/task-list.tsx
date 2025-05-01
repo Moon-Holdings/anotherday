@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Task, TaskList } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -43,34 +42,26 @@ const TaskListComponent = ({
     ? tasks 
     : tasks.filter(task => !task.isCompleted);
     
-  // Filter logic modified to always show some tasks for each department
+  // Filter tasks by department
   let filteredTasks = tasksFilteredByCompletion;
   
-  // If this is the "Afternoon Opening" section (horizontal layout)
-  if (title === 'Afternoon Opening' || displayForcedHorizontal) {
-    // For demo purposes, ensure we always show at least some tasks
-    // First try to filter by department
+  if (localSelectedDepartment && localSelectedDepartment !== 'Everyone') {
+    // First try to filter by exact department match
     const departmentTasks = tasksFilteredByCompletion.filter(task => 
-      !task.department || 
-      task.department === localSelectedDepartment || 
-      localSelectedDepartment === 'Everyone'
+      task.department === localSelectedDepartment
     );
     
-    // If no tasks for this department, show at least 2 tasks as examples
-    filteredTasks = departmentTasks.length > 0 ? departmentTasks : tasksFilteredByCompletion.slice(0, 2);
-  } else if (title === 'Team Tasks') {
-    // For Team Tasks, ensure we show at least one example task
-    const departmentTasks = tasksFilteredByCompletion.filter(task => 
-      !task.department || 
-      task.department === localSelectedDepartment || 
-      localSelectedDepartment === 'Everyone'
-    );
-    
-    filteredTasks = departmentTasks.length > 0 ? departmentTasks : tasksFilteredByCompletion.slice(0, 1);
+    // If we found tasks for this department, use them
+    if (departmentTasks.length > 0) {
+      filteredTasks = departmentTasks;
+    } else {
+      // Otherwise, for demo purposes, show at least 2 random tasks
+      filteredTasks = tasksFilteredByCompletion.slice(0, Math.min(2, tasksFilteredByCompletion.length));
+    }
   }
 
   // Determine if we should display the tasks horizontally based on title or forced prop
-  const isHorizontalLayout = title === 'Afternoon Opening' || displayForcedHorizontal;
+  const isHorizontalLayout = displayForcedHorizontal;
 
   return (
     <div className="mb-6">
