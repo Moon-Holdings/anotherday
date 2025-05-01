@@ -48,6 +48,9 @@ const TaskListComponent = ({
     ? tasks 
     : tasks.filter(task => !task.isCompleted);
 
+  // Determine if we should display the tasks horizontally based on the title
+  const isHorizontalLayout = selectedTitle === 'Afternoon Opening';
+
   return (
     <Card className="mb-6">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -132,9 +135,9 @@ const TaskListComponent = ({
         {filteredTasks.length === 0 ? (
           <p className="text-gray-500 text-center py-4">No tasks to display</p>
         ) : (
-          <div>
+          <div className={isHorizontalLayout ? "flex flex-wrap gap-3" : ""}>
             {filteredTasks.map(task => (
-              <TaskItem key={task.id} task={task} />
+              <TaskItem key={task.id} task={task} isHorizontal={isHorizontalLayout} />
             ))}
           </div>
         )}
