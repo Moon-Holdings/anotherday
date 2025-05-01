@@ -6,6 +6,13 @@ import { Switch } from '@/components/ui/switch';
 import TaskItem from './task-item';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuItem
+} from '@/components/ui/dropdown-menu';
+import { ChevronDown } from 'lucide-react';
 
 interface TaskListProps {
   title: string;
@@ -26,6 +33,16 @@ const TaskListComponent = ({
   const [selectedDay, setSelectedDay] = useState('Sunday');
   const [selectedShift, setSelectedShift] = useState('Afternoon Shift | Opening');
   const [selectedDepartment, setSelectedDepartment] = useState('Waiters');
+  const [selectedTitle, setSelectedTitle] = useState(title);
+
+  const listOptions = [
+    'Afternoon Opening',
+    'Morning Opening',
+    'Evening Opening',
+    'Afternoon Closing',
+    'Morning Closing',
+    'Evening Closing'
+  ];
 
   const filteredTasks = displayCompleted 
     ? tasks 
@@ -34,7 +51,28 @@ const TaskListComponent = ({
   return (
     <Card className="mb-6">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-lg font-medium">{title}</CardTitle>
+        <div className="flex items-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="pl-0 font-medium text-lg flex items-center gap-1 hover:bg-transparent focus:bg-transparent">
+                {selectedTitle}
+                <ChevronDown className="h-4 w-4 opacity-70" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="bg-white w-48">
+              {listOptions.map((option) => (
+                <DropdownMenuItem 
+                  key={option}
+                  onClick={() => setSelectedTitle(option)}
+                  className="cursor-pointer"
+                >
+                  {option}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        
         {filter && (
           <div className="flex items-center space-x-2">
             <Select value={selectedDay} onValueChange={setSelectedDay}>
