@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import TaskItem from './task-item';
 import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface TaskListProps {
@@ -138,19 +139,6 @@ const TaskListComponent = ({
                 <TaskItem key={task.id} task={task} isHorizontal={isHorizontalLayout} />
               ))}
             </div>
-          )}
-          
-          {onAddTask && (
-            <Button 
-              onClick={onAddTask}
-              className="w-full mt-4 bg-rootina-teal hover:bg-rootina-lightTeal"
-            >
-              Add New Task
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </Button>
           )}
         </CardContent>
       </Card>

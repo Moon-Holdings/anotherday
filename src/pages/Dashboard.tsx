@@ -132,7 +132,6 @@ const Dashboard = () => {
           <TaskListComponent 
             title="Personal Tasks" 
             tasks={mockPersonalTasks} 
-            onAddTask={() => setIsAddTaskModalOpen(true)} 
           />
         </div>
       </div>
