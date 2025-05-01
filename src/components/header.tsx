@@ -36,7 +36,7 @@ const Header = ({
           <p className="text-sm">|</p>
           <p className="text-sm">Good afternoon, {userName}</p>
         </div>
-        <Logo />
+        <Logo className="h-8" />
         
         <Select defaultValue={`${currentShift} | ${shiftAction}`}>
           <SelectTrigger className="bg-white text-gray-800 min-w-[200px] border-0">
