@@ -11,6 +11,7 @@ interface HeaderProps {
   currentShift?: string;
   shiftAction?: string;
   onShiftChange?: (shift: string, action: string) => void;
+  userRole?: 'manager' | 'waiter' | 'chef' | 'cook' | 'bartender';
 }
 
 const Header = ({
@@ -18,7 +19,8 @@ const Header = ({
   date = '24.07.22',
   currentShift = 'Afternoon Shift',
   shiftAction = 'Opening',
-  onShiftChange
+  onShiftChange,
+  userRole = 'manager' // Default role is manager
 }: HeaderProps) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -27,6 +29,11 @@ const Header = ({
     setActiveTab(tab);
     navigate(`/${tab}`);
   };
+
+  // Define which tabs are accessible based on user role
+  const canAccessDashboard = ['manager', 'bartender'].includes(userRole);
+  const canAccessSchedule = ['manager', 'bartender'].includes(userRole);
+  const canAccessAdmin = userRole === 'manager';
 
   return (
     <header className="bg-rootina-blue text-white">
@@ -54,13 +61,16 @@ const Header = ({
       </div>
       
       <div className="flex border-t border-opacity-20 border-white">
-        <Button 
-          variant="ghost" 
-          className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${activeTab === 'schedule' ? 'border-b-2 border-rootina-teal' : ''}`}
-          onClick={() => handleTabChange('schedule')}
-        >
-          Daily Schedule
-        </Button>
+        {canAccessSchedule && (
+          <Button 
+            variant="ghost" 
+            className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${activeTab === 'schedule' ? 'border-b-2 border-rootina-teal' : ''}`}
+            onClick={() => handleTabChange('schedule')}
+          >
+            Daily Schedule
+          </Button>
+        )}
+        
         <Button 
           variant="ghost" 
           className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${activeTab === 'tasks' ? 'border-b-2 border-rootina-teal' : ''}`}
@@ -68,13 +78,26 @@ const Header = ({
         >
           Tasks
         </Button>
-        <Button 
-          variant="ghost" 
-          className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${activeTab === 'dashboard' ? 'border-b-2 border-rootina-teal' : ''}`}
-          onClick={() => handleTabChange('dashboard')}
-        >
-          Dashboard
-        </Button>
+        
+        {canAccessDashboard && (
+          <Button 
+            variant="ghost" 
+            className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${activeTab === 'dashboard' ? 'border-b-2 border-rootina-teal' : ''}`}
+            onClick={() => handleTabChange('dashboard')}
+          >
+            Dashboard
+          </Button>
+        )}
+        
+        {canAccessAdmin && (
+          <Button 
+            variant="ghost" 
+            className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${activeTab === 'admin' ? 'border-b-2 border-rootina-teal' : ''}`}
+            onClick={() => handleTabChange('admin')}
+          >
+            Admin
+          </Button>
+        )}
       </div>
     </header>
   );
