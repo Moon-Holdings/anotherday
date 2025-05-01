@@ -14,6 +14,7 @@ interface TaskListProps {
   onAddTask?: () => void;
   filter?: boolean;
   selectedDepartment?: string;
+  hideTitle?: boolean; // Add new prop to optionally hide the title
 }
 
 const TaskListComponent = ({ 
@@ -22,7 +23,8 @@ const TaskListComponent = ({
   showCompleted = false,
   onAddTask,
   filter = false,
-  selectedDepartment = 'floor'
+  selectedDepartment = 'floor',
+  hideTitle = false, // Default to showing title
 }: TaskListProps) => {
   const [displayCompleted, setDisplayCompleted] = useState(showCompleted);
   const [selectedDay, setSelectedDay] = useState('Sunday');
@@ -52,65 +54,67 @@ const TaskListComponent = ({
   return (
     <div className="mb-6">
       {/* Title section displayed outside the card, like in the design */}
-      <div className="flex items-center justify-between mb-2">
-        <h2 className="text-lg font-medium">{title}</h2>
-        
-        {filter && (
-          <div className="flex items-center space-x-2">
-            <Select value={selectedDay} onValueChange={setSelectedDay}>
-              <SelectTrigger className="w-32 h-8 text-sm">
-                <SelectValue placeholder="Select day" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Sunday">Sunday</SelectItem>
-                <SelectItem value="Monday">Monday</SelectItem>
-                <SelectItem value="Tuesday">Tuesday</SelectItem>
-                <SelectItem value="Wednesday">Wednesday</SelectItem>
-                <SelectItem value="Thursday">Thursday</SelectItem>
-                <SelectItem value="Friday">Friday</SelectItem>
-                <SelectItem value="Saturday">Saturday</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={selectedShift} onValueChange={setSelectedShift}>
-              <SelectTrigger className="w-60 h-8 text-sm">
-                <SelectValue placeholder="Select shift" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
-                <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
-                <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
-                <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
-                <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
-                <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
-              </SelectContent>
-            </Select>
-
-            {title === "Team Tasks" && (
-              <Select value={localSelectedDepartment} onValueChange={setLocalSelectedDepartment}>
+      {!hideTitle && (
+        <div className="flex items-center justify-between mb-2">
+          <h2 className="text-lg font-medium">{title}</h2>
+          
+          {filter && (
+            <div className="flex items-center space-x-2">
+              <Select value={selectedDay} onValueChange={setSelectedDay}>
                 <SelectTrigger className="w-32 h-8 text-sm">
-                  <SelectValue placeholder="Select department" />
+                  <SelectValue placeholder="Select day" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Everyone">Everyone</SelectItem>
-                  <SelectItem value="Waiters">Waiters</SelectItem>
-                  <SelectItem value="Bar">Bar</SelectItem>
-                  <SelectItem value="Kitchen">Kitchen</SelectItem>
-                  <SelectItem value="Managers">Managers</SelectItem>
+                  <SelectItem value="Sunday">Sunday</SelectItem>
+                  <SelectItem value="Monday">Monday</SelectItem>
+                  <SelectItem value="Tuesday">Tuesday</SelectItem>
+                  <SelectItem value="Wednesday">Wednesday</SelectItem>
+                  <SelectItem value="Thursday">Thursday</SelectItem>
+                  <SelectItem value="Friday">Friday</SelectItem>
+                  <SelectItem value="Saturday">Saturday</SelectItem>
                 </SelectContent>
               </Select>
-            )}
+
+              <Select value={selectedShift} onValueChange={setSelectedShift}>
+                <SelectTrigger className="w-60 h-8 text-sm">
+                  <SelectValue placeholder="Select shift" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
+                  <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
+                  <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
+                  <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
+                  <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
+                  <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {title === "Team Tasks" && (
+                <Select value={localSelectedDepartment} onValueChange={setLocalSelectedDepartment}>
+                  <SelectTrigger className="w-32 h-8 text-sm">
+                    <SelectValue placeholder="Select department" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Everyone">Everyone</SelectItem>
+                    <SelectItem value="Waiters">Waiters</SelectItem>
+                    <SelectItem value="Bar">Bar</SelectItem>
+                    <SelectItem value="Kitchen">Kitchen</SelectItem>
+                    <SelectItem value="Managers">Managers</SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
+            </div>
+          )}
+          
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-500">Show completed tasks</span>
+            <Switch 
+              checked={displayCompleted} 
+              onCheckedChange={setDisplayCompleted}
+            />
           </div>
-        )}
-        
-        <div className="flex items-center space-x-2">
-          <span className="text-sm text-gray-500">Show completed tasks</span>
-          <Switch 
-            checked={displayCompleted} 
-            onCheckedChange={setDisplayCompleted}
-          />
         </div>
-      </div>
+      )}
       
       <Card>
         <CardContent className="pt-4">

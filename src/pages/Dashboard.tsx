@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -7,6 +8,7 @@ import AddButton from '@/components/add-button';
 import AddTaskModal from '@/components/add-task-modal';
 import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks, mockTeamTasks } from '@/data/mock-data';
 import { Task } from '@/types';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -14,6 +16,9 @@ const Dashboard = () => {
   
   // Selected department state - map to department names correctly
   const [selectedDepartment, setSelectedDepartment] = useState(mockDepartmentProgress[0].department);
+
+  // Selected shift and day state
+  const [selectedShift, setSelectedShift] = useState('Afternoon Shift | Opening');
 
   // Maps the department cards to their corresponding filter values
   const departmentToFilterMap: Record<string, string> = {
@@ -84,6 +89,26 @@ const Dashboard = () => {
       <Header />
       
       <div className="container px-4 py-6">
+        {/* Afternoon Opening title and dropdown */}
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-medium">Afternoon Opening</h2>
+          <div className="flex items-center">
+            <Select value={selectedShift} onValueChange={setSelectedShift}>
+              <SelectTrigger className="w-44 h-8 text-sm">
+                <SelectValue placeholder="Select shift" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
+                <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
+                <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
+                <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
+                <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
+                <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
           {mockDepartmentProgress.map((dept) => (
             <DepartmentCard
@@ -103,6 +128,7 @@ const Dashboard = () => {
             title="Afternoon Opening" 
             tasks={mockOpeningTasks}
             selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'}
+            hideTitle={true} // Hide the title since we've moved it above
           />
 
           <TaskListComponent 
