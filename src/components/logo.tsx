@@ -11,7 +11,7 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
       <img 
         src="/lovable-uploads/6c674d22-38fd-43df-b966-602348b2ef58.png" 
         alt="Another Day Logo"
-        className="h-8"
+        className="h-12 md:h-16" // Increased size for both mobile and desktop
       />
     </div>
   );
