@@ -26,6 +26,7 @@ interface TaskListProps {
   hideTitle?: boolean;
   displayForcedHorizontal?: boolean; 
   description?: string;
+  onUpdateTask?: (taskId: string, updatedTask: Partial<Task>) => void;
 }
 
 // Mock user data - in a real app this would come from an API/context
@@ -47,6 +48,7 @@ const TaskListComponent = ({
   hideTitle = false,
   displayForcedHorizontal = false,
   description,
+  onUpdateTask,
 }: TaskListProps) => {
   const [displayCompleted, setDisplayCompleted] = useState(showCompleted);
   const [localSelectedDepartment, setLocalSelectedDepartment] = useState(selectedDepartment);
@@ -213,6 +215,7 @@ const TaskListComponent = ({
                   isHorizontal={isHorizontalLayout}
                   // Pass the user name only for Team Tasks section
                   assignedUserName={title === "Team Tasks" ? getUserNameById(task.assignedTo) : undefined}
+                  onUpdateTask={onUpdateTask}
                 />
               ))}
             </div>

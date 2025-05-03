@@ -21,7 +21,7 @@ const EditTaskModal = ({ isOpen, onClose, onUpdateTask, task }: EditTaskModalPro
   const [taskType, setTaskType] = useState<TaskRecurrence>('repeating');
   const [taskName, setTaskName] = useState('');
   const [description, setDescription] = useState('');
-  const [department, setDepartment] = useState<Department | ''>('');
+  const [department, setDepartment] = useState<Department | undefined>(undefined);
   const [shift, setShift] = useState<string>('');
   const [daysOfWeek, setDaysOfWeek] = useState<number[]>([0]); // Sunday by default
   const [isQuantityTask, setIsQuantityTask] = useState(false);
@@ -34,7 +34,7 @@ const EditTaskModal = ({ isOpen, onClose, onUpdateTask, task }: EditTaskModalPro
       setTaskType(task.recurrence || 'repeating');
       setTaskName(task.name || '');
       setDescription(task.description || '');
-      setDepartment(task.department || '');
+      setDepartment(task.department);
       setShift(task.shift && task.shiftAction ? `${task.shift} | ${task.shiftAction}` : '');
       setDaysOfWeek(task.daysOfWeek || [0]);
       setIsQuantityTask(!!task.quantityRequired);
@@ -127,7 +127,10 @@ const EditTaskModal = ({ isOpen, onClose, onUpdateTask, task }: EditTaskModalPro
               className="h-24"
             />
 
-            <Select value={department} onValueChange={setDepartment as any}>
+            <Select 
+              value={department} 
+              onValueChange={(val) => setDepartment(val as Department)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Choose department" />
               </SelectTrigger>
