@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -13,6 +12,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Switch } from '@/components/ui/switch';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChefHat, Users, UsersRound, Package, Wine } from 'lucide-react';
 
 const UserDashboard = () => {
@@ -83,30 +83,24 @@ const UserDashboard = () => {
             </Select>
           </div>
           
-          {/* Department cards carousel - updated to match design */}
-          <div className="mb-6 relative">
-            <Carousel className="w-full" opts={{ align: 'start' }}>
-              <CarouselContent className="-ml-2 md:-ml-4">
+          {/* Department cards carousel - updated for horizontal sliding */}
+          <div className="mb-6">
+            <ScrollArea className="w-full pb-4" orientation="horizontal">
+              <div className="flex space-x-3 px-1">
                 {mockDepartmentProgress.map(dept => (
-                  <CarouselItem key={dept.department} className="pl-2 md:pl-4 basis-1/3 md:basis-1/4 lg:basis-1/5">
-                    <div className="p-0.5">
-                      <DepartmentCard 
-                        department={dept.department} 
-                        icon={getDepartmentIcon(dept.department)} 
-                        completed={dept.completed} 
-                        total={dept.total} 
-                        isSelected={dept.department === selectedDepartment} 
-                        onClick={() => setSelectedDepartment(dept.department)} 
-                      />
-                    </div>
-                  </CarouselItem>
+                  <div key={dept.department} className="flex-shrink-0" style={{ width: "160px" }}>
+                    <DepartmentCard 
+                      department={dept.department} 
+                      icon={getDepartmentIcon(dept.department)} 
+                      completed={dept.completed} 
+                      total={dept.total} 
+                      isSelected={dept.department === selectedDepartment} 
+                      onClick={() => setSelectedDepartment(dept.department)} 
+                    />
+                  </div>
                 ))}
-              </CarouselContent>
-              <div className="hidden sm:block">
-                <CarouselPrevious className="-left-5" />
-                <CarouselNext className="-right-5" />
               </div>
-            </Carousel>
+            </ScrollArea>
           </div>
           
           {/* Added a divider and a title to make the connection clearer */}
