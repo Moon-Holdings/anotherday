@@ -36,6 +36,18 @@ const Header = ({
     };
   }, []);
 
+  // Get greeting based on current time
+  const getGreeting = () => {
+    const hours = currentDateTime.getHours();
+    if (hours < 12) {
+      return 'Good morning';
+    } else if (hours < 18) {
+      return 'Good afternoon';
+    } else {
+      return 'Good evening';
+    }
+  };
+
   // Set active tab based on current route when component mounts or route changes
   useEffect(() => {
     const path = location.pathname.substring(1); // Remove leading slash
@@ -93,8 +105,6 @@ const Header = ({
           <p className="text-sm">{formattedDate}</p>
           <p className="text-sm">|</p>
           <p className="text-sm">{formattedTime}</p>
-          <p className="text-sm">|</p>
-          <p className="text-sm">Good afternoon, {userName}</p>
         </div>
         
         <div className="flex justify-center w-1/3">
@@ -102,7 +112,7 @@ const Header = ({
         </div>
         
         <div className="flex justify-end w-1/3">
-          {/* Shift selector dropdown removed */}
+          <p className="text-sm">{getGreeting()}, {userName}</p>
         </div>
       </div>
       
