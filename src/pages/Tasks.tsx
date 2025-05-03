@@ -29,7 +29,7 @@ const Tasks = () => {
     : tasks.filter(task => !task.isCompleted);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pb-20">
       <Header />
       
       <div className="container px-4 py-6">
@@ -107,7 +107,7 @@ const Tasks = () => {
         </Card>
       </div>
       
-      <div className="fixed bottom-6 right-6">
+      <div className="fixed bottom-20 right-6">
         <AddButton onClick={() => setIsAddTaskModalOpen(true)} />
       </div>
 

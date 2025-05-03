@@ -34,7 +34,7 @@ const Schedule = () => {
   });
 
   return (
-    <div className="min-h-screen bg-rootina-lightBlue">
+    <div className="min-h-screen bg-rootina-lightBlue pb-20">
       <Header />
       
       <div className="container px-4 py-6">
@@ -92,7 +92,7 @@ const Schedule = () => {
         </div>
       </div>
       
-      <div className="fixed bottom-6 right-6">
+      <div className="fixed bottom-20 right-6">
         <AddButton onClick={() => setIsAddTaskModalOpen(true)} />
       </div>
 
