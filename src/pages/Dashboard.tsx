@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -58,6 +59,18 @@ const Dashboard = () => {
     console.log('Adding new task:', newTask);
     // In a real app, we would add the task to our state or database
   };
+
+  // Filter tasks based on the selected department
+  const filteredOpeningTasks = mockOpeningTasks.filter(task => {
+    // First try exact department match
+    if (task.department === selectedDepartment) {
+      return true;
+    }
+    
+    // Then try mapped department name
+    const mappedDepartment = departmentToFilterMap[selectedDepartment];
+    return task.department === mappedDepartment;
+  });
   
   return <div className="min-h-screen bg-gray-50 pb-20">
       <Header userRole="owner" />
@@ -122,7 +135,7 @@ const Dashboard = () => {
             <div className={`${isMobile ? 'w-[800px]' : 'w-full'}`}>
               <TaskListComponent 
                 title="Afternoon Opening" 
-                tasks={mockOpeningTasks} 
+                tasks={filteredOpeningTasks.length > 0 ? filteredOpeningTasks : mockOpeningTasks.slice(0, 2)}
                 selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
                 hideTitle={true} 
                 displayForcedHorizontal={true}

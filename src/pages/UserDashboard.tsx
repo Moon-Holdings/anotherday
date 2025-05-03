@@ -85,6 +85,18 @@ const UserDashboard = () => {
     
     toast.success("Task updated successfully");
   };
+
+  // Filter tasks based on the selected department
+  const filteredOpeningTasks = openingTasks.filter(task => {
+    // First try exact department match
+    if (task.department === selectedDepartment) {
+      return true;
+    }
+    
+    // Then try mapped department name
+    const mappedDepartment = departmentToFilterMap[selectedDepartment];
+    return task.department === mappedDepartment;
+  });
   
   return <div className="min-h-screen bg-gray-50 pb-20">
       <Header />
@@ -149,7 +161,7 @@ const UserDashboard = () => {
             <div className={`${isMobile ? 'w-[800px]' : 'w-full'}`}>
               <TaskListComponent 
                 title="Afternoon Opening" 
-                tasks={openingTasks} 
+                tasks={filteredOpeningTasks.length > 0 ? filteredOpeningTasks : openingTasks.slice(0, 2)}
                 selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
                 hideTitle={true} 
                 displayForcedHorizontal={true}
