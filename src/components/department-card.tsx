@@ -43,16 +43,16 @@ const DepartmentCard = ({
   return (
     <div 
       className={`
-        bg-white rounded-lg p-4 shadow hover:shadow-md transition-all
-        ${isSelected ? 'border-2 border-rootina-teal' : ''}
+        bg-white rounded-lg p-3 shadow hover:shadow-md transition-all h-full
+        ${isSelected ? 'border-2 border-rootina-teal' : 'border border-gray-100'}
       `}
       onClick={onClick}
     >
-      <div className="flex flex-col items-center justify-center gap-2">
+      <div className="flex flex-col items-center justify-center gap-2 h-full">
         {icon}
         <div className="text-center">
-          <h3 className="font-medium">{formatDepartmentName(department)}</h3>
-          <p className="text-sm text-gray-600">{completed} / {total}</p>
+          <h3 className="font-medium text-sm">{formatDepartmentName(department)}</h3>
+          <p className="text-xs text-gray-600">{completed} / {total}</p>
         </div>
         <div className="w-full bg-gray-200 h-1 rounded-full mt-1">
           <div 

@@ -12,6 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent } from '@/components/ui/card';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Switch } from '@/components/ui/switch';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -105,8 +107,28 @@ const Dashboard = () => {
             </Select>
           </div>
           
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 sm:gap-4 mb-4">
-            {mockDepartmentProgress.map(dept => <DepartmentCard key={dept.department} department={dept.department} icon={getDepartmentIcon(dept.department)} completed={dept.completed} total={dept.total} isSelected={dept.department === selectedDepartment} onClick={() => setSelectedDepartment(dept.department)} />)}
+          {/* Replace grid with carousel for horizontal scrolling department cards */}
+          <div className="mb-4">
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {mockDepartmentProgress.map(dept => (
+                  <CarouselItem key={dept.department} className="pl-2 md:pl-4 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
+                    <DepartmentCard 
+                      department={dept.department} 
+                      icon={getDepartmentIcon(dept.department)} 
+                      completed={dept.completed} 
+                      total={dept.total} 
+                      isSelected={dept.department === selectedDepartment} 
+                      onClick={() => setSelectedDepartment(dept.department)} 
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="hidden sm:block">
+                <CarouselPrevious className="left-0" />
+                <CarouselNext className="right-0" />
+              </div>
+            </Carousel>
           </div>
           
           {/* Added a divider and a title to make the connection clearer */}
