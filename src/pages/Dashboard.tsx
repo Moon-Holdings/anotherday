@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -40,7 +41,7 @@ const Dashboard = () => {
     switch (department) {
       case 'floor':
         return <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 5H5v14h14V5z"></path>
               <path d="M21 8h-2"></path>
               <path d="M21 12h-2"></path>
@@ -54,7 +55,7 @@ const Dashboard = () => {
           </div>;
       case 'bar':
         return <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M8 22h8"></path>
               <path d="M12 11v11"></path>
               <path d="M18 2H6v6l6 3 6-3V2z"></path>
@@ -62,14 +63,14 @@ const Dashboard = () => {
           </div>;
       case 'kitchen':
         return <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"></path>
               <line x1="6" x2="18" y1="17" y2="17"></line>
             </svg>
           </div>;
       case 'takeaway':
         return <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect width="14" height="20" x="5" y="2" rx="2"></rect>
               <path d="M8 6h.01"></path>
               <path d="M16 6h.01"></path>
@@ -81,7 +82,7 @@ const Dashboard = () => {
           </div>;
       default:
         return <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
               <line x1="12" y1="6" x2="12" y2="18"></line>
             </svg>
@@ -118,12 +119,12 @@ const Dashboard = () => {
             </Select>
           </div>
           
-          {/* Department cards carousel with improved styling */}
+          {/* Department cards carousel with improved styling for smaller cards */}
           <div className="mb-6">
             <Carousel className="w-full">
-              <CarouselContent className="-ml-4">
+              <CarouselContent className="-ml-2">
                 {mockDepartmentProgress.map(dept => (
-                  <CarouselItem key={dept.department} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={dept.department} className="pl-2 md:basis-1/3 lg:basis-1/4">
                     <DepartmentCard 
                       department={dept.department} 
                       icon={getDepartmentIcon(dept.department)} 
@@ -136,8 +137,8 @@ const Dashboard = () => {
                 ))}
               </CarouselContent>
               <div className="hidden sm:block">
-                <CarouselPrevious className="-left-4" />
-                <CarouselNext className="-right-4" />
+                <CarouselPrevious className="-left-3" />
+                <CarouselNext className="-right-3" />
               </div>
             </Carousel>
           </div>

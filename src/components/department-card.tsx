@@ -43,22 +43,22 @@ const DepartmentCard = ({
   return (
     <div 
       className={`
-        bg-white rounded-lg p-6 shadow hover:shadow-md transition-all h-full
+        bg-white rounded-lg p-4 shadow hover:shadow-md transition-all h-full
         ${isSelected ? 'border-2 border-rootina-teal' : 'border border-gray-100'}
       `}
       onClick={onClick}
     >
-      <div className="flex flex-col items-center justify-center gap-3 h-full">
-        <div className="text-rootina-teal text-3xl">
+      <div className="flex flex-col items-center justify-center gap-2 h-full">
+        <div className="text-rootina-teal text-2xl">
           {icon}
         </div>
         <div className="text-center">
-          <h3 className="font-semibold text-lg">{formatDepartmentName(department)}</h3>
-          <p className="text-gray-600 text-xl mt-1 font-medium">{completed} / {total}</p>
+          <h3 className="font-semibold text-base">{formatDepartmentName(department)}</h3>
+          <p className="text-gray-600 text-sm mt-0.5 font-medium">{completed} / {total}</p>
         </div>
-        <div className="w-full bg-gray-200 h-2 rounded-full mt-2">
+        <div className="w-full bg-gray-200 h-1.5 rounded-full mt-1">
           <div 
-            className={`h-2 rounded-full ${progressColor}`}
+            className={`h-1.5 rounded-full ${progressColor}`}
             style={{ width: `${progressPercent}%` }}
           ></div>
         </div>
