@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -7,7 +6,7 @@ import TaskListComponent from '@/components/task-list';
 import AddButton from '@/components/add-button';
 import AddTaskModal from '@/components/add-task-modal';
 import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks, mockTeamTasks } from '@/data/mock-data';
-import { Task } from '@/types';
+import { Task, Role } from '@/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -17,7 +16,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChefHat, Users, UsersRound, Package, Wine } from 'lucide-react';
 
 // Mock user role - in a real app this would come from authentication context
-const userRole: 'owner' | 'manager' | 'chef' | 'waiter' | 'cook' | 'bartender' | 'kitchen-staff' = 'manager';
+const userRole: Role = 'manager';
 
 const Dashboard = () => {
   const navigate = useNavigate();
