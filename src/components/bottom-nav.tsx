@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 
 interface BottomNavProps {
-  userRole?: 'manager' | 'waiter' | 'chef' | 'cook' | 'bartender';
+  userRole?: 'owner' | 'manager' | 'waiter' | 'chef' | 'cook' | 'bartender';
 }
 
 const BottomNav = ({ userRole = 'manager' }: BottomNavProps) => {
@@ -17,6 +17,8 @@ const BottomNav = ({ userRole = 'manager' }: BottomNavProps) => {
     const path = location.pathname.substring(1); // Remove leading slash
     if (path === '') {
       setActiveTab('dashboard');
+    } else if (path === 'dashboard' || path === 'user-dashboard') {
+      setActiveTab('dashboard');
     } else if (path === 'restricted-tasks') {
       setActiveTab('tasks');
     } else if (path.length > 0) {
@@ -27,9 +29,10 @@ const BottomNav = ({ userRole = 'manager' }: BottomNavProps) => {
   }, [location.pathname]);
 
   // Define which tabs are accessible based on user role
-  const canAccessDashboard = ['manager', 'bartender'].includes(userRole);
-  const canAccessSchedule = ['manager', 'bartender'].includes(userRole);
-  const canAccessAdmin = userRole === 'manager';
+  const canAccessDashboard = ['owner', 'manager', 'bartender'].includes(userRole);
+  const canAccessSchedule = ['owner', 'manager', 'bartender'].includes(userRole);
+  const canAccessAdmin = userRole === 'owner' || userRole === 'manager';
+  const shouldUseOwnerDashboard = userRole === 'owner';
 
   const handleTabChange = (tab: string) => {
     // If user role is chef or cook, they can only access tasks
@@ -44,6 +47,13 @@ const BottomNav = ({ userRole = 'manager' }: BottomNavProps) => {
     // Navigate to appropriate route based on role
     if (tab === 'tasks' && ['chef', 'cook'].includes(userRole)) {
       navigate('/restricted-tasks');
+    } else if (tab === 'dashboard') {
+      // Send users to the appropriate dashboard based on role
+      if (shouldUseOwnerDashboard) {
+        navigate('/dashboard');
+      } else {
+        navigate('/user-dashboard');
+      }
     } else {
       navigate(`/${tab}`);
     }

@@ -6,17 +6,16 @@ import DepartmentCard from '@/components/department-card';
 import TaskListComponent from '@/components/task-list';
 import AddButton from '@/components/add-button';
 import AddTaskModal from '@/components/add-task-modal';
-import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks, mockTeamTasks } from '@/data/mock-data';
+import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks } from '@/data/mock-data';
 import { Task } from '@/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Switch } from '@/components/ui/switch';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChefHat, Users, UsersRound, Package, Wine } from 'lucide-react';
 
-const Dashboard = () => {
+const UserDashboard = () => {
   const navigate = useNavigate();
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const isMobile = useIsMobile();
@@ -61,7 +60,7 @@ const Dashboard = () => {
   };
   
   return <div className="min-h-screen bg-gray-50 pb-20">
-      <Header userRole="owner" />
+      <Header />
       
       <div className="container px-2 sm:px-4 py-4 sm:py-6">
         {/* Department Tasks Section */}
@@ -139,15 +138,7 @@ const Dashboard = () => {
           </div>
         </div>
         
-        <div className="space-y-4 sm:space-y-6">
-          <TaskListComponent 
-            title="Team Tasks" 
-            tasks={mockTeamTasks} 
-            description="Tasks assigned to team members under your management" 
-            filter={true} 
-            selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
-          />
-          
+        <div className="space-y-4 sm:space-y-6">          
           <TaskListComponent 
             title="Personal Tasks" 
             tasks={mockPersonalTasks} 
@@ -163,4 +154,5 @@ const Dashboard = () => {
       <AddTaskModal isOpen={isAddTaskModalOpen} onClose={() => setIsAddTaskModalOpen(false)} onAddTask={handleAddTask} />
     </div>;
 };
-export default Dashboard;
+
+export default UserDashboard;
