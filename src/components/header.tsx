@@ -101,18 +101,18 @@ const Header = ({
   return (
     <header className="bg-rootina-blue text-white">
       <div className="flex items-center justify-between p-4">
-        <div className="flex items-center space-x-2 w-1/3">
-          <p className="text-sm">{formattedDate}</p>
-          <p className="text-sm">|</p>
-          <p className="text-sm">{formattedTime}</p>
+        <div className="flex items-center space-x-2 w-1/3 justify-start">
+          <p className="text-sm">{getGreeting()}, {userName}</p>
         </div>
         
         <div className="flex justify-center w-1/3">
           <Logo className="h-8" />
         </div>
         
-        <div className="flex justify-end w-1/3">
-          <p className="text-sm">{getGreeting()}, {userName}</p>
+        <div className="flex justify-end w-1/3 items-center space-x-2">
+          <p className="text-sm">{formattedDate}</p>
+          <p className="text-sm">|</p>
+          <p className="text-sm">{formattedTime}</p>
         </div>
       </div>
       
