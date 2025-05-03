@@ -10,6 +10,7 @@ import AddButton from '@/components/add-button';
 import AddTaskModal from '@/components/add-task-modal';
 import { mockOpeningTasks } from '@/data/mock-data';
 import { Task } from '@/types';
+import { toast } from 'sonner';
 
 const Tasks = () => {
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
@@ -21,6 +22,16 @@ const Tasks = () => {
 
   const handleAddTask = (newTask: Task) => {
     setTasks([...tasks, newTask]);
+    toast.success("Task added successfully");
+  };
+  
+  const handleUpdateTask = (taskId: string, updatedTask: Partial<Task>) => {
+    setTasks(prevTasks => 
+      prevTasks.map(task => 
+        task.id === taskId ? { ...task, ...updatedTask } : task
+      )
+    );
+    toast.success("Task updated successfully");
   };
 
   // Filter tasks based on showCompleted state
@@ -101,7 +112,11 @@ const Tasks = () => {
         <Card className="shadow-sm">
           <div className="p-4">
             {filteredTasks.map((task) => (
-              <TaskItem key={task.id} task={task} />
+              <TaskItem 
+                key={task.id} 
+                task={task} 
+                onUpdateTask={handleUpdateTask}
+              />
             ))}
           </div>
         </Card>

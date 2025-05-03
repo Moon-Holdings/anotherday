@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -14,12 +15,15 @@ import { Switch } from '@/components/ui/switch';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChefHat, Users, UsersRound, Package, Wine } from 'lucide-react';
+import { toast } from 'sonner';
 
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const isMobile = useIsMobile();
   const [showCompletedDepartmentTasks, setShowCompletedDepartmentTasks] = useState(false);
+  const [openingTasks, setOpeningTasks] = useState<Task[]>(mockOpeningTasks);
+  const [personalTasks, setPersonalTasks] = useState<Task[]>(mockPersonalTasks);
 
   // Selected department state - map to department names correctly
   const [selectedDepartment, setSelectedDepartment] = useState(mockDepartmentProgress[0].department);
@@ -55,8 +59,31 @@ const UserDashboard = () => {
   };
   
   const handleAddTask = (newTask: Task) => {
-    console.log('Adding new task:', newTask);
     // In a real app, we would add the task to our state or database
+    if (newTask.type === 'personal') {
+      setPersonalTasks([...personalTasks, newTask]);
+    } else {
+      setOpeningTasks([...openingTasks, newTask]);
+    }
+    toast.success("Task added successfully");
+  };
+
+  const handleUpdateTask = (taskId: string, updatedTask: Partial<Task>) => {
+    // Update personal tasks
+    setPersonalTasks(prevTasks => 
+      prevTasks.map(task => 
+        task.id === taskId ? { ...task, ...updatedTask } : task
+      )
+    );
+    
+    // Update opening tasks
+    setOpeningTasks(prevTasks => 
+      prevTasks.map(task => 
+        task.id === taskId ? { ...task, ...updatedTask } : task
+      )
+    );
+    
+    toast.success("Task updated successfully");
   };
   
   return <div className="min-h-screen bg-gray-50 pb-20">
@@ -122,11 +149,12 @@ const UserDashboard = () => {
             <div className={`${isMobile ? 'w-[800px]' : 'w-full'}`}>
               <TaskListComponent 
                 title="Afternoon Opening" 
-                tasks={mockOpeningTasks} 
+                tasks={openingTasks} 
                 selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
                 hideTitle={true} 
                 displayForcedHorizontal={true}
                 showCompleted={showCompletedDepartmentTasks}
+                onUpdateTask={handleUpdateTask}
               />
             </div>
           </div>
@@ -135,8 +163,9 @@ const UserDashboard = () => {
         <div className="space-y-4 sm:space-y-6">          
           <TaskListComponent 
             title="Personal Tasks" 
-            tasks={mockPersonalTasks} 
+            tasks={personalTasks} 
             description="Your personal assigned tasks"
+            onUpdateTask={handleUpdateTask}
           />
         </div>
       </div>
