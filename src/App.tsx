@@ -8,7 +8,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import OwnerDashboard from "./pages/OwnerDashboard";
 import Tasks from "./pages/Tasks";
 import RestrictedTasks from "./pages/RestrictedTasks";
 import Schedule from "./pages/Schedule";
@@ -31,7 +30,6 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/owner-dashboard" element={<OwnerDashboard />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/restricted-tasks" element={<RestrictedTasks />} />
           <Route path="/schedule" element={<Schedule />} />
