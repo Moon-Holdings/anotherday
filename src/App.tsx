@@ -13,6 +13,10 @@ import RestrictedTasks from "./pages/RestrictedTasks";
 import Schedule from "./pages/Schedule";
 import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
+import Profile from "./pages/Profile";
+import Preferences from "./pages/Preferences";
+import Documentation from "./pages/Documentation";
+import Support from "./pages/Support";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +34,10 @@ const App = () => (
           <Route path="/restricted-tasks" element={<RestrictedTasks />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/preferences" element={<Preferences />} />
+          <Route path="/documentation" element={<Documentation />} />
+          <Route path="/support" element={<Support />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

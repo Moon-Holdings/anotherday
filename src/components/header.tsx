@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Logo from './logo';
 import BottomNav from './bottom-nav';
 import { UserRound } from 'lucide-react';
@@ -61,18 +62,26 @@ const Header = ({
                   <div className="space-y-4 mt-6">
                     <div className="border-b pb-2">
                       <h3 className="font-medium mb-2">Account</h3>
-                      <Button variant="ghost" className="w-full justify-start">Profile</Button>
-                      <Button variant="ghost" className="w-full justify-start">Preferences</Button>
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <Link to="/profile">Profile</Link>
+                      </Button>
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <Link to="/preferences">Preferences</Link>
+                      </Button>
                     </div>
                     
                     <div className="border-b pb-2">
                       <h3 className="font-medium mb-2">Help & Support</h3>
-                      <Button variant="ghost" className="w-full justify-start">Documentation</Button>
-                      <Button variant="ghost" className="w-full justify-start">Support</Button>
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <Link to="/documentation">Documentation</Link>
+                      </Button>
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <Link to="/support">Support</Link>
+                      </Button>
                     </div>
                     
-                    <Button variant="ghost" className="w-full justify-start text-destructive">
-                      Sign out
+                    <Button variant="ghost" className="w-full justify-start text-destructive" asChild>
+                      <Link to="/login">Sign out</Link>
                     </Button>
                   </div>
                 </div>
