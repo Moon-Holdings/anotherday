@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/components/header';
 import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -12,6 +12,21 @@ import { mockOpeningTasks } from '@/data/mock-data';
 import { Task } from '@/types';
 import { toast } from 'sonner';
 
+// Mock user data - in a real app this would come from an API/context
+const mockUserRoles = {
+  // User has 'manager' role and manages 'Waiters' and 'Bar' departments
+  roles: ['manager'],
+  managedDepartments: ['Waiters', 'Bar']
+};
+
+// Mock departments data - in a real app this would come from an API/context
+const mockDepartments = [
+  { id: '1', name: 'Waiters', managedBy: ['manager'] },
+  { id: '2', name: 'Bar', managedBy: ['manager', 'bartender'] },
+  { id: '3', name: 'Kitchen', managedBy: ['chef', 'kitchen-manager'] },
+  { id: '4', name: 'Managers', managedBy: ['admin'] }
+];
+
 const Tasks = () => {
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState('Sunday');
@@ -19,6 +34,26 @@ const Tasks = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('Waiters');
   const [showCompleted, setShowCompleted] = useState(true);
   const [tasks, setTasks] = useState<Task[]>(mockOpeningTasks);
+  const [availableDepartments, setAvailableDepartments] = useState<string[]>([]);
+
+  // Calculate available departments based on user roles
+  useEffect(() => {
+    // Filter departments that the user has access to
+    const userDepartments = mockDepartments.filter(dept => 
+      // User is in department management role
+      dept.managedBy.some(role => mockUserRoles.roles.includes(role)) ||
+      // Department is explicitly managed by user
+      mockUserRoles.managedDepartments.includes(dept.name)
+    ).map(dept => dept.name);
+
+    setAvailableDepartments(userDepartments);
+    
+    // If current selected department is not in available departments,
+    // select the first available one
+    if (userDepartments.length > 0 && !userDepartments.includes(selectedDepartment)) {
+      setSelectedDepartment(userDepartments[0]);
+    }
+  }, [selectedDepartment]);
 
   const handleAddTask = (newTask: Task) => {
     setTasks([...tasks, newTask]);
@@ -79,10 +114,11 @@ const Tasks = () => {
               <SelectValue placeholder="Select department" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Waiters">Waiters</SelectItem>
-              <SelectItem value="Bar">Bar</SelectItem>
-              <SelectItem value="Kitchen">Kitchen</SelectItem>
-              <SelectItem value="Managers">Managers</SelectItem>
+              {availableDepartments.map(department => (
+                <SelectItem key={department} value={department}>
+                  {department}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
