@@ -8,7 +8,7 @@ const Login = () => {
     <div className="w-full h-screen rootina-pattern-bg">
       <div className="container py-16 flex flex-col items-center">
         <div className="mb-8">
-          <Logo className="w-64" />
+          <Logo className="w-80" />
         </div>
         <LoginForm />
       </div>

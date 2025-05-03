@@ -29,9 +29,9 @@ const Header = ({
   return (
     <>
       <header className="bg-rootina-blue text-white">
-        <div className="flex items-center justify-between p-4">
+        <div className="flex items-center justify-between p-4 md:py-2">
           <div className="flex items-center">
-            <Logo className="h-12" />
+            <Logo className="h-16" />
           </div>
           
           <div className="flex items-center">
