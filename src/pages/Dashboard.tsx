@@ -11,11 +11,13 @@ import { Task } from '@/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Switch } from '@/components/ui/switch';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const isMobile = useIsMobile();
+  const [showCompletedDepartmentTasks, setShowCompletedDepartmentTasks] = useState(false);
 
   // Selected department state - map to department names correctly
   const [selectedDepartment, setSelectedDepartment] = useState(mockDepartmentProgress[0].department);
@@ -114,9 +116,10 @@ const Dashboard = () => {
             
             <div className="flex items-center space-x-2 text-xs sm:text-sm">
               <span className="text-gray-500">Show completed tasks</span>
-              <div className="h-4 w-8 bg-gray-200 rounded-full relative">
-                <div className="absolute right-1 top-1/2 transform -translate-y-1/2 h-3 w-3 rounded-full bg-white"></div>
-              </div>
+              <Switch 
+                checked={showCompletedDepartmentTasks} 
+                onCheckedChange={setShowCompletedDepartmentTasks}
+              />
             </div>
           </div>
           
@@ -129,6 +132,7 @@ const Dashboard = () => {
                 selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
                 hideTitle={true} 
                 displayForcedHorizontal={true}
+                showCompleted={showCompletedDepartmentTasks}
               />
             </div>
           </div>

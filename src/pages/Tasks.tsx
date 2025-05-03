@@ -23,6 +23,11 @@ const Tasks = () => {
     setTasks([...tasks, newTask]);
   };
 
+  // Filter tasks based on showCompleted state
+  const filteredTasks = showCompleted 
+    ? tasks 
+    : tasks.filter(task => !task.isCompleted);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -95,7 +100,7 @@ const Tasks = () => {
         
         <Card className="shadow-sm">
           <div className="p-4">
-            {tasks.filter(task => showCompleted || !task.isCompleted).map((task) => (
+            {filteredTasks.map((task) => (
               <TaskItem key={task.id} task={task} />
             ))}
           </div>
