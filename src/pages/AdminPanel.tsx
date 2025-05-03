@@ -3,6 +3,7 @@ import Header from '@/components/header';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import UserManagement from '@/components/admin/user-management';
 import RoleManagement from '@/components/admin/role-management';
+import ListManagement from '@/components/admin/list-management';
 
 const AdminPanel = () => {
   return (
@@ -16,6 +17,7 @@ const AdminPanel = () => {
           <TabsList className="mb-4">
             <TabsTrigger value="users">Users</TabsTrigger>
             <TabsTrigger value="roles">Roles & Permissions</TabsTrigger>
+            <TabsTrigger value="lists">Lists & Departments</TabsTrigger>
           </TabsList>
           
           <TabsContent value="users">
@@ -24,6 +26,10 @@ const AdminPanel = () => {
           
           <TabsContent value="roles">
             <RoleManagement />
+          </TabsContent>
+          
+          <TabsContent value="lists">
+            <ListManagement />
           </TabsContent>
         </Tabs>
       </div>
