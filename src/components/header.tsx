@@ -19,7 +19,7 @@ interface HeaderProps {
   currentShift?: string;
   shiftAction?: string;
   onShiftChange?: (shift: string, action: string) => void;
-  userRole?: 'manager' | 'waiter' | 'chef' | 'cook' | 'bartender';
+  userRole?: 'owner' | 'manager' | 'waiter' | 'chef' | 'cook' | 'bartender';
 }
 
 const Header = ({
@@ -28,7 +28,7 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <>
-      <header className="bg-rootina-blue text-white">
+      <header className="bg-black text-white">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center">
             <Logo className="h-8" />
@@ -37,7 +37,7 @@ const Header = ({
           <div className="flex items-center">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" className="text-white hover:bg-rootina-blue/80 p-2">
+                <Button variant="ghost" className="text-white hover:bg-gray-800/80 p-2">
                   <UserRound className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
@@ -50,7 +50,7 @@ const Header = ({
                 </SheetHeader>
                 <div className="py-4">
                   <div className="flex items-center space-x-2 mb-4">
-                    <div className="h-10 w-10 rounded-full bg-rootina-blue flex items-center justify-center text-white">
+                    <div className="h-10 w-10 rounded-full bg-black flex items-center justify-center text-white">
                       {userName.charAt(0).toUpperCase()}
                     </div>
                     <div>

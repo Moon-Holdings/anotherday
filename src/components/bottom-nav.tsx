@@ -67,7 +67,7 @@ const BottomNav = ({ userRole = 'manager' }: BottomNavProps) => {
             onClick={() => handleTabChange('schedule')} 
             className={cn(
               "flex flex-col items-center justify-center py-2 px-4 w-1/4",
-              activeTab === 'schedule' ? 'text-rootina-teal' : 'text-gray-500'
+              activeTab === 'schedule' ? 'text-teal-500' : 'text-gray-500'
             )}
           >
             <CalendarDays size={24} />
@@ -79,7 +79,7 @@ const BottomNav = ({ userRole = 'manager' }: BottomNavProps) => {
           onClick={() => handleTabChange('tasks')} 
           className={cn(
             "flex flex-col items-center justify-center py-2 px-4 w-1/4",
-            activeTab === 'tasks' ? 'text-rootina-teal' : 'text-gray-500'
+            activeTab === 'tasks' ? 'text-teal-500' : 'text-gray-500'
           )}
         >
           <ListTodo size={24} />
@@ -91,7 +91,7 @@ const BottomNav = ({ userRole = 'manager' }: BottomNavProps) => {
             onClick={() => handleTabChange('dashboard')} 
             className={cn(
               "flex flex-col items-center justify-center py-2 px-4 w-1/4",
-              activeTab === 'dashboard' ? 'text-rootina-teal' : 'text-gray-500'
+              activeTab === 'dashboard' ? 'text-teal-500' : 'text-gray-500'
             )}
           >
             <LayoutDashboard size={24} />
@@ -104,7 +104,7 @@ const BottomNav = ({ userRole = 'manager' }: BottomNavProps) => {
             onClick={() => handleTabChange('admin')} 
             className={cn(
               "flex flex-col items-center justify-center py-2 px-4 w-1/4",
-              activeTab === 'admin' ? 'text-rootina-teal' : 'text-gray-500'
+              activeTab === 'admin' ? 'text-teal-500' : 'text-gray-500'
             )}
           >
             <Settings size={24} />

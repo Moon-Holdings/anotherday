@@ -9,8 +9,8 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
   return (
     <div className={`${className}`}>
       <img 
-        src="/lovable-uploads/06fdb487-9c9d-406e-9541-799f1b4833b9.png" 
-        alt="Rootina Logo"
+        src="/lovable-uploads/6c674d22-38fd-43df-b966-602348b2ef58.png" 
+        alt="Another Day Logo"
         className="h-8"
       />
     </div>
