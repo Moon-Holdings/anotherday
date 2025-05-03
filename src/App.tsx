@@ -18,6 +18,9 @@ import Profile from "./pages/Profile";
 import Preferences from "./pages/Preferences";
 import Documentation from "./pages/Documentation";
 import Support from "./pages/Support";
+import Welcome from "./pages/Welcome";
+import SignUp from "./pages/SignUp";
+import CreateOrganization from "./pages/CreateOrganization";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +32,9 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/create-organization" element={<CreateOrganization />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/user-dashboard" element={<UserDashboard />} />

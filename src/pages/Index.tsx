@@ -2,8 +2,8 @@
 import { Navigate } from "react-router-dom";
 
 const Index = () => {
-  // Redirect to login page
-  return <Navigate to="/login" replace />;
+  // Redirect to welcome page
+  return <Navigate to="/welcome" replace />;
 };
 
 export default Index;
