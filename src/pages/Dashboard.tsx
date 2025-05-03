@@ -16,6 +16,9 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChefHat, Users, UsersRound, Package, Wine } from 'lucide-react';
 
+// Mock user role - in a real app this would come from authentication context
+const userRole: 'owner' | 'manager' | 'chef' | 'waiter' | 'cook' | 'bartender' | 'kitchen-staff' = 'manager';
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
@@ -140,13 +143,16 @@ const Dashboard = () => {
         </div>
         
         <div className="space-y-4 sm:space-y-6">
-          <TaskListComponent 
-            title="Team Tasks" 
-            tasks={mockTeamTasks} 
-            description="Tasks assigned to team members under your management" 
-            filter={true} 
-            selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
-          />
+          {/* Only show Team Tasks to owner role */}
+          {userRole === 'owner' && (
+            <TaskListComponent 
+              title="Team Tasks" 
+              tasks={mockTeamTasks} 
+              description="Tasks assigned to team members under your management" 
+              filter={true} 
+              selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
+            />
+          )}
           
           <TaskListComponent 
             title="Personal Tasks" 
