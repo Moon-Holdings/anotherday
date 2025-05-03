@@ -59,28 +59,30 @@ const DepartmentCard = ({
   return (
     <div 
       className={`
-        bg-white rounded-lg p-4 shadow-sm transition-all aspect-square w-full
+        bg-white rounded-lg p-3 shadow-sm transition-all aspect-[1.5/1] w-full
         ${isSelected ? 'border-2 border-rootina-teal bg-[#F2FCE2]' : 'border border-gray-100'}
       `}
       onClick={onClick}
     >
-      <div className="flex flex-col items-center justify-center h-full gap-2">
-        <div className="text-gray-800 mb-1">
+      <div className="flex items-center h-full">
+        <div className="text-gray-800 mr-3">
           {icon}
         </div>
-        <h3 className="font-medium text-base text-center">
-          {formatDepartmentName(department)}
-        </h3>
-        <div className="flex items-baseline justify-center gap-1 text-sm">
-          {getCompletedCountWithColor()}
-          <span className="text-gray-500">/ {total}</span>
-        </div>
-        <div className="w-full mt-1">
-          <div className="h-1.5 bg-gray-200 rounded-full w-full">
-            <div 
-              className={`h-1.5 rounded-full ${progressColor}`}
-              style={{ width: `${progressPercent}%` }}
-            ></div>
+        <div className="flex-1">
+          <h3 className="font-medium text-sm">
+            {formatDepartmentName(department)}
+          </h3>
+          <div className="flex items-baseline gap-1 text-xs mt-1">
+            {getCompletedCountWithColor()}
+            <span className="text-gray-500">/ {total}</span>
+          </div>
+          <div className="w-full mt-1">
+            <div className="h-1.5 bg-gray-200 rounded-full w-full">
+              <div 
+                className={`h-1.5 rounded-full ${progressColor}`}
+                style={{ width: `${progressPercent}%` }}
+              ></div>
+            </div>
           </div>
         </div>
       </div>
