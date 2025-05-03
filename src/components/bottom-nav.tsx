@@ -50,7 +50,7 @@ const BottomNav = ({ userRole = 'manager' }: BottomNavProps) => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+    <div className="fixed bottom-4 left-4 right-4 bg-white rounded-lg border border-gray-200 shadow-md z-50">
       <div className="flex justify-around items-center">
         {canAccessSchedule && (
           <button 
