@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from './logo';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface HeaderProps {
   userName?: string;
@@ -23,7 +22,6 @@ const Header = ({
 }: HeaderProps) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
@@ -102,19 +100,19 @@ const Header = ({
 
   return (
     <header className="bg-rootina-blue text-white">
-      <div className={`flex items-center justify-between p-2 sm:p-4 ${isMobile ? 'flex-wrap' : ''}`}>
-        <div className={`flex items-center space-x-2 ${isMobile ? 'w-1/2' : 'w-1/3'}`}>
-          <p className="text-xs sm:text-sm">{formattedDate}</p>
-          <p className="text-xs sm:text-sm">|</p>
-          <p className="text-xs sm:text-sm">{formattedTime}</p>
+      <div className="flex items-center justify-between p-4">
+        <div className="flex items-center space-x-2 w-1/3">
+          <p className="text-sm">{formattedDate}</p>
+          <p className="text-sm">|</p>
+          <p className="text-sm">{formattedTime}</p>
         </div>
         
-        <div className={`flex justify-center ${isMobile ? 'w-1/2' : 'w-1/3'}`}>
-          <Logo className="h-6 sm:h-8" />
+        <div className="flex justify-center w-1/3">
+          <Logo className="h-8" />
         </div>
         
-        <div className={`flex justify-end ${isMobile ? 'w-full mt-2' : 'w-1/3'}`}>
-          <p className="text-xs sm:text-sm">{getGreeting()}, {userName}</p>
+        <div className="flex justify-end w-1/3">
+          <p className="text-sm">{getGreeting()}, {userName}</p>
         </div>
       </div>
       
@@ -122,7 +120,7 @@ const Header = ({
         {canAccessSchedule && (
           <Button 
             variant="ghost" 
-            className={`flex-1 py-2 sm:py-3 text-xs sm:text-sm rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${
+            className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${
               activeTab === 'schedule' 
                 ? 'border-b-2 border-rootina-teal text-rootina-teal' 
                 : ''
@@ -135,7 +133,7 @@ const Header = ({
         
         <Button 
           variant="ghost" 
-          className={`flex-1 py-2 sm:py-3 text-xs sm:text-sm rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${
+          className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${
             activeTab === 'tasks' 
               ? 'border-b-2 border-rootina-teal text-rootina-teal' 
               : ''
@@ -148,7 +146,7 @@ const Header = ({
         {canAccessDashboard && (
           <Button 
             variant="ghost" 
-            className={`flex-1 py-2 sm:py-3 text-xs sm:text-sm rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${
+            className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${
               activeTab === 'dashboard' 
                 ? 'border-b-2 border-rootina-teal text-rootina-teal' 
                 : ''
@@ -162,7 +160,7 @@ const Header = ({
         {canAccessAdmin && (
           <Button 
             variant="ghost" 
-            className={`flex-1 py-2 sm:py-3 text-xs sm:text-sm rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${
+            className={`flex-1 py-3 rounded-none text-white hover:bg-rootina-blue hover:bg-opacity-80 ${
               activeTab === 'admin' 
                 ? 'border-b-2 border-rootina-teal text-rootina-teal' 
                 : ''

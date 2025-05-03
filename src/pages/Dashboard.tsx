@@ -41,17 +41,17 @@ const Dashboard = () => {
   const getDepartmentIcon = (department: string) => {
     switch (department) {
       case 'floor':
-        return <Users size={isMobile ? 28 : 36} strokeWidth={1.5} />;
+        return <Users size={36} strokeWidth={1.5} />;
       case 'bar':
-        return <Wine size={isMobile ? 28 : 36} strokeWidth={1.5} />;
+        return <Wine size={36} strokeWidth={1.5} />;
       case 'kitchen':
-        return <ChefHat size={isMobile ? 28 : 36} strokeWidth={1.5} />;
+        return <ChefHat size={36} strokeWidth={1.5} />;
       case 'takeaway':
-        return <Package size={isMobile ? 28 : 36} strokeWidth={1.5} />;
+        return <Package size={36} strokeWidth={1.5} />;
       case 'management':
-        return <UsersRound size={isMobile ? 28 : 36} strokeWidth={1.5} />;
+        return <UsersRound size={36} strokeWidth={1.5} />;
       default:
-        return <div className={`w-${isMobile ? '7' : '9'} h-${isMobile ? '7' : '9'}`} />;
+        return <div className="w-9 h-9" />;
     }
   };
   
@@ -66,8 +66,8 @@ const Dashboard = () => {
       <div className="container px-2 sm:px-4 py-4 sm:py-6">
         {/* Department Tasks Section */}
         <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm mb-4 sm:mb-6">
-          {/* Shift selector title and dropdown adjusted for mobile */}
-          <div className={`flex flex-col space-y-2 sm:flex-row sm:items-center sm:space-y-0 mb-4`}>
+          {/* Afternoon Opening title and dropdown adjusted for mobile */}
+          <div className={`${isMobile ? 'flex flex-col space-y-2' : 'flex items-center'} mb-4`}>
             <h2 className={`text-lg font-medium ${!isMobile && 'mr-4'}`}>Departments Tasks</h2>
             <Select value={selectedShift} onValueChange={setSelectedShift}>
               <SelectTrigger className={`${isMobile ? 'w-full' : 'w-64'} h-8 text-sm`}>
@@ -84,12 +84,12 @@ const Dashboard = () => {
             </Select>
           </div>
           
-          {/* Department cards carousel - optimized for mobile */}
+          {/* Department cards carousel - updated to match design */}
           <div className="mb-6 relative">
-            <Carousel className="w-full" opts={{ align: 'start', dragFree: true }}>
+            <Carousel className="w-full" opts={{ align: 'start' }}>
               <CarouselContent className="-ml-2 md:-ml-4">
                 {mockDepartmentProgress.map(dept => (
-                  <CarouselItem key={dept.department} className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
+                  <CarouselItem key={dept.department} className="pl-2 md:pl-4 basis-1/3 md:basis-1/4 lg:basis-1/5">
                     <div className="p-0.5">
                       <DepartmentCard 
                         department={dept.department} 
@@ -97,7 +97,7 @@ const Dashboard = () => {
                         completed={dept.completed} 
                         total={dept.total} 
                         isSelected={dept.department === selectedDepartment} 
-                        onClick={() => setSelectedDepartment(dept.department)}
+                        onClick={() => setSelectedDepartment(dept.department)} 
                       />
                     </div>
                   </CarouselItem>
@@ -124,9 +124,9 @@ const Dashboard = () => {
             </div>
           </div>
           
-          {/* Responsive task list for mobile */}
-          <ScrollArea className="w-full overflow-hidden">
-            <div className="min-w-full pb-2">
+          {/* The horizontal task list is now clearly part of the department tasks section */}
+          <div className="overflow-x-auto -mx-3 px-3 pb-2">
+            <div className={`${isMobile ? 'w-[800px]' : 'w-full'}`}>
               <TaskListComponent 
                 title="Afternoon Opening" 
                 tasks={mockOpeningTasks} 
@@ -136,7 +136,7 @@ const Dashboard = () => {
                 showCompleted={showCompletedDepartmentTasks}
               />
             </div>
-          </ScrollArea>
+          </div>
         </div>
         
         <div className="space-y-4 sm:space-y-6">
