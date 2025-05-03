@@ -60,7 +60,7 @@ const Dashboard = () => {
     // In a real app, we would add the task to our state or database
   };
   
-  return <div className="min-h-screen bg-gray-50 pb-20">
+  return <div className="min-h-screen bg-gray-50 pb-28">
       <Header />
       
       <div className="container px-2 sm:px-4 py-4 sm:py-6">
@@ -156,7 +156,7 @@ const Dashboard = () => {
         </div>
       </div>
       
-      <div className="fixed bottom-20 right-4 sm:right-6">
+      <div className="fixed bottom-40 right-4 sm:right-6">
         <AddButton onClick={() => setIsAddTaskModalOpen(true)} />
       </div>
 
