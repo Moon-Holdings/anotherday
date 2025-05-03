@@ -14,6 +14,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Switch } from '@/components/ui/switch';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { ChefHat, Users, UsersRound, Package, Wine } from 'lucide-react';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -40,53 +41,17 @@ const Dashboard = () => {
   const getDepartmentIcon = (department: string) => {
     switch (department) {
       case 'floor':
-        return <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 5H5v14h14V5z"></path>
-              <path d="M21 8h-2"></path>
-              <path d="M21 12h-2"></path>
-              <path d="M21 16h-2"></path>
-              <path d="M5 8H3"></path>
-              <path d="M5 12H3"></path>
-              <path d="M5 16H3"></path>
-              <path d="M12 3v2"></path>
-              <path d="M12 19v2"></path>
-            </svg>
-          </div>;
+        return <Users size={36} strokeWidth={1.5} />;
       case 'bar':
-        return <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M8 22h8"></path>
-              <path d="M12 11v11"></path>
-              <path d="M18 2H6v6l6 3 6-3V2z"></path>
-            </svg>
-          </div>;
+        return <Wine size={36} strokeWidth={1.5} />;
       case 'kitchen':
-        return <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"></path>
-              <line x1="6" x2="18" y1="17" y2="17"></line>
-            </svg>
-          </div>;
+        return <ChefHat size={36} strokeWidth={1.5} />;
       case 'takeaway':
-        return <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect width="14" height="20" x="5" y="2" rx="2"></rect>
-              <path d="M8 6h.01"></path>
-              <path d="M16 6h.01"></path>
-              <path d="M8 10h.01"></path>
-              <path d="M16 10h.01"></path>
-              <path d="M8 14h.01"></path>
-              <path d="M16 14h.01"></path>
-            </svg>
-          </div>;
+        return <Package size={36} strokeWidth={1.5} />;
+      case 'management':
+        return <UsersRound size={36} strokeWidth={1.5} />;
       default:
-        return <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
-              <line x1="12" y1="6" x2="12" y2="18"></line>
-            </svg>
-          </div>;
+        return <div className="w-9 h-9" />;
     }
   };
   
@@ -99,7 +64,7 @@ const Dashboard = () => {
       <Header />
       
       <div className="container px-2 sm:px-4 py-4 sm:py-6">
-        {/* Department Tasks Section - Added a container with a light background to visually group it */}
+        {/* Department Tasks Section */}
         <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm mb-4 sm:mb-6">
           {/* Afternoon Opening title and dropdown adjusted for mobile */}
           <div className={`${isMobile ? 'flex flex-col space-y-2' : 'flex items-center'} mb-4`}>
@@ -119,26 +84,28 @@ const Dashboard = () => {
             </Select>
           </div>
           
-          {/* Department cards carousel with improved styling for smaller cards */}
-          <div className="mb-6">
-            <Carousel className="w-full">
-              <CarouselContent className="-ml-2">
+          {/* Department cards carousel - updated to match design */}
+          <div className="mb-6 relative">
+            <Carousel className="w-full" opts={{ align: 'start' }}>
+              <CarouselContent className="-ml-2 md:-ml-4">
                 {mockDepartmentProgress.map(dept => (
-                  <CarouselItem key={dept.department} className="pl-2 md:basis-1/3 lg:basis-1/4">
-                    <DepartmentCard 
-                      department={dept.department} 
-                      icon={getDepartmentIcon(dept.department)} 
-                      completed={dept.completed} 
-                      total={dept.total} 
-                      isSelected={dept.department === selectedDepartment} 
-                      onClick={() => setSelectedDepartment(dept.department)} 
-                    />
+                  <CarouselItem key={dept.department} className="pl-2 md:pl-4 basis-1/3 md:basis-1/4 lg:basis-1/5">
+                    <div className="p-0.5">
+                      <DepartmentCard 
+                        department={dept.department} 
+                        icon={getDepartmentIcon(dept.department)} 
+                        completed={dept.completed} 
+                        total={dept.total} 
+                        isSelected={dept.department === selectedDepartment} 
+                        onClick={() => setSelectedDepartment(dept.department)} 
+                      />
+                    </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
               <div className="hidden sm:block">
-                <CarouselPrevious className="-left-3" />
-                <CarouselNext className="-right-3" />
+                <CarouselPrevious className="-left-5" />
+                <CarouselNext className="-right-5" />
               </div>
             </Carousel>
           </div>

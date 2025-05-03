@@ -1,5 +1,6 @@
 
 import { Department } from '@/types';
+import { Progress } from "@/components/ui/progress";
 
 interface DepartmentCardProps {
   department: Department;
@@ -25,14 +26,18 @@ const DepartmentCard = ({
         return 'Service Kitchen';
       case 'prep-kitchen':
         return 'Prep Kitchen';
+      case 'floor':
+        return 'Waiters';
       default:
         return name.charAt(0).toUpperCase() + name.slice(1);
     }
   };
 
-  // Determine progress color
-  let progressColor = 'bg-rootina-green';
+  // Calculate progress percentage
   const progressPercent = (completed / total) * 100;
+  
+  // Determine progress color based on percentage
+  let progressColor = 'bg-rootina-green';
   
   if (progressPercent < 33) {
     progressColor = 'bg-rootina-red';
@@ -40,27 +45,43 @@ const DepartmentCard = ({
     progressColor = 'bg-rootina-yellow';
   }
   
+  // Format the completed count with color
+  const getCompletedCountWithColor = () => {
+    if (progressPercent < 33) {
+      return <span className="text-rootina-red font-semibold">{completed}</span>;
+    } else if (progressPercent < 66) {
+      return <span className="text-rootina-yellow font-semibold">{completed}</span>;
+    } else {
+      return <span className="text-rootina-green font-semibold">{completed}</span>;
+    }
+  };
+
   return (
     <div 
       className={`
-        bg-white rounded-lg p-4 shadow hover:shadow-md transition-all h-full
-        ${isSelected ? 'border-2 border-rootina-teal' : 'border border-gray-100'}
+        bg-white rounded-lg p-4 shadow-sm transition-all aspect-square w-full
+        ${isSelected ? 'border-2 border-rootina-teal bg-[#F2FCE2]' : 'border border-gray-100'}
       `}
       onClick={onClick}
     >
-      <div className="flex flex-col items-center justify-center gap-2 h-full">
-        <div className="text-rootina-teal text-2xl">
+      <div className="flex flex-col items-center justify-center h-full gap-2">
+        <div className="text-gray-800 mb-1">
           {icon}
         </div>
-        <div className="text-center">
-          <h3 className="font-semibold text-base">{formatDepartmentName(department)}</h3>
-          <p className="text-gray-600 text-sm mt-0.5 font-medium">{completed} / {total}</p>
+        <h3 className="font-medium text-base text-center">
+          {formatDepartmentName(department)}
+        </h3>
+        <div className="flex items-baseline justify-center gap-1 text-sm">
+          {getCompletedCountWithColor()}
+          <span className="text-gray-500">/ {total}</span>
         </div>
-        <div className="w-full bg-gray-200 h-1.5 rounded-full mt-1">
-          <div 
-            className={`h-1.5 rounded-full ${progressColor}`}
-            style={{ width: `${progressPercent}%` }}
-          ></div>
+        <div className="w-full mt-1">
+          <div className="h-1.5 bg-gray-200 rounded-full w-full">
+            <div 
+              className={`h-1.5 rounded-full ${progressColor}`}
+              style={{ width: `${progressPercent}%` }}
+            ></div>
+          </div>
         </div>
       </div>
     </div>
