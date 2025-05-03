@@ -1,9 +1,17 @@
 
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import Logo from './logo';
-import { format } from 'date-fns';
 import BottomNav from './bottom-nav';
+import { UserRound } from 'lucide-react';
+import { 
+  Sheet, 
+  SheetContent, 
+  SheetDescription, 
+  SheetHeader, 
+  SheetTitle, 
+  SheetTrigger 
+} from './ui/sheet';
+import { Button } from './ui/button';
 
 interface HeaderProps {
   userName?: string;
@@ -15,56 +23,61 @@ interface HeaderProps {
 
 const Header = ({
   userName = 'Brandon',
-  currentShift = 'Afternoon Shift',
-  shiftAction = 'Opening',
-  onShiftChange,
   userRole = 'manager' // Default role is manager
 }: HeaderProps) => {
-  const [currentDateTime, setCurrentDateTime] = useState(new Date());
-
-  // Update the time every second
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentDateTime(new Date());
-    }, 1000);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-
-  // Get greeting based on current time
-  const getGreeting = () => {
-    const hours = currentDateTime.getHours();
-    if (hours < 12) {
-      return 'Good morning';
-    } else if (hours < 18) {
-      return 'Good afternoon';
-    } else {
-      return 'Good evening';
-    }
-  };
-
-  // Format current date and time
-  const formattedDate = format(currentDateTime, 'dd.MM.yy');
-  const formattedTime = format(currentDateTime, 'HH:mm:ss');
-
   return (
     <>
       <header className="bg-rootina-blue text-white">
         <div className="flex items-center justify-between p-4">
-          <div className="flex items-center space-x-2 w-1/3 justify-start">
-            <p className="text-sm">{getGreeting()}, {userName}</p>
-          </div>
-          
-          <div className="flex justify-center w-1/3">
+          <div className="flex items-center">
             <Logo className="h-8" />
           </div>
           
-          <div className="flex justify-end w-1/3 items-center space-x-2">
-            <p className="text-sm">{formattedDate}</p>
-            <p className="text-sm">|</p>
-            <p className="text-sm">{formattedTime}</p>
+          <div className="flex items-center">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" className="text-white hover:bg-rootina-blue/80 p-2">
+                  <UserRound className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Settings</SheetTitle>
+                  <SheetDescription>
+                    Manage your account and preferences
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="py-4">
+                  <div className="flex items-center space-x-2 mb-4">
+                    <div className="h-10 w-10 rounded-full bg-rootina-blue flex items-center justify-center text-white">
+                      {userName.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <p className="font-medium">{userName}</p>
+                      <p className="text-sm text-muted-foreground capitalize">{userRole}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4 mt-6">
+                    <div className="border-b pb-2">
+                      <h3 className="font-medium mb-2">Account</h3>
+                      <Button variant="ghost" className="w-full justify-start">Profile</Button>
+                      <Button variant="ghost" className="w-full justify-start">Preferences</Button>
+                    </div>
+                    
+                    <div className="border-b pb-2">
+                      <h3 className="font-medium mb-2">Help & Support</h3>
+                      <Button variant="ghost" className="w-full justify-start">Documentation</Button>
+                      <Button variant="ghost" className="w-full justify-start">Support</Button>
+                    </div>
+                    
+                    <Button variant="ghost" className="w-full justify-start text-destructive">
+                      Sign out
+                    </Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </header>

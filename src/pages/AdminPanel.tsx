@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import Header from '@/components/header';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import UserManagement from '@/components/admin/user-management';
