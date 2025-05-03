@@ -12,6 +12,14 @@ import { Mail, Phone, MessageSquare } from 'lucide-react';
 const Support = () => {
   const [issueCategory, setIssueCategory] = useState('');
   
+  // Function to switch to the contact tab
+  const switchToContactTab = () => {
+    const contactTab = document.querySelector('[data-value="contact"]') as HTMLElement;
+    if (contactTab) {
+      contactTab.click();
+    }
+  };
+  
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       <Header />
@@ -171,7 +179,7 @@ const Support = () => {
                 
                 <div>
                   <h3 className="text-lg font-medium mb-3">Didn't find your answer?</h3>
-                  <Button onClick={() => document.querySelector('[data-value="contact"]')?.click()}>
+                  <Button onClick={switchToContactTab}>
                     Contact Support
                   </Button>
                 </div>
