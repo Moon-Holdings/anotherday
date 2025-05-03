@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Department, ShiftType, ShiftAction, TaskRecurrence, Task } from '@/types';
+import { toast } from 'sonner';
 
 interface EditTaskModalProps {
   isOpen: boolean;
@@ -27,6 +28,7 @@ const EditTaskModal = ({ isOpen, onClose, onUpdateTask, task }: EditTaskModalPro
   const [isQuantityTask, setIsQuantityTask] = useState(false);
   const [isPhotoTask, setIsPhotoTask] = useState(false);
   const [quantity, setQuantity] = useState(0);
+  const [deadlineHour, setDeadlineHour] = useState<string>('');
 
   // Populate form with task data when it changes
   useEffect(() => {
@@ -40,18 +42,24 @@ const EditTaskModal = ({ isOpen, onClose, onUpdateTask, task }: EditTaskModalPro
       setIsQuantityTask(!!task.quantityRequired);
       setIsPhotoTask(task.completionMethod?.includes('photo') || false);
       setQuantity(task.quantityOnHand || 0);
+      setDeadlineHour(''); // Reset deadline hour as it's optional
     }
   }, [task]);
 
   const handleSubmit = () => {
-    if (!task || !taskName) return;
+    if (!task || !taskName) {
+      toast.error("Task name is required");
+      return;
+    }
     
+    const [shiftType, shiftAction] = shift.split('|').map(s => s.trim());
+
     const updatedTask: Partial<Task> = {
       name: taskName,
       description,
       department,
-      shift: shift.split('|')[0].trim() as ShiftType,
-      shiftAction: shift.split('|')[1].trim() as ShiftAction,
+      shift: shiftType as ShiftType,
+      shiftAction: shiftAction as ShiftAction,
       daysOfWeek,
       recurrence: taskType,
       completionMethod: isPhotoTask 
@@ -62,6 +70,7 @@ const EditTaskModal = ({ isOpen, onClose, onUpdateTask, task }: EditTaskModalPro
     };
     
     onUpdateTask(task.id, updatedTask);
+    toast.success("Task updated successfully!");
     onClose();
   };
 
@@ -168,6 +177,7 @@ const EditTaskModal = ({ isOpen, onClose, onUpdateTask, task }: EditTaskModalPro
                   <div key={day} className="flex flex-col items-center">
                     <span className="text-xs mb-1">{day}</span>
                     <Checkbox 
+                      id={`day-${index}`}
                       checked={daysOfWeek.includes(index)}
                       onCheckedChange={() => handleDayToggle(index)}
                     />
@@ -210,7 +220,7 @@ const EditTaskModal = ({ isOpen, onClose, onUpdateTask, task }: EditTaskModalPro
                 <Checkbox 
                   id="quantity-task" 
                   checked={isQuantityTask}
-                  onCheckedChange={(checked) => setIsQuantityTask(checked as boolean)}
+                  onCheckedChange={(checked) => setIsQuantityTask(checked === true)}
                 />
                 <Label htmlFor="quantity-task">Quantity task</Label>
               </div>
@@ -219,7 +229,7 @@ const EditTaskModal = ({ isOpen, onClose, onUpdateTask, task }: EditTaskModalPro
                 <Checkbox 
                   id="photo-task" 
                   checked={isPhotoTask}
-                  onCheckedChange={(checked) => setIsPhotoTask(checked as boolean)}
+                  onCheckedChange={(checked) => setIsPhotoTask(checked === true)}
                 />
                 <Label htmlFor="photo-task">Taking a pictures</Label>
               </div>
@@ -252,7 +262,7 @@ const EditTaskModal = ({ isOpen, onClose, onUpdateTask, task }: EditTaskModalPro
 
             <div className="space-y-2">
               <Label>Deadline Hour (optional)</Label>
-              <Select>
+              <Select value={deadlineHour} onValueChange={setDeadlineHour}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select time" />
                 </SelectTrigger>
