@@ -40,7 +40,7 @@ const Welcome = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-anotherday-mint to-white">
       <div className="flex justify-center p-6 pt-10">
-        <Logo className="w-48" />
+        <Logo className="w-64" />
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center p-4">

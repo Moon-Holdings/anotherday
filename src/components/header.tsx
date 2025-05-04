@@ -28,7 +28,7 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <>
-      <header className="bg-rootina-blue text-white">
+      <header className="bg-anotherday-dark text-white">
         <div className="flex items-center justify-between p-1 md:py-0.5">
           <div className="flex items-center">
             <Logo className="h-16 md:h-18" />
@@ -37,7 +37,7 @@ const Header = ({
           <div className="flex items-center">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" className="text-white hover:bg-rootina-blue/80 p-1">
+                <Button variant="ghost" className="text-white hover:bg-anotherday-dark/80 p-1">
                   <UserRound className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
@@ -50,7 +50,7 @@ const Header = ({
                 </SheetHeader>
                 <div className="py-4">
                   <div className="flex items-center space-x-2 mb-4">
-                    <div className="h-10 w-10 rounded-full bg-rootina-blue flex items-center justify-center text-white">
+                    <div className="h-10 w-10 rounded-full bg-anotherday-mint flex items-center justify-center text-anotherday-dark">
                       {userName.charAt(0).toUpperCase()}
                     </div>
                     <div>
