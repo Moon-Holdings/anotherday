@@ -27,12 +27,12 @@ const DepartmentTasksCard = ({
   selectedTaskListId
 }: DepartmentTasksCardProps) => {
   return (
-    <div className="bg-white rounded-lg p-3 shadow-sm w-[250px] mr-4 flex-shrink-0">
-      <div className="flex flex-col items-center mb-3">
-        <div className="mb-2">
+    <div className="bg-white rounded-lg p-2 shadow-sm w-[200px] mr-3 flex-shrink-0">
+      <div className="flex flex-col items-center mb-2">
+        <div className="mb-1">
           {icon}
         </div>
-        <h2 className="text-lg font-bold">{department}</h2>
+        <h2 className="text-base font-bold">{department}</h2>
       </div>
       
       <div className="space-y-2">
