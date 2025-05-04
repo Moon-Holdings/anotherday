@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Task, TaskList } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,19 +14,13 @@ import {
 } from '@/components/ui/select';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Checkbox } from '@/components/ui/checkbox';
-
-interface TaskListProps {
-  title: string;
-  tasks: Task[];
-  showCompleted?: boolean;
-  onAddTask?: () => void;
-  filter?: boolean;
-  selectedDepartment?: string;
-  hideTitle?: boolean;
-  displayForcedHorizontal?: boolean; 
-  description?: string;
-  onUpdateTask?: (taskId: string, updatedTask: Partial<Task>) => void;
-}
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselNext, 
+  CarouselPrevious 
+} from '@/components/ui/carousel';
 
 // Mock user data - in a real app this would come from an API/context
 const mockUsers = [
@@ -206,14 +199,32 @@ const TaskListComponent = ({
         <CardContent className="pt-4">
           {tasksWithUsers.length === 0 ? (
             <p className="text-gray-500 text-center py-4">No tasks to display</p>
+          ) : isHorizontalLayout ? (
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {tasksWithUsers.map(task => (
+                  <CarouselItem key={task.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3">
+                    <TaskItem 
+                      task={task} 
+                      isHorizontal={true}
+                      assignedUserName={title === "Team Tasks" ? getUserNameById(task.assignedTo) : undefined}
+                      onUpdateTask={onUpdateTask}
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex justify-end mt-2">
+                <CarouselPrevious className="relative static mr-2 translate-y-0" />
+                <CarouselNext className="relative static translate-y-0" />
+              </div>
+            </Carousel>
           ) : (
-            <div className={isHorizontalLayout ? "flex flex-wrap gap-3" : ""}>
+            <div>
               {tasksWithUsers.map(task => (
                 <TaskItem 
                   key={task.id} 
                   task={task} 
-                  isHorizontal={isHorizontalLayout}
-                  // Pass the user name only for Team Tasks section
+                  isHorizontal={false}
                   assignedUserName={title === "Team Tasks" ? getUserNameById(task.assignedTo) : undefined}
                   onUpdateTask={onUpdateTask}
                 />
