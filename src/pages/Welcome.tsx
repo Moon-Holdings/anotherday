@@ -46,10 +46,10 @@ const Welcome = () => {
       <div className="flex-1 flex flex-col items-center justify-center p-4">
         <Carousel
           className="w-full max-w-md"
-          onSelect={(api) => {
-            if (api) {
+          setApi={(api) => {
+            api?.on("select", () => {
               setCurrentSlide(api.selectedScrollSnap());
-            }
+            });
           }}
         >
           <CarouselContent>
