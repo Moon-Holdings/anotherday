@@ -27,15 +27,15 @@ const DepartmentTasksCard = ({
   selectedTaskListId
 }: DepartmentTasksCardProps) => {
   return (
-    <div className="bg-white rounded-lg p-4 shadow-sm w-[300px] mr-4 flex-shrink-0">
-      <div className="flex flex-col items-center mb-4">
+    <div className="bg-white rounded-lg p-3 shadow-sm w-[250px] mr-4 flex-shrink-0">
+      <div className="flex flex-col items-center mb-3">
         <div className="mb-2">
           {icon}
         </div>
-        <h2 className="text-xl font-bold">{department}</h2>
+        <h2 className="text-lg font-bold">{department}</h2>
       </div>
       
-      <div className="space-y-3">
+      <div className="space-y-2">
         {taskLists.map((taskList) => (
           <TaskListCard 
             key={taskList.id}
