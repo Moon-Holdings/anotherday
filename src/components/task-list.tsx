@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Task, TaskList } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,6 +22,20 @@ import {
   CarouselNext, 
   CarouselPrevious 
 } from '@/components/ui/carousel';
+
+// Define the TaskListProps interface
+interface TaskListProps {
+  title: string;
+  tasks: Task[];
+  showCompleted?: boolean;
+  onAddTask?: () => void;
+  filter?: boolean;
+  selectedDepartment?: string;
+  hideTitle?: boolean;
+  displayForcedHorizontal?: boolean; 
+  description?: string;
+  onUpdateTask?: (taskId: string, updatedTask: Partial<Task>) => void;
+}
 
 // Mock user data - in a real app this would come from an API/context
 const mockUsers = [
