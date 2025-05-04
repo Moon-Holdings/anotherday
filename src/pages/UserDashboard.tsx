@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -163,19 +162,17 @@ const UserDashboard = () => {
               </div>
             </div>
             
-            {/* Task list for selected department */}
-            <div className="overflow-x-auto -mx-3 px-3 pb-2">
-              <div className="w-full">
-                <TaskListComponent 
-                  title=""
-                  tasks={filteredOpeningTasks.length > 0 ? filteredOpeningTasks : openingTasks.slice(0, 2)}
-                  selectedDepartment={departmentToFilterMap[selectedDepartment] || selectedDepartment} 
-                  hideTitle={true} 
-                  displayForcedHorizontal={true}
-                  showCompleted={showCompletedDepartmentTasks}
-                  onUpdateTask={handleUpdateTask}
-                />
-              </div>
+            {/* Task list for selected department - Title moved outside the TaskListComponent */}
+            <div>
+              <TaskListComponent 
+                title=""
+                tasks={filteredOpeningTasks.length > 0 ? filteredOpeningTasks : openingTasks.slice(0, 2)}
+                selectedDepartment={departmentToFilterMap[selectedDepartment] || selectedDepartment} 
+                hideTitle={true} 
+                displayForcedHorizontal={true}
+                showCompleted={showCompletedDepartmentTasks}
+                onUpdateTask={handleUpdateTask}
+              />
             </div>
           </div>
         </div>

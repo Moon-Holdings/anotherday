@@ -138,18 +138,16 @@ const Dashboard = () => {
               </div>
             </div>
             
-            {/* Task list for selected department */}
-            <div className="overflow-x-auto -mx-3 px-3 pb-2">
-              <div className="w-full">
-                <TaskListComponent 
-                  title=""
-                  tasks={filteredTasks}
-                  selectedDepartment={departmentToFilterMap[selectedDepartment] || selectedDepartment} 
-                  hideTitle={true} 
-                  displayForcedHorizontal={true}
-                  showCompleted={showCompletedDepartmentTasks}
-                />
-              </div>
+            {/* Task list for selected department - Title moved outside the TaskListComponent */}
+            <div>
+              <TaskListComponent 
+                title=""
+                tasks={filteredTasks}
+                selectedDepartment={departmentToFilterMap[selectedDepartment] || selectedDepartment} 
+                hideTitle={true} 
+                displayForcedHorizontal={true}
+                showCompleted={showCompletedDepartmentTasks}
+              />
             </div>
           </div>
         </div>
