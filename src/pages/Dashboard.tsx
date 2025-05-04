@@ -1,32 +1,50 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
-import DepartmentCard from '@/components/department-card';
 import TaskListComponent from '@/components/task-list';
 import AddButton from '@/components/add-button';
 import AddTaskModal from '@/components/add-task-modal';
+import DepartmentTasksCard from '@/components/department-tasks-card';
 import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks, mockTeamTasks } from '@/data/mock-data';
 import { Task } from '@/types';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent } from '@/components/ui/card';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { Switch } from '@/components/ui/switch';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { ChefHat, Users, UsersRound, Package, Wine } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Switch } from '@/components/ui/switch';
+import { ChefHat, Users, UsersRound, Package, Wine, MoveRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+// Mock data for department task lists
+const mockDepartmentTaskLists = {
+  floor: [
+    { id: 'f1', title: 'Morning Opening', completed: 6, total: 12 },
+    { id: 'f2', title: 'Morning Closing', completed: 2, total: 8 },
+  ],
+  kitchen: [
+    { id: 'k1', title: 'Morning Opening', completed: 3, total: 7 },
+    { id: 'k2', title: 'Morning Closing', completed: 2, total: 5 },
+  ],
+  bar: [
+    { id: 'b1', title: 'Morning Closing', completed: 3, total: 5 },
+    { id: 'b2', title: 'Morning Closing', completed: 1, total: 4 },
+  ],
+  takeaway: [
+    { id: 't1', title: 'Afternoon Opening', completed: 1, total: 3 },
+  ],
+  management: [
+    { id: 'm1', title: 'Morning Check', completed: 4, total: 6 },
+  ],
+};
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
-  const isMobile = useIsMobile();
   const [showCompletedDepartmentTasks, setShowCompletedDepartmentTasks] = useState(false);
 
-  // Selected department state - map to department names correctly
-  const [selectedDepartment, setSelectedDepartment] = useState(mockDepartmentProgress[0].department);
-
-  // Selected shift and day state
-  const [selectedShift, setSelectedShift] = useState('Afternoon Shift | Opening');
+  // Selected department and task list state
+  const [selectedDepartment, setSelectedDepartment] = useState('floor');
+  const [selectedTaskListId, setSelectedTaskListId] = useState(mockDepartmentTaskLists.floor[0].id);
+  const [selectedTaskListTitle, setSelectedTaskListTitle] = useState(mockDepartmentTaskLists.floor[0].title);
 
   // Maps the department cards to their corresponding filter values
   const departmentToFilterMap: Record<string, string> = {
@@ -41,17 +59,17 @@ const Dashboard = () => {
   const getDepartmentIcon = (department: string) => {
     switch (department) {
       case 'floor':
-        return <Users size={36} strokeWidth={1.5} />;
+        return <Users size={48} strokeWidth={1.5} />;
       case 'bar':
-        return <Wine size={36} strokeWidth={1.5} />;
+        return <Wine size={48} strokeWidth={1.5} />;
       case 'kitchen':
-        return <ChefHat size={36} strokeWidth={1.5} />;
+        return <ChefHat size={48} strokeWidth={1.5} />;
       case 'takeaway':
-        return <Package size={36} strokeWidth={1.5} />;
+        return <Package size={48} strokeWidth={1.5} />;
       case 'management':
-        return <UsersRound size={36} strokeWidth={1.5} />;
+        return <UsersRound size={48} strokeWidth={1.5} />;
       default:
-        return <div className="w-9 h-9" />;
+        return <div className="w-12 h-12" />;
     }
   };
   
@@ -60,91 +78,83 @@ const Dashboard = () => {
     // In a real app, we would add the task to our state or database
   };
 
-  // Filter tasks based on the selected department
-  const filteredOpeningTasks = mockOpeningTasks.filter(task => {
-    // First try exact department match
-    if (task.department === selectedDepartment) {
-      return true;
-    }
-    
-    // Then try mapped department name
+  const handleSelectTaskList = (departmentName: string, taskListId: string, taskListTitle: string) => {
+    setSelectedDepartment(departmentName);
+    setSelectedTaskListId(taskListId);
+    setSelectedTaskListTitle(taskListTitle);
+  };
+
+  // Filter tasks based on the selected department and task list
+  const filteredTasks = mockOpeningTasks.filter(task => {
     const mappedDepartment = departmentToFilterMap[selectedDepartment];
     return task.department === mappedDepartment;
   });
   
-  return <div className="min-h-screen bg-gray-50 pb-20">
+  return (
+    <div className="min-h-screen bg-gray-50 pb-20">
       <Header userRole="owner" />
       
       <div className="container px-2 sm:px-4 py-4 sm:py-6">
-        {/* Department Tasks Section */}
+        {/* Department Tasks Section with new design */}
         <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm mb-4 sm:mb-6">
-          {/* Afternoon Opening title and dropdown adjusted for mobile */}
-          <div className={`${isMobile ? 'flex flex-col space-y-2' : 'flex items-center'} mb-4`}>
-            <h2 className={`text-lg font-medium ${!isMobile && 'mr-4'}`}>Departments Tasks</h2>
-            <Select value={selectedShift} onValueChange={setSelectedShift}>
-              <SelectTrigger className={`${isMobile ? 'w-full' : 'w-64'} h-8 text-sm`}>
-                <SelectValue placeholder="Select shift" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
-                <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
-                <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
-                <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
-                <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
-                <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <h2 className="text-lg font-medium mb-4">Departments Tasks</h2>
           
-          {/* Department cards carousel - updated for horizontal sliding */}
+          {/* Departments carousel with task lists */}
           <div className="mb-6">
             <ScrollArea className="w-full pb-4" orientation="horizontal">
-              <div className="flex space-x-3 px-1">
-                {mockDepartmentProgress.map(dept => (
-                  <div key={dept.department} className="flex-shrink-0" style={{ width: "160px" }}>
-                    <DepartmentCard 
-                      department={dept.department} 
-                      icon={getDepartmentIcon(dept.department)} 
-                      completed={dept.completed} 
-                      total={dept.total} 
-                      isSelected={dept.department === selectedDepartment} 
-                      onClick={() => setSelectedDepartment(dept.department)} 
-                    />
-                  </div>
+              <div className="flex px-1 py-2">
+                {Object.entries(mockDepartmentTaskLists).map(([department, taskLists]) => (
+                  <DepartmentTasksCard
+                    key={department}
+                    department={departmentToFilterMap[department] || department}
+                    icon={getDepartmentIcon(department)}
+                    taskLists={taskLists}
+                    onSelectTaskList={handleSelectTaskList}
+                    selectedTaskListId={selectedTaskListId}
+                  />
                 ))}
               </div>
             </ScrollArea>
           </div>
           
-          {/* Added a divider and a title to make the connection clearer */}
-          <div className="border-t border-gray-200 my-3 sm:my-4"></div>
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 space-y-2 sm:space-y-0">
-            <h3 className="text-sm font-medium text-gray-700">{selectedShift} Department Tasks</h3>
-            
-            <div className="flex items-center space-x-2 text-xs sm:text-sm">
-              <span className="text-gray-500">Show completed tasks</span>
-              <Switch 
-                checked={showCompletedDepartmentTasks} 
-                onCheckedChange={setShowCompletedDepartmentTasks}
-              />
+          {/* Selected task list details */}
+          <div className="border-t border-gray-200 pt-4 mt-2">
+            <div className="flex justify-between items-center mb-3">
+              <div className="flex items-center">
+                <h3 className="text-lg font-medium">
+                  {departmentToFilterMap[selectedDepartment] || selectedDepartment} | {selectedTaskListTitle}
+                </h3>
+                <Button variant="ghost" size="icon" className="ml-1" onClick={() => navigate(`/tasks/${selectedTaskListId}`)}>
+                  <MoveRight className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              <div className="flex items-center space-x-2 text-xs sm:text-sm">
+                <span className="text-gray-500">Show completed tasks</span>
+                <Switch 
+                  checked={showCompletedDepartmentTasks} 
+                  onCheckedChange={setShowCompletedDepartmentTasks}
+                />
+              </div>
             </div>
-          </div>
-          
-          {/* The horizontal task list is now clearly part of the department tasks section */}
-          <div className="overflow-x-auto -mx-3 px-3 pb-2">
-            <div className={`${isMobile ? 'w-[800px]' : 'w-full'}`}>
-              <TaskListComponent 
-                title="Afternoon Opening" 
-                tasks={filteredOpeningTasks.length > 0 ? filteredOpeningTasks : mockOpeningTasks.slice(0, 2)}
-                selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} 
-                hideTitle={true} 
-                displayForcedHorizontal={true}
-                showCompleted={showCompletedDepartmentTasks}
-              />
+            
+            {/* Task list for selected department */}
+            <div className="overflow-x-auto -mx-3 px-3 pb-2">
+              <div className="w-full">
+                <TaskListComponent 
+                  title=""
+                  tasks={filteredTasks}
+                  selectedDepartment={departmentToFilterMap[selectedDepartment] || selectedDepartment} 
+                  hideTitle={true} 
+                  displayForcedHorizontal={true}
+                  showCompleted={showCompletedDepartmentTasks}
+                />
+              </div>
             </div>
           </div>
         </div>
         
+        {/* Other sections remain unchanged */}
         <div className="space-y-4 sm:space-y-6">
           <TaskListComponent 
             title="Team Tasks" 
@@ -167,6 +177,8 @@ const Dashboard = () => {
       </div>
 
       <AddTaskModal isOpen={isAddTaskModalOpen} onClose={() => setIsAddTaskModalOpen(false)} onAddTask={handleAddTask} />
-    </div>;
+    </div>
+  );
 };
+
 export default Dashboard;
