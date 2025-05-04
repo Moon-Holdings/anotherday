@@ -33,7 +33,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col rootina-pattern-bg">
+    <div className="w-full min-h-screen flex flex-col anotherday-pattern-bg">
       <div className="flex justify-center p-6 pt-10">
         <Logo className="w-48" />
       </div>
@@ -42,7 +42,7 @@ const SignUp = () => {
         <Card className="w-full max-w-md p-8 rounded-xl shadow-lg bg-white">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-semibold mb-2">Create your account</h2>
-            <p className="text-gray-500">Join Rootina and start managing your tasks efficiently</p>
+            <p className="text-gray-500">Join anotherday and start managing your tasks efficiently</p>
           </div>
           
           <form onSubmit={handleSignUp} className="space-y-4">
@@ -57,7 +57,7 @@ const SignUp = () => {
                   required
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-rootina-teal">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-anotherday-mint">
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                     <circle cx="9" cy="7" r="4"></circle>
                   </svg>
@@ -76,7 +76,7 @@ const SignUp = () => {
                   required
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-rootina-teal">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-anotherday-mint">
                     <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                     <path d="M7 15h0"></path>
                     <path d="M12 15h0"></path>
@@ -98,7 +98,7 @@ const SignUp = () => {
                   required
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-rootina-teal">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-anotherday-mint">
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                   </svg>
@@ -118,7 +118,7 @@ const SignUp = () => {
                   required
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-rootina-teal">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-anotherday-mint">
                     <path d="m9 12 2 2 4-4"></path>
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
@@ -129,7 +129,7 @@ const SignUp = () => {
 
             <Button 
               type="submit" 
-              className="w-full py-6 bg-rootina-teal hover:bg-rootina-lightTeal text-white"
+              className="w-full py-6 bg-anotherday-mint hover:bg-anotherday-mint/90 text-anotherday-dark"
             >
               Sign Up
             </Button>
@@ -139,7 +139,7 @@ const SignUp = () => {
                 Already have an account?{" "}
                 <Button 
                   variant="link" 
-                  className="p-0 text-rootina-teal"
+                  className="p-0 text-anotherday-mint"
                   onClick={() => navigate('/login')}
                 >
                   Log in

@@ -8,7 +8,7 @@ import Logo from "@/components/logo";
 
 const welcomeSlides = [
   {
-    title: "Welcome to Rootina Shift Flow",
+    title: "Welcome to anotherday",
     description: "Streamline your business operations with our powerful task management system.",
     image: "/placeholder.svg",
   },
@@ -38,7 +38,7 @@ const Welcome = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-rootina-lightTeal to-white">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-anotherday-mint to-white">
       <div className="flex justify-center p-6 pt-10">
         <Logo className="w-48" />
       </div>
@@ -77,7 +77,7 @@ const Welcome = () => {
                 <div
                   key={index}
                   className={`w-2 h-2 rounded-full ${
-                    currentSlide === index ? "bg-rootina-teal" : "bg-gray-300"
+                    currentSlide === index ? "bg-anotherday-mint" : "bg-gray-300"
                   }`}
                 />
               ))}
@@ -91,14 +91,14 @@ const Welcome = () => {
 
         <div className="w-full max-w-md mt-8 flex flex-col gap-3">
           <Button 
-            className="w-full py-6 bg-rootina-teal hover:bg-rootina-lightTeal"
+            className="w-full py-6 bg-anotherday-mint hover:bg-anotherday-mint/90 text-anotherday-dark"
             onClick={() => handleNavigate('/signup')}
           >
             Get Started
           </Button>
           <Button 
             variant="outline" 
-            className="w-full py-6"
+            className="w-full py-6 text-anotherday-dark border-anotherday-dark hover:bg-anotherday-mint/10"
             onClick={() => handleNavigate('/login')}
           >
             I already have an account

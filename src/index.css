@@ -78,7 +78,14 @@
 }
 
 .rootina-pattern-bg {
-  background-color: #1A4D79;
-  background-image: radial-gradient(#37BD8D 0.75px, transparent 0.75px);
+  background-color: #2A3A42;
+  background-image: radial-gradient(#64D2B3 0.75px, transparent 0.75px);
+  background-size: 16px 16px;
+}
+
+/* Adding an alias for backward compatibility */
+.anotherday-pattern-bg {
+  background-color: #2A3A42;
+  background-image: radial-gradient(#64D2B3 0.75px, transparent 0.75px);
   background-size: 16px 16px;
 }

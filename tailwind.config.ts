@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,6 +62,16 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				anotherday: {
+					mint: '#64D2B3',
+					dark: '#2A3A42',
+					lightMint: '#80DAC2',
+					gray: '#F5F5F5',
+					yellow: '#FFD166',
+					red: '#EF476F',
+					green: '#06D6A0'
+				},
+				// Keeping rootina colors for backward compatibility
 				rootina: {
 					blue: '#1A4D79',
 					teal: '#37BD8D',
