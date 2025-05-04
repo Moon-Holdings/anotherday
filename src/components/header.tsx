@@ -28,7 +28,7 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <>
-      <header className="bg-anotherday-dark text-white">
+      <header className="bg-white shadow-sm">
         <div className="flex items-center justify-between p-1 md:py-0.5">
           <div className="flex items-center">
             <Logo className="h-16 md:h-18" />
@@ -37,7 +37,7 @@ const Header = ({
           <div className="flex items-center">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" className="text-white hover:bg-anotherday-dark/80 p-1">
+                <Button variant="ghost" className="text-anotherday-dark hover:bg-gray-100 p-1">
                   <UserRound className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
