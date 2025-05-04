@@ -32,13 +32,13 @@ const TaskListCard = ({
   return (
     <div 
       className={`
-        bg-white border p-2 rounded-md cursor-pointer transition-all
+        bg-white border p-1.5 rounded-md cursor-pointer transition-all
         ${isSelected ? 'border-rootina-teal shadow-sm' : 'border-gray-200'}
       `}
       onClick={onClick}
     >
       <div className="flex justify-between items-center">
-        <h3 className="font-medium text-xs truncate pr-1">{title}</h3>
+        <h3 className="font-medium text-xs truncate max-w-[70%] pr-1">{title}</h3>
         <span className="text-xs text-gray-600 whitespace-nowrap">{completed}/{total}</span>
       </div>
       <div className="w-full mt-1">
