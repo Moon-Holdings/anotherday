@@ -24,6 +24,22 @@ const DepartmentTasksCard = ({
   onSelectTaskList,
   selectedTaskListId
 }: DepartmentTasksCardProps) => {
+  // Ensure we show up to 6 task lists per department
+  const displayTaskLists = taskLists.slice(0, 6);
+  
+  // If we have fewer than 6 task lists, create placeholder empty ones to show 6 total
+  const emptyTaskLists = Array(Math.max(0, 6 - displayTaskLists.length))
+    .fill(null)
+    .map((_, index) => ({
+      id: `empty-${index}`,
+      title: "No task list",
+      completed: 0,
+      total: 0
+    }));
+  
+  // Combine actual task lists with empty placeholders to always show 6
+  const allTaskLists = [...displayTaskLists, ...emptyTaskLists];
+  
   return <div className="bg-white rounded-lg p-2 shadow-sm w-[150px] mr-3 flex-shrink-0 py-[3px]">
       <div className="flex items-center mb-2">
         <div className="mr-1">
@@ -33,7 +49,7 @@ const DepartmentTasksCard = ({
       </div>
       
       <div className="space-y-2">
-        {taskLists.map(taskList => <TaskListCard key={taskList.id} title={taskList.title} completed={taskList.completed} total={taskList.total} isSelected={taskList.id === selectedTaskListId} onClick={() => onSelectTaskList(department, taskList.id, taskList.title)} />)}
+        {allTaskLists.map(taskList => <TaskListCard key={taskList.id} title={taskList.title} completed={taskList.completed} total={taskList.total} isSelected={taskList.id === selectedTaskListId} onClick={() => onSelectTaskList(department, taskList.id, taskList.title)} />)}
       </div>
     </div>;
 };
