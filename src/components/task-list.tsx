@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Task, TaskList } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -47,48 +46,6 @@ const mockUsers = [{
   name: 'Robert Wilson',
   role: 'kitchen-staff'
 }];
-
-// Example tasks to show when no tasks are available
-const exampleTasks: Task[] = [
-  {
-    id: 'example-1',
-    name: 'Clean the espresso machine',
-    description: 'Disassemble, clean, and reassemble the espresso machine',
-    department: 'Bar',
-    completionMethod: 'checkmark',
-    type: 'role',
-    recurrence: 'daily-schedule',
-    isCompleted: false,
-    assignmentType: 'role',
-    isHighPriority: true
-  },
-  {
-    id: 'example-2',
-    name: 'Restock wine cellar',
-    description: 'Check inventory and restock the wine cellar with new deliveries',
-    department: 'Bar',
-    completionMethod: 'quantity',
-    quantityRequired: 24,
-    quantityOnHand: 8,
-    type: 'schedule',
-    recurrence: 'weekly',
-    isCompleted: false,
-    assignmentType: 'role'
-  },
-  {
-    id: 'example-3',
-    name: 'Prepare salad station',
-    description: 'Wash and prep vegetables for the salad station',
-    department: 'Kitchen',
-    completionMethod: 'checkmark',
-    type: 'schedule',
-    recurrence: 'daily-schedule',
-    isCompleted: true,
-    completedAt: new Date().toISOString(),
-    assignmentType: 'role'
-  }
-];
-
 const TaskListComponent = ({
   title,
   tasks,
@@ -185,15 +142,6 @@ const TaskListComponent = ({
     }
     return task;
   });
-
-  // Use example tasks if there are no real tasks to display
-  const displayTasks = tasksWithUsers.length === 0 ? 
-    // Filter example tasks by department if needed
-    (localSelectedDepartment && localSelectedDepartment !== 'Everyone' 
-      ? exampleTasks.filter(task => task.department === localSelectedDepartment || !task.department)
-      : exampleTasks)
-    : tasksWithUsers;
-
   return <div className="mb-6">
       {/* Title section displayed outside the card, like in the design */}
       {!hideTitle && <div className="flex items-center justify-between mb-2">
@@ -239,23 +187,7 @@ const TaskListComponent = ({
       
       <Card>
         <CardContent className="pt-4 py-0">
-          {tasksWithUsers.length === 0 ? (
-            // Show example tasks with a light indicator that these are examples
-            <div className="space-y-3 py-2">
-              <div className="px-2 py-1 bg-gray-50 text-gray-500 text-xs font-medium rounded">
-                Example Tasks
-              </div>
-              {displayTasks.slice(0, 3).map(task => (
-                <div key={task.id} className="opacity-80">
-                  <TaskItem 
-                    task={task} 
-                    isHorizontal={isHorizontalLayout}
-                    assignedUserName={title === "Team Tasks" ? getUserNameById(task.assignedTo) : undefined}
-                  />
-                </div>
-              ))}
-            </div>
-          ) : isHorizontalLayout ? <Carousel className="w-full">
+          {tasksWithUsers.length === 0 ? <p className="text-gray-500 text-center py-4">No tasks to display</p> : isHorizontalLayout ? <Carousel className="w-full">
               <CarouselContent className="-ml-2 md:-ml-4">
                 {tasksWithUsers.map(task => <CarouselItem key={task.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3">
                     <TaskItem task={task} isHorizontal={true} assignedUserName={title === "Team Tasks" ? getUserNameById(task.assignedTo) : undefined} onUpdateTask={onUpdateTask} />
@@ -272,5 +204,4 @@ const TaskListComponent = ({
       </Card>
     </div>;
 };
-
 export default TaskListComponent;

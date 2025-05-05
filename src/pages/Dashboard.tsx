@@ -131,7 +131,7 @@ const Dashboard = () => {
           </div>
           
           {/* Selected task list details */}
-          <div className="border-t border-gray-200 pt-4 mt-2 py-[9px]">
+          <div className="border-t border-gray-200 pt-4 mt-2 py-[3px]">
             <div className="flex justify-between items-center mb-3">
               <div className="flex items-center">
                 <h3 className="text-xs font-normal">
@@ -155,7 +155,7 @@ const Dashboard = () => {
         
         {/* Other sections remain unchanged */}
         <div className="space-y-4 sm:space-y-6">
-          <TaskListComponent title="Team Tasks" tasks={mockTeamTasks} description="Tasks assigned to team members under your management" filter={true} selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} />
+          <TaskListComponent title="Team Tasks" tasks={mockTeamTasks} filter={true} selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'} />
           
           <TaskListComponent title="Personal Tasks" tasks={mockPersonalTasks} description="Your personal assigned tasks" />
         </div>
