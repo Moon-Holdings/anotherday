@@ -1,3 +1,4 @@
+
 import React from 'react';
 import TaskListCard from './task-list-card';
 import { Users, ChefHat, Wine } from 'lucide-react';
@@ -24,11 +25,11 @@ const DepartmentTasksCard = ({
   selectedTaskListId
 }: DepartmentTasksCardProps) => {
   return <div className="bg-white rounded-lg p-2 shadow-sm w-[150px] mr-3 flex-shrink-0 py-[3px]">
-      <div className="flex flex-col items-center mb-2">
-        <div className="mb-1">
-          {icon}
+      <div className="flex items-center mb-2">
+        <div className="mr-1">
+          {React.cloneElement(icon as React.ReactElement, { size: 20 })}
         </div>
-        <h2 className="text-sm font-bold truncate w-full text-center">{department}</h2>
+        <h2 className="text-sm font-bold truncate w-full">{department}</h2>
       </div>
       
       <div className="space-y-2">
