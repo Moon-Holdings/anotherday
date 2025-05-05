@@ -1,5 +1,6 @@
+
 import { useState, useEffect } from 'react';
-import { Task, TaskList } from '@/types';
+import { Task, TaskList, Department, TaskRecurrence } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import TaskItem from './task-item';
@@ -46,6 +47,44 @@ const mockUsers = [{
   name: 'Robert Wilson',
   role: 'kitchen-staff'
 }];
+
+// Example tasks to display when no tasks are available
+const exampleTasks: Task[] = [
+  {
+    id: 'example-1',
+    name: 'Check inventory levels',
+    description: 'Make sure stock is sufficient for service',
+    department: 'bar',
+    assignmentType: 'role',
+    completionMethod: 'checkmark',
+    type: 'role',
+    recurrence: 'daily-schedule',
+    isCompleted: false
+  },
+  {
+    id: 'example-2',
+    name: 'Prepare mise en place',
+    description: 'Prepare all ingredients before service',
+    department: 'kitchen',
+    assignmentType: 'role',
+    completionMethod: 'checkmark',
+    type: 'role',
+    recurrence: 'daily-schedule',
+    isCompleted: false
+  },
+  {
+    id: 'example-3',
+    name: 'Set up tables and chairs',
+    description: 'Arrange according to reservation plan',
+    department: 'floor',
+    assignmentType: 'role',
+    completionMethod: 'photo',
+    type: 'role',
+    recurrence: 'daily-schedule',
+    isCompleted: false
+  }
+];
+
 const TaskListComponent = ({
   title,
   tasks,
@@ -78,7 +117,7 @@ const TaskListComponent = ({
     filteredTasks = tasksFilteredByCompletion.slice(0, selectedUsers.length * 2);
   } else if (localSelectedDepartment && localSelectedDepartment !== 'Everyone') {
     // First try to filter by exact department match
-    const departmentTasks = tasksFilteredByCompletion.filter(task => task.department === localSelectedDepartment);
+    const departmentTasks = tasksFilteredByCompletion.filter(task => task.department === localSelectedDepartment.toLowerCase());
 
     // If we found tasks for this department, use them
     if (departmentTasks.length > 0) {
@@ -142,6 +181,18 @@ const TaskListComponent = ({
     }
     return task;
   });
+
+  // Get department-specific example tasks
+  const getDepartmentExampleTasks = () => {
+    const deptExamples = exampleTasks.filter(task => 
+      task.department === localSelectedDepartment.toLowerCase() || 
+      (localSelectedDepartment === 'Waiters' && task.department === 'floor')
+    );
+    
+    // If no examples for this specific department, return the first example
+    return deptExamples.length > 0 ? deptExamples : [exampleTasks[0]];
+  };
+
   return <div className="mb-6">
       {/* Title section displayed outside the card, like in the design */}
       {!hideTitle && <div className="flex items-center justify-between mb-2">
@@ -187,7 +238,35 @@ const TaskListComponent = ({
       
       <Card>
         <CardContent className="pt-4 py-0">
-          {tasksWithUsers.length === 0 ? <p className="text-gray-500 text-center py-4">No tasks to display</p> : isHorizontalLayout ? <Carousel className="w-full">
+          {tasksWithUsers.length === 0 ? (
+            <div className="py-4">
+              <div className="text-gray-500 text-center mb-4">
+                <p className="font-medium">Example tasks for {localSelectedDepartment}</p>
+                <p className="text-xs text-gray-400">These are examples of tasks you might create</p>
+              </div>
+              <div className={isHorizontalLayout ? "space-y-0" : "space-y-3"}>
+                {isHorizontalLayout ? (
+                  <Carousel className="w-full">
+                    <CarouselContent className="-ml-2 md:-ml-4">
+                      {getDepartmentExampleTasks().map(task => (
+                        <CarouselItem key={task.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3">
+                          <TaskItem task={task} isHorizontal={true} isExample={true} onUpdateTask={onUpdateTask} />
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <div className="flex justify-end mt-2">
+                      <CarouselPrevious className="relative static mr-2 translate-y-0" />
+                      <CarouselNext className="relative static translate-y-0" />
+                    </div>
+                  </Carousel>
+                ) : (
+                  getDepartmentExampleTasks().map(task => (
+                    <TaskItem key={task.id} task={task} isHorizontal={false} isExample={true} onUpdateTask={onUpdateTask} />
+                  ))
+                )}
+              </div>
+            </div>
+          ) : isHorizontalLayout ? <Carousel className="w-full">
               <CarouselContent className="-ml-2 md:-ml-4">
                 {tasksWithUsers.map(task => <CarouselItem key={task.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3">
                     <TaskItem task={task} isHorizontal={true} assignedUserName={title === "Team Tasks" ? getUserNameById(task.assignedTo) : undefined} onUpdateTask={onUpdateTask} />

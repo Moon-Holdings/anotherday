@@ -1,84 +1,103 @@
-
+import React, { useState, useEffect } from 'react';
 import { Task } from '@/types';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Button } from '@/components/ui/button';
-import QuantityControl from './quantity-control';
-import PhotoControl from './photo-control';
-import DeadlineDisplay from './deadline-display';
-import { Badge } from '@/components/ui/badge';
+import { Calendar } from "lucide-react";
+import { formatDistanceToNow } from 'date-fns';
 
 interface VerticalTaskItemProps {
   task: Task;
-  isCompleted: boolean;
-  onCheckChange: () => void;
-  quantity: number;
-  onQuantityIncrease: () => void;
-  onQuantityDecrease: () => void;
   assignedUserName?: string;
+  onTaskStatusChange?: (isCompleted: boolean) => void;
+  onQuantityUpdate?: (quantity: number) => void;
+  isExample?: boolean;
 }
 
-const VerticalTaskItem = ({
-  task,
-  isCompleted,
-  onCheckChange,
-  quantity,
-  onQuantityIncrease,
-  onQuantityDecrease,
-  assignedUserName
+const VerticalTaskItem = ({ 
+  task, 
+  assignedUserName,
+  onTaskStatusChange,
+  onQuantityUpdate,
+  isExample = false
 }: VerticalTaskItemProps) => {
+  const [isCompleted, setIsCompleted] = useState(task.isCompleted);
+  const [quantityOnHand, setQuantityOnHand] = useState(task.quantityOnHand || 0);
+
+  useEffect(() => {
+    setIsCompleted(task.isCompleted);
+    setQuantityOnHand(task.quantityOnHand || 0);
+  }, [task.isCompleted, task.quantityOnHand]);
+
+  const handleCheckboxChange = (checked: boolean) => {
+    setIsCompleted(checked);
+    onTaskStatusChange?.(checked);
+  };
+
+  const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    setQuantityOnHand(newQuantity);
+    onQuantityUpdate?.(newQuantity);
+  };
+
+  const deadline = task.deadline ? new Date(task.deadline) : undefined;
+  const timeAgo = deadline ? formatDistanceToNow(deadline, { addSuffix: true }) : undefined;
+
   return (
-    <div className="flex items-start space-x-4 py-4 border-b last:border-b-0">
-      <div className="flex-shrink-0 pt-1">
-        <Checkbox checked={isCompleted} onCheckedChange={onCheckChange} />
-      </div>
-      
-      <div className="flex-grow">
-        <div className="flex items-start justify-between">
-          <div>
-            <p className={`font-medium ${isCompleted ? 'text-gray-400 line-through' : ''}`}>
-              {task.name}
-            </p>
-            {task.description && (
-              <p className={`text-sm text-gray-500 ${isCompleted ? 'text-gray-300 line-through' : ''}`}>
-                {task.description}
-              </p>
-            )}
-            
-            {/* Display assigned user name if provided */}
-            {assignedUserName && (
-              <Badge variant="outline" className="mt-2 text-xs bg-gray-50">
-                {assignedUserName}
-              </Badge>
+    <div className={`flex items-center justify-between p-3 border-b last:border-b-0 
+      ${isExample ? 'border-dashed bg-gray-50' : ''}`}>
+      <div className="flex items-center flex-1">
+        <Checkbox
+          id={`task-${task.id}`}
+          checked={isCompleted}
+          onCheckedChange={handleCheckboxChange}
+          disabled={isExample}
+        />
+        
+        <div className="ml-3 flex-1 flex flex-col">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <span className="font-medium text-gray-900">
+                {task.name}
+                {isExample && <span className="ml-2 text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">Example</span>}
+              </span>
+              {task.isHighPriority && (
+                <span className="ml-2 text-xs text-red-500 font-semibold">High Priority</span>
+              )}
+            </div>
+            {deadline && (
+              <div className="text-xs text-gray-500 flex items-center">
+                <Calendar className="w-3.5 h-3.5 mr-1" />
+                {timeAgo}
+              </div>
             )}
           </div>
-
-          {task.deadline && (
-            <DeadlineDisplay deadline={task.deadline} />
+          
+          {task.description && (
+            <p className="text-sm text-gray-500 line-clamp-1">{task.description}</p>
+          )}
+          {assignedUserName && (
+            <p className="text-sm text-gray-500">Assigned to: {assignedUserName}</p>
           )}
         </div>
-
-        {task.completionMethod === 'quantity' && (
-          <QuantityControl
-            quantity={quantity}
-            required={task.quantityRequired}
-            onIncrease={onQuantityIncrease}
-            onDecrease={onQuantityDecrease}
-          />
-        )}
-
-        {task.completionMethod === 'photo' && (
-          <PhotoControl />
-        )}
       </div>
       
-      <div className="flex-shrink-0">
-        <Button variant="ghost" size="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-          </svg>
-        </Button>
-      </div>
+      {task.completionMethod === 'quantity' && (
+        <div>
+          <div className="flex items-center space-x-2">
+            <label htmlFor={`quantity-${task.id}`} className="text-sm font-medium text-gray-700">
+              Quantity:
+            </label>
+            <input
+              type="number"
+              id={`quantity-${task.id}`}
+              className="w-20 px-3 py-2 border rounded-md text-sm text-gray-900"
+              value={quantityOnHand}
+              onChange={handleQuantityChange}
+              disabled={isExample}
+            />
+            <span className="text-sm text-gray-500">/{task.quantityRequired}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
