@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Task, TaskList } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,9 +17,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { 
   Carousel, 
   CarouselContent, 
-  CarouselItem, 
-  CarouselNext, 
-  CarouselPrevious 
+  CarouselItem
 } from '@/components/ui/carousel';
 
 // Define the TaskListProps interface
@@ -218,7 +215,7 @@ const TaskListComponent = ({
             <Carousel className="w-full">
               <CarouselContent className="-ml-2 md:-ml-4">
                 {tasksWithUsers.map(task => (
-                  <CarouselItem key={task.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3">
+                  <CarouselItem key={task.id} className="pl-2 md:pl-4 basis-full sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
                     <TaskItem 
                       task={task} 
                       isHorizontal={true}
@@ -228,10 +225,6 @@ const TaskListComponent = ({
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <div className="flex justify-end mt-2">
-                <CarouselPrevious className="relative static mr-2 translate-y-0" />
-                <CarouselNext className="relative static translate-y-0" />
-              </div>
             </Carousel>
           ) : (
             <div>

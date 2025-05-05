@@ -26,7 +26,7 @@ const HorizontalTaskItem = ({
   assignedUserName
 }: HorizontalTaskItemProps) => {
   return (
-    <div className="flex-shrink-0 w-[250px] bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+    <div className="flex-shrink-0 w-[180px] bg-white rounded-lg p-3 shadow-sm border border-gray-100">
       <div className="flex items-start mb-2">
         <div className="flex-shrink-0 mt-1">
           <Checkbox checked={isCompleted} onCheckedChange={onCheckChange} />
