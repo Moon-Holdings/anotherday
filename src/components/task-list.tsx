@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Task, TaskList } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,22 +5,10 @@ import { Switch } from '@/components/ui/switch';
 import TaskItem from './task-item';
 import { Button } from '@/components/ui/button';
 import { Plus, Check, X } from 'lucide-react';
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Checkbox } from '@/components/ui/checkbox';
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-  CarouselNext, 
-  CarouselPrevious 
-} from '@/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 // Define the TaskListProps interface
 interface TaskListProps {
@@ -32,23 +19,36 @@ interface TaskListProps {
   filter?: boolean;
   selectedDepartment?: string;
   hideTitle?: boolean;
-  displayForcedHorizontal?: boolean; 
+  displayForcedHorizontal?: boolean;
   description?: string;
   onUpdateTask?: (taskId: string, updatedTask: Partial<Task>) => void;
 }
 
 // Mock user data - in a real app this would come from an API/context
-const mockUsers = [
-  { id: '1', name: 'John Smith', role: 'waiter' },
-  { id: '2', name: 'Sarah Johnson', role: 'bartender' },
-  { id: '3', name: 'Michael Brown', role: 'chef' },
-  { id: '4', name: 'Emily Davis', role: 'waiter' },
-  { id: '5', name: 'Robert Wilson', role: 'kitchen-staff' },
-];
-
-const TaskListComponent = ({ 
-  title, 
-  tasks, 
+const mockUsers = [{
+  id: '1',
+  name: 'John Smith',
+  role: 'waiter'
+}, {
+  id: '2',
+  name: 'Sarah Johnson',
+  role: 'bartender'
+}, {
+  id: '3',
+  name: 'Michael Brown',
+  role: 'chef'
+}, {
+  id: '4',
+  name: 'Emily Davis',
+  role: 'waiter'
+}, {
+  id: '5',
+  name: 'Robert Wilson',
+  role: 'kitchen-staff'
+}];
+const TaskListComponent = ({
+  title,
+  tasks,
   showCompleted = false,
   onAddTask,
   filter = false,
@@ -56,7 +56,7 @@ const TaskListComponent = ({
   hideTitle = false,
   displayForcedHorizontal = false,
   description,
-  onUpdateTask,
+  onUpdateTask
 }: TaskListProps) => {
   const [displayCompleted, setDisplayCompleted] = useState(showCompleted);
   const [localSelectedDepartment, setLocalSelectedDepartment] = useState(selectedDepartment);
@@ -68,23 +68,18 @@ const TaskListComponent = ({
   }, [selectedDepartment]);
 
   // Filter tasks by completion status
-  const tasksFilteredByCompletion = displayCompleted 
-    ? tasks 
-    : tasks.filter(task => !task.isCompleted);
-    
+  const tasksFilteredByCompletion = displayCompleted ? tasks : tasks.filter(task => !task.isCompleted);
+
   // Filter tasks by department or user
   let filteredTasks = tasksFilteredByCompletion;
-  
   if (title === "Team Tasks" && !selectedUsers.includes('everyone') && selectedUsers.length > 0) {
     // This is just a simple mock filter - in a real app, tasks would have assignedTo IDs
     // For demo, we'll just show some tasks based on selection
     filteredTasks = tasksFilteredByCompletion.slice(0, selectedUsers.length * 2);
   } else if (localSelectedDepartment && localSelectedDepartment !== 'Everyone') {
     // First try to filter by exact department match
-    const departmentTasks = tasksFilteredByCompletion.filter(task => 
-      task.department === localSelectedDepartment
-    );
-    
+    const departmentTasks = tasksFilteredByCompletion.filter(task => task.department === localSelectedDepartment);
+
     // If we found tasks for this department, use them
     if (departmentTasks.length > 0) {
       filteredTasks = departmentTasks;
@@ -114,10 +109,10 @@ const TaskListComponent = ({
       }
       return;
     }
-    
+
     // Remove 'everyone' from selection when selecting specific users
     let newSelection = selectedUsers.filter(id => id !== 'everyone');
-    
+
     // Toggle the selected user
     if (newSelection.includes(userId)) {
       newSelection = newSelection.filter(id => id !== userId);
@@ -128,7 +123,6 @@ const TaskListComponent = ({
     } else {
       newSelection.push(userId);
     }
-    
     setSelectedUsers(newSelection);
   };
 
@@ -141,39 +135,32 @@ const TaskListComponent = ({
     if (title === "Team Tasks" && !task.assignedTo) {
       // Assign a random user for demo purposes
       const randomUserId = mockUsers[Math.floor(Math.random() * mockUsers.length)].id;
-      return {...task, assignedTo: randomUserId};
+      return {
+        ...task,
+        assignedTo: randomUserId
+      };
     }
     return task;
   });
-
-  return (
-    <div className="mb-6">
+  return <div className="mb-6">
       {/* Title section displayed outside the card, like in the design */}
-      {!hideTitle && (
-        <div className="flex items-center justify-between mb-2">
+      {!hideTitle && <div className="flex items-center justify-between mb-2">
           <div>
             <h2 className="text-lg font-medium">{title}</h2>
-            {description && <p className="text-sm text-gray-500">{description}</p>}
+            {description}
           </div>
           
-          {filter && title === "Team Tasks" && (
-            <div className="flex items-center space-x-2">
+          {filter && title === "Team Tasks" && <div className="flex items-center space-x-2">
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="outline" className="h-8 px-3 text-sm">
-                    {selectedUsers.includes('everyone') 
-                      ? 'Everyone' 
-                      : `${selectedUsers.length} users selected`}
+                    {selectedUsers.includes('everyone') ? 'Everyone' : `${selectedUsers.length} users selected`}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-56 p-0" align="end">
                   <div className="p-2 border-b">
                     <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-md">
-                      <Checkbox 
-                        id="everyone"
-                        checked={selectedUsers.includes('everyone')}
-                        onCheckedChange={() => toggleUserSelection('everyone')}
-                      />
+                      <Checkbox id="everyone" checked={selectedUsers.includes('everyone')} onCheckedChange={() => toggleUserSelection('everyone')} />
                       <label htmlFor="everyone" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer w-full">
                         Everyone
                       </label>
@@ -181,75 +168,40 @@ const TaskListComponent = ({
                   </div>
                   
                   <div className="py-2 max-h-60 overflow-auto">
-                    {mockUsers.map(user => (
-                      <div key={user.id} className="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-md">
-                        <Checkbox 
-                          id={`user-${user.id}`}
-                          checked={selectedUsers.includes(user.id) || selectedUsers.includes('everyone')}
-                          disabled={selectedUsers.includes('everyone')}
-                          onCheckedChange={() => toggleUserSelection(user.id)}
-                        />
+                    {mockUsers.map(user => <div key={user.id} className="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-md">
+                        <Checkbox id={`user-${user.id}`} checked={selectedUsers.includes(user.id) || selectedUsers.includes('everyone')} disabled={selectedUsers.includes('everyone')} onCheckedChange={() => toggleUserSelection(user.id)} />
                         <label htmlFor={`user-${user.id}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer w-full">
                           {user.name}
                         </label>
-                      </div>
-                    ))}
+                      </div>)}
                   </div>
                 </PopoverContent>
               </Popover>
-            </div>
-          )}
+            </div>}
           
           <div className="flex items-center space-x-2">
             <span className="text-sm text-gray-500">Show completed tasks</span>
-            <Switch 
-              checked={displayCompleted} 
-              onCheckedChange={setDisplayCompleted}
-            />
+            <Switch checked={displayCompleted} onCheckedChange={setDisplayCompleted} />
           </div>
-        </div>
-      )}
+        </div>}
       
       <Card>
         <CardContent className="pt-4">
-          {tasksWithUsers.length === 0 ? (
-            <p className="text-gray-500 text-center py-4">No tasks to display</p>
-          ) : isHorizontalLayout ? (
-            <Carousel className="w-full">
+          {tasksWithUsers.length === 0 ? <p className="text-gray-500 text-center py-4">No tasks to display</p> : isHorizontalLayout ? <Carousel className="w-full">
               <CarouselContent className="-ml-2 md:-ml-4">
-                {tasksWithUsers.map(task => (
-                  <CarouselItem key={task.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3">
-                    <TaskItem 
-                      task={task} 
-                      isHorizontal={true}
-                      assignedUserName={title === "Team Tasks" ? getUserNameById(task.assignedTo) : undefined}
-                      onUpdateTask={onUpdateTask}
-                    />
-                  </CarouselItem>
-                ))}
+                {tasksWithUsers.map(task => <CarouselItem key={task.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3">
+                    <TaskItem task={task} isHorizontal={true} assignedUserName={title === "Team Tasks" ? getUserNameById(task.assignedTo) : undefined} onUpdateTask={onUpdateTask} />
+                  </CarouselItem>)}
               </CarouselContent>
               <div className="flex justify-end mt-2">
                 <CarouselPrevious className="relative static mr-2 translate-y-0" />
                 <CarouselNext className="relative static translate-y-0" />
               </div>
-            </Carousel>
-          ) : (
-            <div>
-              {tasksWithUsers.map(task => (
-                <TaskItem 
-                  key={task.id} 
-                  task={task} 
-                  isHorizontal={false}
-                  assignedUserName={title === "Team Tasks" ? getUserNameById(task.assignedTo) : undefined}
-                  onUpdateTask={onUpdateTask}
-                />
-              ))}
-            </div>
-          )}
+            </Carousel> : <div>
+              {tasksWithUsers.map(task => <TaskItem key={task.id} task={task} isHorizontal={false} assignedUserName={title === "Team Tasks" ? getUserNameById(task.assignedTo) : undefined} onUpdateTask={onUpdateTask} />)}
+            </div>}
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>;
 };
-
 export default TaskListComponent;
