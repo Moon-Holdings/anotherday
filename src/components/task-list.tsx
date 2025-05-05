@@ -186,7 +186,7 @@ const TaskListComponent = ({
         </div>}
       
       <Card>
-        <CardContent className="pt-4">
+        <CardContent className="pt-4 py-0">
           {tasksWithUsers.length === 0 ? <p className="text-gray-500 text-center py-4">No tasks to display</p> : isHorizontalLayout ? <Carousel className="w-full">
               <CarouselContent className="-ml-2 md:-ml-4">
                 {tasksWithUsers.map(task => <CarouselItem key={task.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3">
