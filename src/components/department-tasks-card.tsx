@@ -2,6 +2,7 @@
 import React from 'react';
 import TaskListCard from './task-list-card';
 import { Users, ChefHat, Wine } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 // Define the task list type
 interface TaskList {
@@ -48,8 +49,21 @@ const DepartmentTasksCard = ({
         <h2 className="text-sm font-bold truncate w-full">{department}</h2>
       </div>
       
-      <div className="space-y-2">
-        {allTaskLists.map(taskList => <TaskListCard key={taskList.id} title={taskList.title} completed={taskList.completed} total={taskList.total} isSelected={taskList.id === selectedTaskListId} onClick={() => onSelectTaskList(department, taskList.id, taskList.title)} />)}
+      <div className="h-[132px]"> {/* Fixed height to show 3 task cards (~44px each) */}
+        <ScrollArea className="h-full" orientation="vertical">
+          <div className="space-y-2 pr-2">
+            {allTaskLists.map(taskList => 
+              <TaskListCard 
+                key={taskList.id} 
+                title={taskList.title} 
+                completed={taskList.completed} 
+                total={taskList.total} 
+                isSelected={taskList.id === selectedTaskListId} 
+                onClick={() => onSelectTaskList(department, taskList.id, taskList.title)} 
+              />
+            )}
+          </div>
+        </ScrollArea>
       </div>
     </div>;
 };
