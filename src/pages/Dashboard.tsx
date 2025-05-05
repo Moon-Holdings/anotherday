@@ -131,7 +131,7 @@ const Dashboard = () => {
           </div>
           
           {/* Selected task list details */}
-          <div className="border-t border-gray-200 pt-4 mt-2 py-[9px]">
+          <div className="border-t border-gray-200 pt-4 mt-2 py-[3px]">
             <div className="flex justify-between items-center mb-3">
               <div className="flex items-center">
                 <h3 className="text-xs font-normal">
