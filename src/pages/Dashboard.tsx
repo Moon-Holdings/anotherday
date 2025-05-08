@@ -104,18 +104,22 @@ const Dashboard = () => {
     return task.department === mappedDepartment;
   });
   
-  // Sample task for the UI matching the design
-  const sampleTask = {
+  // Sample task for the UI matching the design - Fixed to include all required Task properties
+  const sampleTask: Task = {
     id: 'sample-1',
     name: 'Taking all chairs down',
     description: 'Remove covers and position properly',
     department: departmentToFilterMap[selectedDepartment],
-    type: 'opening',
-    isCompleted: false
-  } as Task;
+    type: 'role', // Changed from 'opening' to a valid TaskType
+    isCompleted: false,
+    // Adding the missing required properties
+    assignmentType: 'role',
+    completionMethod: 'checkmark',
+    recurrence: 'daily-schedule'
+  };
   
-  // Sample team tasks matching the design
-  const sampleTeamTasks = [
+  // Sample team tasks matching the design - Fixed to include all required Task properties
+  const sampleTeamTasks: Task[] = [
     {
       id: 'team-1',
       name: 'Update website menu',
@@ -123,7 +127,11 @@ const Dashboard = () => {
       department: 'Management',
       type: 'role',
       isCompleted: false,
-      assignedTo: 'unknown'
+      assignedTo: 'unknown',
+      // Adding the missing required properties
+      assignmentType: 'user',
+      completionMethod: 'checkmark',
+      recurrence: 'one-time'
     },
     {
       id: 'team-2',
@@ -132,18 +140,26 @@ const Dashboard = () => {
       department: 'Management',
       type: 'role',
       isCompleted: false,
-      assignedTo: 'you'
+      assignedTo: 'you',
+      // Adding the missing required properties
+      assignmentType: 'user',
+      completionMethod: 'checkmark',
+      recurrence: 'one-time'
     }
-  ] as Task[];
+  ];
   
-  // Sample personal task matching the design
-  const samplePersonalTask = {
+  // Sample personal task matching the design - Fixed to include all required Task properties
+  const samplePersonalTask: Task = {
     id: 'personal-1',
     name: 'Decide on valentines dessert',
     description: '',
     type: 'personal',
-    isCompleted: false
-  } as Task;
+    isCompleted: false,
+    // Adding the missing required properties
+    assignmentType: 'user',
+    completionMethod: 'checkmark',
+    recurrence: 'one-time'
+  };
   
   return (
     <div className="min-h-screen bg-white pb-24">
