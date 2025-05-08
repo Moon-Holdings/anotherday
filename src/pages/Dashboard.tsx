@@ -14,7 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { ChefHat, Users, UsersRound, Package, Wine, MoveRight, User, UserRound } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 
 // Simplified mock data for department task lists
 const mockDepartmentTaskLists = {
@@ -50,11 +50,11 @@ const Dashboard = () => {
   const getDepartmentIcon = (department: string) => {
     switch (department) {
       case 'floor':
-        return <Users size={24} />;
+        return <Users size={20} />;
       case 'kitchen':
-        return <ChefHat size={24} />;
+        return <ChefHat size={20} />;
       default:
-        return <div className="w-6 h-6" />;
+        return <div className="w-5 h-5" />;
     }
   };
   
@@ -160,16 +160,16 @@ const Dashboard = () => {
   };
   
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-gray-50 pb-16">
       <Header userRole="owner" />
       
-      <div className="container px-4 py-6">
+      <div className="container px-3 py-4">
         {/* Departments Tasks Section - Card with distinct border */}
-        <Card className="mb-6 rounded-lg overflow-hidden">
-          <div className="p-6">
-            <h2 className="text-2xl font-bold mb-4">Departments Tasks</h2>
+        <Card className="mb-4 rounded-lg overflow-hidden shadow-sm">
+          <div className="p-4">
+            <h2 className="text-lg font-bold mb-3">Departments Tasks</h2>
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <DepartmentTasksCard
                 key="floor"
                 department="Waiters"
@@ -194,33 +194,34 @@ const Dashboard = () => {
           <div className="h-px w-full bg-gray-200"></div>
           
           {/* Selected task list details */}
-          <div className="p-6">
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className="bg-gray-100 rounded-full px-4 py-2 text-base font-medium">
+          <div className="p-4">
+            <div className="flex justify-between items-center mb-3">
+              <div className="flex items-center gap-1.5">
+                <Badge variant="outline" className="bg-gray-100 rounded-full px-3 py-1 text-sm font-medium">
                   {departmentToFilterMap[selectedDepartment] === 'floor' ? 'Waiters' : 'Kitchen'}
                 </Badge>
-                <Badge variant="outline" className="bg-gray-100 rounded-full px-4 py-2 text-base font-medium">
+                <Badge variant="outline" className="bg-gray-100 rounded-full px-3 py-1 text-sm font-medium">
                   {selectedTaskListTitle || 'Morning Opening'}
                 </Badge>
               </div>
               
-              <div className="flex items-center gap-2">
-                <span className="text-gray-600">Show completed</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs text-gray-600">Show completed</span>
                 <Switch 
                   checked={showCompletedDepartmentTasks} 
                   onCheckedChange={setShowCompletedDepartmentTasks}
+                  className="scale-75"
                 />
               </div>
             </div>
             
-            <div className="mt-4">
+            <div className="mt-3">
               {/* Single task item based on mockup */}
-              <div className="p-4 flex items-start">
-                <div className="h-6 w-6 rounded-sm border border-gray-300 flex-shrink-0 mt-1"></div>
-                <div className="ml-4">
-                  <h3 className="text-xl font-semibold">Taking all chairs down</h3>
-                  <p className="text-gray-600">Remove covers and position properly</p>
+              <div className="py-2 px-3 flex items-start">
+                <div className="h-5 w-5 rounded-sm border border-gray-300 flex-shrink-0 mt-0.5"></div>
+                <div className="ml-3">
+                  <h3 className="text-base font-medium">Taking all chairs down</h3>
+                  <p className="text-xs text-gray-600">Remove covers and position properly</p>
                 </div>
               </div>
             </div>
@@ -228,37 +229,38 @@ const Dashboard = () => {
         </Card>
         
         {/* Team Tasks section - Card with distinct border */}
-        <Card className="mb-6 rounded-lg overflow-hidden">
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
+        <Card className="mb-4 rounded-lg overflow-hidden shadow-sm">
+          <div className="p-4">
+            <div className="flex items-center justify-between mb-3">
               <div className="flex items-center">
-                <UsersRound className="h-6 w-6 mr-3" />
-                <h2 className="text-2xl font-bold">Team Tasks</h2>
+                <UsersRound className="h-4 w-4 mr-2" />
+                <h2 className="text-lg font-bold">Team Tasks</h2>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-gray-600">Show completed</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs text-gray-600">Show completed</span>
                 <Switch 
                   checked={showCompletedTeamTasks} 
                   onCheckedChange={setShowCompletedTeamTasks}
+                  className="scale-75"
                 />
               </div>
             </div>
             
-            <div className="space-y-4">
+            <div className="space-y-2">
               {/* Team task items based on mockup */}
-              <div className="p-4 flex items-start">
-                <div className="h-6 w-6 rounded-sm border border-gray-300 flex-shrink-0 mt-1"></div>
-                <div className="ml-4">
-                  <h3 className="text-xl font-semibold">Update website menu</h3>
-                  <p className="text-gray-600">Unknown User</p>
+              <div className="py-2 px-3 flex items-start">
+                <div className="h-5 w-5 rounded-sm border border-gray-300 flex-shrink-0 mt-0.5"></div>
+                <div className="ml-3">
+                  <h3 className="text-base font-medium">Update website menu</h3>
+                  <p className="text-xs text-gray-600">Unknown User</p>
                 </div>
               </div>
               
-              <div className="p-4 flex items-start">
-                <div className="h-6 w-6 rounded-sm border border-gray-300 flex-shrink-0 mt-1"></div>
-                <div className="ml-4">
-                  <h3 className="text-xl font-semibold">Updating evening playlist</h3>
-                  <p className="text-gray-600">Assigned to you</p>
+              <div className="py-2 px-3 flex items-start">
+                <div className="h-5 w-5 rounded-sm border border-gray-300 flex-shrink-0 mt-0.5"></div>
+                <div className="ml-3">
+                  <h3 className="text-base font-medium">Updating evening playlist</h3>
+                  <p className="text-xs text-gray-600">Assigned to you</p>
                 </div>
               </div>
             </div>
@@ -266,26 +268,26 @@ const Dashboard = () => {
         </Card>
         
         {/* Personal Tasks section - Card with distinct border */}
-        <Card className="rounded-lg overflow-hidden">
-          <div className="p-6">
-            <div className="flex items-center mb-4">
-              <User className="h-6 w-6 mr-3" />
-              <h2 className="text-2xl font-bold">Personal Tasks</h2>
+        <Card className="rounded-lg overflow-hidden shadow-sm">
+          <div className="p-4">
+            <div className="flex items-center mb-3">
+              <User className="h-4 w-4 mr-2" />
+              <h2 className="text-lg font-bold">Personal Tasks</h2>
             </div>
             
-            <div className="space-y-4">
+            <div className="space-y-2">
               {/* Personal task item based on mockup */}
-              <div className="p-4 flex items-start">
-                <div className="h-6 w-6 rounded-sm border border-gray-300 flex-shrink-0 mt-1"></div>
-                <div className="ml-4">
-                  <h3 className="text-xl font-semibold">Decide on valentines dessert</h3>
+              <div className="py-2 px-3 flex items-start">
+                <div className="h-5 w-5 rounded-sm border border-gray-300 flex-shrink-0 mt-0.5"></div>
+                <div className="ml-3">
+                  <h3 className="text-base font-medium">Decide on valentines dessert</h3>
                 </div>
               </div>
               
-              <div className="p-4 flex items-start">
-                <div className="h-6 w-6 rounded-sm border border-gray-300 flex-shrink-0 mt-1"></div>
-                <div className="ml-4">
-                  <h3 className="text-xl font-semibold">Get toilet paper</h3>
+              <div className="py-2 px-3 flex items-start">
+                <div className="h-5 w-5 rounded-sm border border-gray-300 flex-shrink-0 mt-0.5"></div>
+                <div className="ml-3">
+                  <h3 className="text-base font-medium">Get toilet paper</h3>
                 </div>
               </div>
             </div>
@@ -293,7 +295,7 @@ const Dashboard = () => {
         </Card>
       </div>
       
-      <div className="fixed bottom-24 right-6">
+      <div className="fixed bottom-20 right-4">
         <AddButton onClick={() => setIsAddTaskModalOpen(true)} />
       </div>
 
