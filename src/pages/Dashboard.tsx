@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -7,7 +6,7 @@ import AddButton from '@/components/add-button';
 import AddTaskModal from '@/components/add-task-modal';
 import DepartmentTasksCard from '@/components/department-tasks-card';
 import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks, mockTeamTasks } from '@/data/mock-data';
-import { Task } from '@/types';
+import { Task, Department } from '@/types';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
@@ -39,9 +38,9 @@ const Dashboard = () => {
   const [selectedTaskListTitle, setSelectedTaskListTitle] = useState(mockDepartmentTaskLists.floor[0].title);
 
   // Maps the department cards to their corresponding filter values
-  const departmentToFilterMap: Record<string, string> = {
-    floor: 'Waiters',
-    kitchen: 'Kitchen',
+  const departmentToFilterMap: Record<string, Department> = {
+    floor: 'floor',
+    kitchen: 'kitchen',
   };
 
   // Icons for departments
@@ -109,10 +108,9 @@ const Dashboard = () => {
     id: 'sample-1',
     name: 'Taking all chairs down',
     description: 'Remove covers and position properly',
-    department: departmentToFilterMap[selectedDepartment],
-    type: 'role', // Changed from 'opening' to a valid TaskType
+    department: departmentToFilterMap[selectedDepartment], // Now correctly typed as Department
+    type: 'role', 
     isCompleted: false,
-    // Adding the missing required properties
     assignmentType: 'role',
     completionMethod: 'checkmark',
     recurrence: 'daily-schedule'
@@ -124,11 +122,10 @@ const Dashboard = () => {
       id: 'team-1',
       name: 'Update website menu',
       description: '',
-      department: 'Management',
+      department: 'kitchen', // Changed from "Management" to a valid Department type
       type: 'role',
       isCompleted: false,
       assignedTo: 'unknown',
-      // Adding the missing required properties
       assignmentType: 'user',
       completionMethod: 'checkmark',
       recurrence: 'one-time'
@@ -137,11 +134,10 @@ const Dashboard = () => {
       id: 'team-2',
       name: 'Updating evening playlist',
       description: '',
-      department: 'Management',
+      department: 'floor', // Changed from "Management" to a valid Department type
       type: 'role',
       isCompleted: false,
       assignedTo: 'you',
-      // Adding the missing required properties
       assignmentType: 'user',
       completionMethod: 'checkmark',
       recurrence: 'one-time'
@@ -155,7 +151,6 @@ const Dashboard = () => {
     description: '',
     type: 'personal',
     isCompleted: false,
-    // Adding the missing required properties
     assignmentType: 'user',
     completionMethod: 'checkmark',
     recurrence: 'one-time'
