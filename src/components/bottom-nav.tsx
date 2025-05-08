@@ -60,42 +60,51 @@ const BottomNav = ({ userRole = 'manager' }: BottomNavProps) => {
   };
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 bg-white rounded-lg border border-gray-200 shadow-md z-50">
+    <div className="fixed bottom-4 left-4 right-4 bg-white rounded-lg border border-gray-200 shadow-lg z-50">
       <div className="flex justify-around items-center">
         {canAccessSchedule && (
           <button 
             onClick={() => handleTabChange('schedule')} 
             className={cn(
-              "flex flex-col items-center justify-center py-2 px-4 w-1/4",
+              "flex flex-col items-center justify-center py-3 px-4 w-1/4 relative",
               activeTab === 'schedule' ? 'text-teal-500' : 'text-gray-500'
             )}
           >
             <CalendarDays size={24} />
             <span className="text-xs mt-1">Schedule</span>
+            {activeTab === 'schedule' && (
+              <div className="absolute bottom-0 left-1/4 right-1/4 h-0.5 bg-teal-500 rounded-full"></div>
+            )}
           </button>
         )}
         
         <button 
           onClick={() => handleTabChange('tasks')} 
           className={cn(
-            "flex flex-col items-center justify-center py-2 px-4 w-1/4",
+            "flex flex-col items-center justify-center py-3 px-4 w-1/4 relative",
             activeTab === 'tasks' ? 'text-teal-500' : 'text-gray-500'
           )}
         >
           <ListTodo size={24} />
           <span className="text-xs mt-1">Tasks</span>
+          {activeTab === 'tasks' && (
+            <div className="absolute bottom-0 left-1/4 right-1/4 h-0.5 bg-teal-500 rounded-full"></div>
+          )}
         </button>
         
         {canAccessDashboard && (
           <button 
             onClick={() => handleTabChange('dashboard')} 
             className={cn(
-              "flex flex-col items-center justify-center py-2 px-4 w-1/4",
+              "flex flex-col items-center justify-center py-3 px-4 w-1/4 relative",
               activeTab === 'dashboard' ? 'text-teal-500' : 'text-gray-500'
             )}
           >
             <LayoutDashboard size={24} />
             <span className="text-xs mt-1">Dashboard</span>
+            {activeTab === 'dashboard' && (
+              <div className="absolute bottom-0 left-1/4 right-1/4 h-0.5 bg-teal-500 rounded-full"></div>
+            )}
           </button>
         )}
         
@@ -103,12 +112,15 @@ const BottomNav = ({ userRole = 'manager' }: BottomNavProps) => {
           <button 
             onClick={() => handleTabChange('admin')} 
             className={cn(
-              "flex flex-col items-center justify-center py-2 px-4 w-1/4",
+              "flex flex-col items-center justify-center py-3 px-4 w-1/4 relative",
               activeTab === 'admin' ? 'text-teal-500' : 'text-gray-500'
             )}
           >
             <Settings size={24} />
             <span className="text-xs mt-1">Admin</span>
+            {activeTab === 'admin' && (
+              <div className="absolute bottom-0 left-1/4 right-1/4 h-0.5 bg-teal-500 rounded-full"></div>
+            )}
           </button>
         )}
       </div>
