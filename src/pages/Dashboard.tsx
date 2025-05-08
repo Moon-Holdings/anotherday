@@ -15,25 +15,13 @@ import { ChefHat, Users, UsersRound, Package, Wine, MoveRight, User, UserRound }
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 
-// Mock data for department task lists
+// Simplified mock data for department task lists
 const mockDepartmentTaskLists = {
   floor: [
     { id: 'f1', title: 'Morning Opening', completed: 6, total: 12 },
-    { id: 'f2', title: 'Morning Closing', completed: 2, total: 8 },
   ],
   kitchen: [
-    { id: 'k1', title: 'Morning Opening', completed: 3, total: 7 },
-    { id: 'k2', title: 'Morning Closing', completed: 2, total: 5 },
-  ],
-  bar: [
-    { id: 'b1', title: 'Morning Closing', completed: 3, total: 5 },
-    { id: 'b2', title: 'Morning Closing', completed: 1, total: 4 },
-  ],
-  takeaway: [
-    { id: 't1', title: 'Afternoon Opening', completed: 1, total: 3 },
-  ],
-  management: [
-    { id: 'm1', title: 'Morning Check', completed: 4, total: 6 },
+    { id: 'k1', title: 'Morning Cleaning', completed: 2, total: 5 },
   ],
 };
 
@@ -53,32 +41,22 @@ const Dashboard = () => {
   // Maps the department cards to their corresponding filter values
   const departmentToFilterMap: Record<string, string> = {
     floor: 'Waiters',
-    bar: 'Bar',
     kitchen: 'Kitchen',
-    takeaway: 'Waiters',
-    management: 'Managers'
   };
 
   // Icons for departments
   const getDepartmentIcon = (department: string) => {
     switch (department) {
       case 'floor':
-        return <Users size={48} strokeWidth={1.5} />;
-      case 'bar':
-        return <Wine size={48} strokeWidth={1.5} />;
+        return <Users size={24} />;
       case 'kitchen':
-        return <ChefHat size={48} strokeWidth={1.5} />;
-      case 'takeaway':
-        return <Package size={48} strokeWidth={1.5} />;
-      case 'management':
-        return <UsersRound size={48} strokeWidth={1.5} />;
+        return <ChefHat size={24} />;
       default:
-        return <div className="w-12 h-12" />;
+        return <div className="w-6 h-6" />;
     }
   };
   
   const handleAddTask = (newTask: Task) => {
-    // In a real app, we would add the task to our state or database
     if (newTask.type === 'personal') {
       setPersonalTasks([...personalTasks, newTask]);
     } else if (newTask.type === 'role') {
@@ -126,107 +104,167 @@ const Dashboard = () => {
     return task.department === mappedDepartment;
   });
   
+  // Sample task for the UI matching the design
+  const sampleTask = {
+    id: 'sample-1',
+    name: 'Taking all chairs down',
+    description: 'Remove covers and position properly',
+    department: departmentToFilterMap[selectedDepartment],
+    type: 'opening',
+    isCompleted: false
+  } as Task;
+  
+  // Sample team tasks matching the design
+  const sampleTeamTasks = [
+    {
+      id: 'team-1',
+      name: 'Update website menu',
+      description: '',
+      department: 'Management',
+      type: 'role',
+      isCompleted: false,
+      assignedTo: 'unknown'
+    },
+    {
+      id: 'team-2',
+      name: 'Updating evening playlist',
+      description: '',
+      department: 'Management',
+      type: 'role',
+      isCompleted: false,
+      assignedTo: 'you'
+    }
+  ] as Task[];
+  
+  // Sample personal task matching the design
+  const samplePersonalTask = {
+    id: 'personal-1',
+    name: 'Decide on valentines dessert',
+    description: '',
+    type: 'personal',
+    isCompleted: false
+  } as Task;
+  
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-white pb-24">
       <Header userRole="owner" />
       
-      <div className="container px-3 sm:px-4 py-4 sm:py-6">
-        {/* Department Tasks Section with new design */}
-        <div className="bg-white p-4 rounded-lg shadow-md mb-5">
-          <h2 className="text-xl font-semibold mb-4">Departments Tasks</h2>
+      <div className="container px-4 py-6">
+        {/* Departments Tasks Section */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold mb-4">Departments Tasks</h2>
           
-          {/* Departments carousel with task lists */}
-          <div className="mb-6">
-            <ScrollArea className="w-full pb-4" orientation="horizontal">
-              <div className="flex px-1 py-2 gap-2">
-                {Object.entries(mockDepartmentTaskLists).map(([department, taskLists]) => (
-                  <DepartmentTasksCard
-                    key={department}
-                    department={departmentToFilterMap[department] || department}
-                    icon={getDepartmentIcon(department)}
-                    taskLists={taskLists}
-                    onSelectTaskList={(dept, listId, listTitle) => handleSelectTaskList(department, listId, listTitle)}
-                    selectedTaskListId={selectedTaskListId}
-                  />
-                ))}
-              </div>
-            </ScrollArea>
+          <div className="grid grid-cols-2 gap-4">
+            <DepartmentTasksCard
+              key="floor"
+              department="Waiters"
+              icon={getDepartmentIcon('floor')}
+              taskLists={mockDepartmentTaskLists.floor}
+              onSelectTaskList={(dept, listId, listTitle) => handleSelectTaskList('floor', listId, listTitle)}
+              selectedTaskListId={selectedTaskListId}
+            />
+            
+            <DepartmentTasksCard
+              key="kitchen"
+              department="Kitchen"
+              icon={getDepartmentIcon('kitchen')}
+              taskLists={mockDepartmentTaskLists.kitchen}
+              onSelectTaskList={(dept, listId, listTitle) => handleSelectTaskList('kitchen', listId, listTitle)}
+              selectedTaskListId={selectedTaskListId}
+            />
           </div>
           
           {/* Selected task list details */}
-          <div className="border-t border-gray-200 pt-4 mt-2">
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex items-center">
-                <div className="flex space-x-2">
-                  <Badge variant="outline" className="bg-gray-100 px-3 py-1.5 text-gray-800">
-                    {departmentToFilterMap[selectedDepartment] || selectedDepartment}
-                  </Badge>
-                  <Badge variant="outline" className="bg-gray-100 px-3 py-1.5 text-gray-800">
-                    {selectedTaskListTitle}
-                  </Badge>
-                </div>
-                <Button variant="ghost" size="icon" className="ml-1" onClick={() => navigate(`/tasks/${selectedTaskListId}`)}>
-                  <MoveRight className="h-4 w-4" />
-                </Button>
+          <div className="mt-4 p-4 border-t border-gray-200">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="bg-white rounded-full px-4 py-2 text-base font-medium">
+                  {departmentToFilterMap[selectedDepartment] || 'Waiters'}
+                </Badge>
+                <Badge variant="outline" className="bg-white rounded-full px-4 py-2 text-base font-medium">
+                  {selectedTaskListTitle || 'Morning Opening'}
+                </Badge>
               </div>
-            </div>
-            
-            <div className="flex items-center justify-end mb-3">
-              <span className="text-sm text-gray-500 mr-2">Show completed tasks</span>
+              
               <Switch 
                 checked={showCompletedDepartmentTasks} 
                 onCheckedChange={setShowCompletedDepartmentTasks}
               />
             </div>
             
-            {/* Task list for selected department - Title moved outside the TaskListComponent */}
-            <div>
-              <TaskListComponent 
-                title=""
-                tasks={filteredOpeningTasks.length > 0 ? filteredOpeningTasks : openingTasks.slice(0, 2)}
-                selectedDepartment={departmentToFilterMap[selectedDepartment] || selectedDepartment} 
-                hideTitle={true} 
-                displayForcedHorizontal={true}
-                showCompleted={showCompletedDepartmentTasks}
-                onUpdateTask={handleUpdateTask}
-              />
+            <div className="mt-6">
+              {/* Single task item based on mockup */}
+              <div className="p-4 flex items-start">
+                <div className="h-6 w-6 rounded-sm border border-gray-300 flex-shrink-0 mt-1"></div>
+                <div className="ml-4">
+                  <h3 className="text-xl font-semibold">Taking all chairs down</h3>
+                  <p className="text-gray-600">Remove covers and position properly</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         
         {/* Team Tasks section */}
-        <div className="bg-white p-4 rounded-lg shadow-md mb-5">
-          <div className="flex items-center mb-3">
-            <UsersRound className="h-5 w-5 mr-2 text-gray-700" />
-            <h2 className="text-lg font-semibold">Team Tasks</h2>
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center">
+              <UsersRound className="h-6 w-6 mr-3" />
+              <h2 className="text-2xl font-bold">Team Tasks</h2>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-gray-600">Show completed</span>
+              <Switch checked={false} />
+            </div>
           </div>
-          <TaskListComponent 
-            title="" 
-            tasks={teamTasks}
-            filter={true} 
-            hideTitle={true}
-            selectedDepartment={departmentToFilterMap[selectedDepartment] || 'Waiters'}
-            onUpdateTask={handleUpdateTask}
-          />
+          
+          <div className="space-y-4">
+            {/* Team task items based on mockup */}
+            <div className="p-4 flex items-start">
+              <div className="h-6 w-6 rounded-sm border border-gray-300 flex-shrink-0 mt-1"></div>
+              <div className="ml-4">
+                <h3 className="text-xl font-semibold">Update website menu</h3>
+                <p className="text-gray-600">Unknown User</p>
+              </div>
+            </div>
+            
+            <div className="p-4 flex items-start">
+              <div className="h-6 w-6 rounded-sm border border-gray-300 flex-shrink-0 mt-1"></div>
+              <div className="ml-4">
+                <h3 className="text-xl font-semibold">Updating evening playlist</h3>
+                <p className="text-gray-600">Assigned to you</p>
+              </div>
+            </div>
+          </div>
         </div>
         
         {/* Personal Tasks section */}
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <div className="flex items-center mb-3">
-            <User className="h-5 w-5 mr-2 text-gray-700" />
-            <h2 className="text-lg font-semibold">Personal Tasks</h2>
+        <div>
+          <div className="flex items-center mb-4">
+            <User className="h-6 w-6 mr-3" />
+            <h2 className="text-2xl font-bold">Personal Tasks</h2>
           </div>
-          <TaskListComponent 
-            title="" 
-            tasks={personalTasks}
-            hideTitle={true}
-            description="Your personal assigned tasks"
-            onUpdateTask={handleUpdateTask}
-          />
+          
+          <div className="space-y-4">
+            {/* Personal task item based on mockup */}
+            <div className="p-4 flex items-start">
+              <div className="h-6 w-6 rounded-sm border border-gray-300 flex-shrink-0 mt-1"></div>
+              <div className="ml-4">
+                <h3 className="text-xl font-semibold">Decide on valentines dessert</h3>
+              </div>
+            </div>
+            
+            <div className="p-4 flex items-start">
+              <div className="h-6 w-6 rounded-sm border border-gray-300 flex-shrink-0 mt-1"></div>
+              <div className="ml-4">
+                <h3 className="text-xl font-semibold">Get toilet paper</h3>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       
-      <div className="fixed bottom-24 right-4 sm:right-6">
+      <div className="fixed bottom-24 right-6">
         <AddButton onClick={() => setIsAddTaskModalOpen(true)} />
       </div>
 

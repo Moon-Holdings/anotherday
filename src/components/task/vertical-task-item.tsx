@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Task } from '@/types';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -42,59 +43,47 @@ const VerticalTaskItem = ({
   const timeAgo = deadline ? formatDistanceToNow(deadline, { addSuffix: true }) : undefined;
 
   return (
-    <div className={`flex items-center justify-between p-3 border-b last:border-b-0 
-      ${isExample ? 'border-dashed bg-gray-50' : ''}`}>
-      <div className="flex items-center flex-1">
+    <div className="p-4 flex items-start">
+      <div className="h-6 w-6 rounded-sm border border-gray-300 flex-shrink-0 mt-1">
         <Checkbox
           id={`task-${task.id}`}
           checked={isCompleted}
           onCheckedChange={handleCheckboxChange}
           disabled={isExample}
+          className="h-full w-full"
         />
-        
-        <div className="ml-3 flex-1 flex flex-col">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <span className="font-medium text-gray-900">
-                {task.name}
-                {isExample && <span className="ml-2 text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">Example</span>}
-              </span>
-              {task.isHighPriority && (
-                <span className="ml-2 text-xs text-red-500 font-semibold">High Priority</span>
-              )}
-            </div>
-            {deadline && (
-              <div className="text-xs text-gray-500 flex items-center">
-                <Calendar className="w-3.5 h-3.5 mr-1" />
-                {timeAgo}
-              </div>
-            )}
+      </div>
+      
+      <div className="ml-4">
+        <h3 className="text-xl font-semibold">{task.name}</h3>
+        {task.description && (
+          <p className="text-gray-600">{task.description}</p>
+        )}
+        {assignedUserName && (
+          <p className="text-gray-600">{
+            assignedUserName === 'you' ? 'Assigned to you' : assignedUserName
+          }</p>
+        )}
+        {deadline && (
+          <div className="text-sm text-gray-500 flex items-center mt-1">
+            <Calendar className="w-4 h-4 mr-1" />
+            {timeAgo}
           </div>
-          
-          {task.description && (
-            <p className="text-sm text-gray-500 line-clamp-1">{task.description}</p>
-          )}
-          {assignedUserName && (
-            <p className="text-sm text-gray-500">Assigned to: {assignedUserName}</p>
-          )}
-        </div>
+        )}
       </div>
       
       {task.completionMethod === 'quantity' && (
-        <div>
-          <div className="flex items-center space-x-2">
-            <label htmlFor={`quantity-${task.id}`} className="text-sm font-medium text-gray-700">
-              Quantity:
-            </label>
+        <div className="ml-auto">
+          <div className="flex items-center">
             <input
               type="number"
               id={`quantity-${task.id}`}
-              className="w-20 px-3 py-2 border rounded-md text-sm text-gray-900"
+              className="w-16 p-2 border rounded"
               value={quantityOnHand}
               onChange={handleQuantityChange}
               disabled={isExample}
             />
-            <span className="text-sm text-gray-500">/{task.quantityRequired}</span>
+            <span className="ml-1 text-gray-600">/{task.quantityRequired}</span>
           </div>
         </div>
       )}
