@@ -32,24 +32,22 @@ const TaskListCard = ({
   return (
     <div 
       className={`
-        bg-gray-50 rounded-lg p-3 cursor-pointer
-        ${isSelected ? 'border border-rootina-teal' : ''}
+        bg-white border p-1.5 rounded-md cursor-pointer transition-all
+        ${isSelected ? 'border-rootina-teal shadow-sm' : 'border-gray-200'}
       `}
       onClick={onClick}
     >
-      <div className="text-base font-medium mb-2">
-        {title}
+      <div className="flex justify-between items-center">
+        <h3 className="font-medium text-xs truncate max-w-[70%] pr-1">{title}</h3>
+        <span className="text-xs text-gray-600 whitespace-nowrap">{completed}/{total}</span>
       </div>
-      <div className="flex items-center justify-between">
-        <div className="w-3/4">
-          <div className="h-2 bg-gray-100 rounded-full w-full">
-            <div 
-              className={`h-2 rounded-full ${progressColor}`}
-              style={{ width: `${progressPercent}%` }}
-            ></div>
-          </div>
+      <div className="w-full mt-1">
+        <div className="h-1.5 bg-gray-100 rounded-full w-full">
+          <div 
+            className={`h-1.5 rounded-full ${progressColor}`}
+            style={{ width: `${progressPercent}%` }}
+          ></div>
         </div>
-        <span className="text-gray-600 text-base ml-2">{completed}/{total}</span>
       </div>
     </div>
   );

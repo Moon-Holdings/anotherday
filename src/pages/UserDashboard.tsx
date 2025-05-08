@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
@@ -10,8 +9,7 @@ import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks } from '@/d
 import { Task } from '@/types';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Switch } from '@/components/ui/switch';
-import { Badge } from '@/components/ui/badge';
-import { ChefHat, Users, UsersRound, Package, Wine, MoveRight, User } from 'lucide-react';
+import { ChefHat, Users, UsersRound, Package, Wine, MoveRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 
@@ -117,25 +115,25 @@ const UserDashboard = () => {
   });
   
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-gray-50 pb-20">
       <Header />
       
-      <div className="container px-3 sm:px-4 py-4 sm:py-6">
+      <div className="container px-2 sm:px-4 py-4 sm:py-6">
         {/* Department Tasks Section with new design */}
-        <div className="bg-white p-4 rounded-lg shadow-md mb-5">
-          <h2 className="text-xl font-semibold mb-4">Departments Tasks</h2>
+        <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm mb-4 sm:mb-6">
+          <h2 className="text-lg font-medium mb-4">Departments Tasks</h2>
           
           {/* Departments carousel with task lists */}
           <div className="mb-6">
             <ScrollArea className="w-full pb-4" orientation="horizontal">
-              <div className="flex px-1 py-2 gap-2">
+              <div className="flex px-1 py-2">
                 {Object.entries(mockDepartmentTaskLists).map(([department, taskLists]) => (
                   <DepartmentTasksCard
                     key={department}
                     department={departmentToFilterMap[department] || department}
                     icon={getDepartmentIcon(department)}
                     taskLists={taskLists}
-                    onSelectTaskList={(dept, listId, listTitle) => handleSelectTaskList(department, listId, listTitle)}
+                    onSelectTaskList={handleSelectTaskList}
                     selectedTaskListId={selectedTaskListId}
                   />
                 ))}
@@ -145,28 +143,23 @@ const UserDashboard = () => {
           
           {/* Selected task list details */}
           <div className="border-t border-gray-200 pt-4 mt-2">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-3">
               <div className="flex items-center">
-                <div className="flex space-x-2">
-                  <Badge variant="outline" className="bg-gray-100 px-3 py-1.5 text-gray-800">
-                    {departmentToFilterMap[selectedDepartment] || selectedDepartment}
-                  </Badge>
-                  <Badge variant="outline" className="bg-gray-100 px-3 py-1.5 text-gray-800">
-                    {selectedTaskListTitle}
-                  </Badge>
-                </div>
+                <h3 className="text-lg font-medium">
+                  {departmentToFilterMap[selectedDepartment] || selectedDepartment} | {selectedTaskListTitle}
+                </h3>
                 <Button variant="ghost" size="icon" className="ml-1" onClick={() => navigate(`/tasks/${selectedTaskListId}`)}>
                   <MoveRight className="h-4 w-4" />
                 </Button>
               </div>
-            </div>
-            
-            <div className="flex items-center justify-end mb-3">
-              <span className="text-sm text-gray-500 mr-2">Show completed tasks</span>
-              <Switch 
-                checked={showCompletedDepartmentTasks} 
-                onCheckedChange={setShowCompletedDepartmentTasks}
-              />
+              
+              <div className="flex items-center space-x-2 text-xs sm:text-sm">
+                <span className="text-gray-500">Show completed tasks</span>
+                <Switch 
+                  checked={showCompletedDepartmentTasks} 
+                  onCheckedChange={setShowCompletedDepartmentTasks}
+                />
+              </div>
             </div>
             
             {/* Task list for selected department - Title moved outside the TaskListComponent */}
@@ -185,22 +178,17 @@ const UserDashboard = () => {
         </div>
         
         {/* Personal Tasks Section */}
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <div className="flex items-center mb-3">
-            <User className="h-5 w-5 mr-2 text-gray-700" />
-            <h2 className="text-lg font-semibold">Personal Tasks</h2>
-          </div>
+        <div className="space-y-4 sm:space-y-6">
           <TaskListComponent 
-            title="" 
+            title="Personal Tasks" 
             tasks={personalTasks} 
-            hideTitle={true}
             description="Your personal assigned tasks"
             onUpdateTask={handleUpdateTask}
           />
         </div>
       </div>
       
-      <div className="fixed bottom-24 right-4 sm:right-6">
+      <div className="fixed bottom-20 right-4 sm:right-6">
         <AddButton onClick={() => setIsAddTaskModalOpen(true)} />
       </div>
 

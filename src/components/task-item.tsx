@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Task } from '@/types';
 import HorizontalTaskItem from './task/horizontal-task-item';
