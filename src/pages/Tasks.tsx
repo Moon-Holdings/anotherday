@@ -11,6 +11,11 @@ import AddTaskModal from '@/components/add-task-modal';
 import { mockOpeningTasks } from '@/data/mock-data';
 import { Task } from '@/types';
 import { toast } from 'sonner';
+import { format } from 'date-fns';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { CalendarIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 // Mock user data - in a real app this would come from an API/context
 const mockUserRoles = {
@@ -29,7 +34,7 @@ const mockDepartments = [
 
 const Tasks = () => {
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
-  const [selectedDay, setSelectedDay] = useState('Sunday');
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedShift, setSelectedShift] = useState('Afternoon Shift | Opening');
   const [selectedDepartment, setSelectedDepartment] = useState('Waiters');
   const [showCompleted, setShowCompleted] = useState(true);
@@ -80,20 +85,28 @@ const Tasks = () => {
       
       <div className="container px-4 py-6">
         <div className="flex flex-wrap gap-2 mb-6">
-          <Select value={selectedDay} onValueChange={setSelectedDay}>
-            <SelectTrigger className="w-32">
-              <SelectValue placeholder="Select day" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Sunday">Sunday</SelectItem>
-              <SelectItem value="Monday">Monday</SelectItem>
-              <SelectItem value="Tuesday">Tuesday</SelectItem>
-              <SelectItem value="Wednesday">Wednesday</SelectItem>
-              <SelectItem value="Thursday">Thursday</SelectItem>
-              <SelectItem value="Friday">Friday</SelectItem>
-              <SelectItem value="Saturday">Saturday</SelectItem>
-            </SelectContent>
-          </Select>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  "w-[200px] justify-start text-left font-normal",
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {format(selectedDate, "EEEE, MMM d, yyyy")}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={selectedDate}
+                onSelect={(date) => date && setSelectedDate(date)}
+                initialFocus
+                className="p-3 pointer-events-auto"
+              />
+            </PopoverContent>
+          </Popover>
 
           <Select value={selectedShift} onValueChange={setSelectedShift}>
             <SelectTrigger className="w-60">
