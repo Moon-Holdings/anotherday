@@ -9,7 +9,7 @@ import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks } from '@/d
 import { Task } from '@/types';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Switch } from '@/components/ui/switch';
-import { ChefHat, Users, UsersRound, Package, Wine, MoveRight } from 'lucide-react';
+import { ChefHat, Users, UsersRound, Package, Wine, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 
@@ -148,8 +148,13 @@ const UserDashboard = () => {
                 <h3 className="text-lg font-medium">
                   {departmentToFilterMap[selectedDepartment] || selectedDepartment} | {selectedTaskListTitle}
                 </h3>
-                <Button variant="ghost" size="icon" className="ml-1" onClick={() => navigate(`/tasks/${selectedTaskListId}`)}>
-                  <MoveRight className="h-4 w-4" />
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="ml-1" 
+                  onClick={() => navigate(`/tasks/${selectedTaskListId}`)}
+                >
+                  <ExternalLink className="h-4 w-4" />
                 </Button>
               </div>
               
