@@ -85,6 +85,33 @@ const Tasks = () => {
       
       <div className="container px-4 py-6">
         <div className="flex flex-wrap gap-2 mb-6">
+          <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
+            <SelectTrigger className="w-32">
+              <SelectValue placeholder="Select department" />
+            </SelectTrigger>
+            <SelectContent>
+              {availableDepartments.map(department => (
+                <SelectItem key={department} value={department}>
+                  {department}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          
+          <Select value={selectedShift} onValueChange={setSelectedShift}>
+            <SelectTrigger className="w-60">
+              <SelectValue placeholder="Select shift" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
+              <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
+              <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
+              <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
+              <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
+              <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
+            </SelectContent>
+          </Select>
+          
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -107,33 +134,6 @@ const Tasks = () => {
               />
             </PopoverContent>
           </Popover>
-
-          <Select value={selectedShift} onValueChange={setSelectedShift}>
-            <SelectTrigger className="w-60">
-              <SelectValue placeholder="Select shift" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
-              <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
-              <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
-              <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
-              <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
-              <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
-            <SelectTrigger className="w-32">
-              <SelectValue placeholder="Select department" />
-            </SelectTrigger>
-            <SelectContent>
-              {availableDepartments.map(department => (
-                <SelectItem key={department} value={department}>
-                  {department}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
         </div>
 
         <div className="mb-4">
