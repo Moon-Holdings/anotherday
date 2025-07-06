@@ -1,99 +1,62 @@
 
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Bell, Settings, User, LogOut } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Logo from './logo';
-import BottomNav from './bottom-nav';
-import { UserRound } from 'lucide-react';
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetDescription, 
-  SheetHeader, 
-  SheetTitle, 
-  SheetTrigger 
-} from './ui/sheet';
-import { Button } from './ui/button';
+import NotificationCenter from './notifications/notification-center';
 
-interface HeaderProps {
-  userName?: string;
-  currentShift?: string;
-  shiftAction?: string;
-  onShiftChange?: (shift: string, action: string) => void;
-  userRole?: 'owner' | 'manager' | 'waiter' | 'chef' | 'cook' | 'bartender';
-}
-
-const Header = ({
-  userName = 'Brandon',
-  userRole = 'manager' // Default role is manager
-}: HeaderProps) => {
+const Header = () => {
   return (
-    <>
-      <header className="bg-white shadow-sm">
-        <div className="flex items-center justify-between p-1 md:py-0.5">
-          <div className="flex items-center">
-            <Logo className="h-16 md:h-18" />
-          </div>
+    <header className="bg-white border-b border-gray-200 px-4 py-3">
+      <div className="flex items-center justify-between">
+        <Logo />
+        
+        <div className="flex items-center space-x-4">
+          <NotificationCenter />
           
-          <div className="flex items-center">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" className="text-anotherday-dark hover:bg-gray-100 p-1">
-                  <UserRound className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>Settings</SheetTitle>
-                  <SheetDescription>
-                    Manage your account and preferences
-                  </SheetDescription>
-                </SheetHeader>
-                <div className="py-4">
-                  <div className="flex items-center space-x-2 mb-4">
-                    <div className="h-10 w-10 rounded-full bg-anotherday-mint flex items-center justify-center text-anotherday-dark">
-                      {userName.charAt(0).toUpperCase()}
-                    </div>
-                    <div>
-                      <p className="font-medium">{userName}</p>
-                      <p className="text-sm text-muted-foreground capitalize">{userRole}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4 mt-6">
-                    <div className="border-b pb-2">
-                      <h3 className="font-medium mb-2">Account</h3>
-                      <Button variant="ghost" className="w-full justify-start" asChild>
-                        <Link to="/profile">Profile</Link>
-                      </Button>
-                      <Button variant="ghost" className="w-full justify-start" asChild>
-                        <Link to="/preferences">Preferences</Link>
-                      </Button>
-                    </div>
-                    
-                    <div className="border-b pb-2">
-                      <h3 className="font-medium mb-2">Help & Support</h3>
-                      <Button variant="ghost" className="w-full justify-start" asChild>
-                        <Link to="/documentation">Documentation</Link>
-                      </Button>
-                      <Button variant="ghost" className="w-full justify-start" asChild>
-                        <Link to="/support">Support</Link>
-                      </Button>
-                    </div>
-                    
-                    <Button variant="ghost" className="w-full justify-start text-destructive" asChild>
-                      <Link to="/login">Sign out</Link>
-                    </Button>
-                  </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                <Avatar className="h-8 w-8">
+                  <AvatarFallback>JD</AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end" forceMount>
+              <div className="flex items-center justify-start gap-2 p-2">
+                <div className="flex flex-col space-y-1 leading-none">
+                  <p className="font-medium">John Doe</p>
+                  <p className="w-[200px] truncate text-sm text-muted-foreground">
+                    john@restaurant.com
+                  </p>
                 </div>
-              </SheetContent>
-            </Sheet>
-          </div>
+              </div>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="cursor-pointer">
+                <User className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="cursor-pointer">
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-      </header>
-      
-      {/* Bottom Navigation */}
-      <BottomNav userRole={userRole} />
-    </>
+      </div>
+    </header>
   );
 };
 

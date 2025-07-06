@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import UserManagement from '@/components/admin/user-management';
 import RoleManagement from '@/components/admin/role-management';
 import ListManagement from '@/components/admin/list-management';
+import TaskTemplateManagement from '@/components/admin/task-template-management';
 import AnalyticsDashboard from '@/components/analytics/analytics-dashboard';
 import { mockOpeningTasks, mockPersonalTasks, mockTeamTasks, mockManagerTasks } from '@/data/mock-data';
 
@@ -26,6 +27,7 @@ const AdminPanel = () => {
         <Tabs defaultValue="analytics" className="w-full">
           <TabsList className="mb-4">
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="automation">Automation</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
             <TabsTrigger value="roles">Roles & Permissions</TabsTrigger>
             <TabsTrigger value="lists">Lists & Departments</TabsTrigger>
@@ -33,6 +35,10 @@ const AdminPanel = () => {
           
           <TabsContent value="analytics">
             <AnalyticsDashboard tasks={allTasks} />
+          </TabsContent>
+          
+          <TabsContent value="automation">
+            <TaskTemplateManagement />
           </TabsContent>
           
           <TabsContent value="users">
