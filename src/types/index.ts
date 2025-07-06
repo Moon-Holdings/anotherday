@@ -1,4 +1,3 @@
-
 export type Role = 
   | 'owner' 
   | 'manager' 
@@ -171,6 +170,8 @@ export interface Task {
   tags?: string[];
   isBlocked?: boolean;
   blockReason?: string;
+  createdAt?: string; // Added for task scheduler
+  scheduledFor?: string; // Added for task scheduler
 }
 
 export interface TaskList {

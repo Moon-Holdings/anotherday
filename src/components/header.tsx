@@ -12,7 +12,11 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Logo from './logo';
 import NotificationCenter from './notifications/notification-center';
 
-const Header = () => {
+interface HeaderProps {
+  userRole?: string;
+}
+
+const Header = ({ userRole }: HeaderProps) => {
   return (
     <header className="bg-white border-b border-gray-200 px-4 py-3">
       <div className="flex items-center justify-between">
@@ -36,6 +40,11 @@ const Header = () => {
                   <p className="w-[200px] truncate text-sm text-muted-foreground">
                     john@restaurant.com
                   </p>
+                  {userRole && (
+                    <p className="text-xs text-muted-foreground capitalize">
+                      {userRole}
+                    </p>
+                  )}
                 </div>
               </div>
               <DropdownMenuSeparator />

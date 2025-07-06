@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash2, Save, X } from 'lucide-react';
 import { TaskTemplate, taskScheduler } from '@/services/task-scheduler';
-import { Department, ShiftType, ShiftAction, TaskRecurrence } from '@/types';
+import { Department, ShiftType, ShiftAction, TaskRecurrence, TaskPriority, TaskCompletionMethod } from '@/types';
 
 const TaskTemplateManagement = () => {
   const [templates, setTemplates] = useState<TaskTemplate[]>([]);
@@ -28,9 +28,9 @@ const TaskTemplateManagement = () => {
     shift: '' as ShiftType | '',
     shiftAction: '' as ShiftAction | '',
     daysOfWeek: [] as number[],
-    priority: 'medium' as const,
+    priority: 'medium' as TaskPriority,
     estimatedDuration: 30,
-    completionMethod: 'checkmark' as const,
+    completionMethod: 'checkmark' as TaskCompletionMethod,
     quantityRequired: undefined as number | undefined,
     recurrence: 'repeating' as TaskRecurrence,
     isActive: true
@@ -75,10 +75,25 @@ const TaskTemplateManagement = () => {
   const handleSave = () => {
     if (!formData.name || !formData.department || !formData.shift || !formData.shiftAction) return;
 
+    const templateData = {
+      name: formData.name,
+      description: formData.description,
+      department: formData.department as Department,
+      shift: formData.shift as ShiftType,
+      shiftAction: formData.shiftAction as ShiftAction,
+      daysOfWeek: formData.daysOfWeek,
+      priority: formData.priority,
+      estimatedDuration: formData.estimatedDuration,
+      completionMethod: formData.completionMethod,
+      quantityRequired: formData.quantityRequired,
+      recurrence: formData.recurrence,
+      isActive: formData.isActive
+    };
+
     if (editingTemplate) {
-      taskScheduler.updateTemplate(editingTemplate.id, formData);
+      taskScheduler.updateTemplate(editingTemplate.id, templateData);
     } else {
-      taskScheduler.addTemplate(formData);
+      taskScheduler.addTemplate(templateData);
     }
 
     setTemplates(taskScheduler.getTemplates());
@@ -177,7 +192,7 @@ const TaskTemplateManagement = () => {
 
               <div>
                 <Label>Priority</Label>
-                <Select value={formData.priority} onValueChange={(value) => setFormData(prev => ({ ...prev, priority: value as any }))}>
+                <Select value={formData.priority} onValueChange={(value) => setFormData(prev => ({ ...prev, priority: value as TaskPriority }))}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
