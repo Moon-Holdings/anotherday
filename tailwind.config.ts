@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -62,6 +63,7 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				// Primary anotherday brand colors
 				anotherday: {
 					mint: '#64D2B3',
 					dark: '#2A3A42',
@@ -71,12 +73,12 @@ export default {
 					red: '#EF476F',
 					green: '#06D6A0'
 				},
-				// Keeping rootina colors for backward compatibility
+				// Legacy colors for backward compatibility - will be phased out
 				rootina: {
-					blue: '#1A4D79',
-					teal: '#37BD8D',
-					lightTeal: '#64D2A8',
-					lightBlue: '#EBF2F8',
+					blue: '#2A3A42', // Maps to anotherday-dark
+					teal: '#64D2B3', // Maps to anotherday-mint
+					lightTeal: '#80DAC2', // Maps to anotherday-lightMint
+					lightBlue: '#F5F5F5', // Maps to anotherday-gray
 					gray: '#F5F5F5',
 					yellow: '#FFD166',
 					red: '#EF476F',
@@ -114,12 +116,23 @@ export default {
 						opacity: '1',
 						transform: 'translateY(0)'
 					}
+				},
+				'slide-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateX(-10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateX(0)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.5s ease-out'
+				'fade-in': 'fade-in 0.5s ease-out',
+				'slide-in': 'slide-in 0.3s ease-out'
 			}
 		}
 	},

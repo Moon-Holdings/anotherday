@@ -5,27 +5,28 @@ import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import Logo from "@/components/logo";
+import { CheckCircle, Users, Clock, Calendar } from "lucide-react";
 
 const welcomeSlides = [
   {
     title: "Welcome to anotherday",
-    description: "Streamline your business operations with our powerful task management system.",
-    image: "/placeholder.svg",
+    description: "Transform your business operations with our intelligent task management platform designed for modern teams.",
+    icon: <CheckCircle className="w-24 h-24 text-anotherday-mint" />,
   },
   {
-    title: "Manage Tasks Efficiently",
-    description: "Create, assign, and track tasks across departments and shifts with ease.",
-    image: "/placeholder.svg",
+    title: "Streamline Team Tasks",
+    description: "Create, assign, and track tasks across departments with real-time collaboration and progress monitoring.",
+    icon: <Users className="w-24 h-24 text-anotherday-mint" />,
   },
   {
-    title: "Role-Based Access Control",
-    description: "Customize access and permissions for different team members based on their roles.",
-    image: "/placeholder.svg",
+    title: "Smart Scheduling",
+    description: "Organize shifts, manage schedules, and ensure seamless handoffs between opening and closing operations.",
+    icon: <Clock className="w-24 h-24 text-anotherday-mint" />,
   },
   {
     title: "Stay Organized",
-    description: "Keep track of opening and closing tasks for each shift with customizable checklists.",
-    image: "/placeholder.svg",
+    description: "Keep your team aligned with customizable checklists, deadline reminders, and department-specific workflows.",
+    icon: <Calendar className="w-24 h-24 text-anotherday-mint" />,
   }
 ];
 
@@ -57,15 +58,11 @@ const Welcome = () => {
               <CarouselItem key={index}>
                 <Card className="border-none shadow-lg">
                   <CardContent className="p-6 flex flex-col items-center">
-                    <div className="w-full h-48 bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
-                      <img 
-                        src={slide.image} 
-                        alt={slide.title} 
-                        className="max-w-full max-h-full object-contain"
-                      />
+                    <div className="w-full h-48 rounded-lg mb-4 flex items-center justify-center bg-gradient-to-br from-anotherday-gray to-white">
+                      {slide.icon}
                     </div>
-                    <h2 className="text-xl font-bold text-center mb-2">{slide.title}</h2>
-                    <p className="text-gray-600 text-center">{slide.description}</p>
+                    <h2 className="text-xl font-bold text-center mb-2 text-anotherday-dark">{slide.title}</h2>
+                    <p className="text-gray-600 text-center leading-relaxed">{slide.description}</p>
                   </CardContent>
                 </Card>
               </CarouselItem>
@@ -76,7 +73,7 @@ const Welcome = () => {
               {welcomeSlides.map((_, index) => (
                 <div
                   key={index}
-                  className={`w-2 h-2 rounded-full ${
+                  className={`w-2 h-2 rounded-full transition-colors duration-200 ${
                     currentSlide === index ? "bg-anotherday-mint" : "bg-gray-300"
                   }`}
                 />
@@ -91,19 +88,23 @@ const Welcome = () => {
 
         <div className="w-full max-w-md mt-8 flex flex-col gap-3">
           <Button 
-            className="w-full py-6 bg-anotherday-mint hover:bg-anotherday-mint/90 text-anotherday-dark"
+            className="w-full py-6 bg-anotherday-mint hover:bg-anotherday-mint/90 text-anotherday-dark font-medium"
             onClick={() => handleNavigate('/signup')}
           >
-            Get Started
+            Get Started with anotherday
           </Button>
           <Button 
             variant="outline" 
-            className="w-full py-6 text-anotherday-dark border-anotherday-dark hover:bg-anotherday-mint/10"
+            className="w-full py-6 text-anotherday-dark border-anotherday-dark hover:bg-anotherday-mint/10 font-medium"
             onClick={() => handleNavigate('/login')}
           >
-            I already have an account
+            Sign In to Your Account
           </Button>
         </div>
+      </div>
+
+      <div className="text-center pb-6 text-sm text-gray-500">
+        <p>Trusted by teams worldwide to streamline operations</p>
       </div>
     </div>
   );

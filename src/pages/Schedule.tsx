@@ -34,7 +34,7 @@ const Schedule = () => {
   });
 
   return (
-    <div className="min-h-screen bg-rootina-lightBlue pb-20">
+    <div className="min-h-screen bg-anotherday-gray pb-20">
       <Header />
       
       <div className="container px-4 py-6">
@@ -79,8 +79,8 @@ const Schedule = () => {
 
         <div className="flex flex-col space-y-1 mb-6">
           <div className="flex justify-between text-xs text-gray-500 px-1">
-            <span>משימה</span>
-            <span>שעה</span>
+            <span>Task</span>
+            <span>Time</span>
           </div>
           
           {scheduleItems.map((item) => (

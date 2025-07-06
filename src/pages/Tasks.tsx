@@ -139,7 +139,7 @@ const Tasks = () => {
         <div className="mb-4">
           <Button 
             variant="default" 
-            className="bg-rootina-teal hover:bg-rootina-lightTeal"
+            className="bg-anotherday-mint hover:bg-anotherday-lightMint text-anotherday-dark font-medium"
             onClick={() => setIsAddTaskModalOpen(true)}
           >
             Add New Task

@@ -66,7 +66,7 @@ const UserManagement = () => {
         <Button onClick={() => {
           setEditingUser(null);
           setIsAddUserModalOpen(true);
-        }} className="bg-rootina-teal hover:bg-rootina-lightTeal">
+        }} className="bg-anotherday-mint hover:bg-anotherday-lightMint text-anotherday-dark">
           <PlusCircle className="mr-2 h-4 w-4" />
           Add User
         </Button>
