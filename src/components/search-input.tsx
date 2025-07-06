@@ -11,6 +11,7 @@ interface SearchInputProps {
   onChange?: (value: string) => void
   onClear?: () => void
   className?: string
+  id?: string
 }
 
 const SearchInput = ({ 
@@ -18,7 +19,8 @@ const SearchInput = ({
   value = "", 
   onChange, 
   onClear,
-  className 
+  className,
+  id
 }: SearchInputProps) => {
   const [internalValue, setInternalValue] = useState(value)
   
@@ -38,6 +40,7 @@ const SearchInput = ({
     <div className={cn("relative flex items-center", className)}>
       <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
       <Input
+        id={id}
         type="text"
         placeholder={placeholder}
         value={internalValue}

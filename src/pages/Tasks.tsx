@@ -131,7 +131,7 @@ const Tasks = () => {
   const filteredTasks = tasks.filter(task => {
     const matchesCompletion = showCompleted || !task.isCompleted;
     const matchesSearch = searchTerm === '' || 
-      task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       task.description?.toLowerCase().includes(searchTerm.toLowerCase());
     
     return matchesCompletion && matchesSearch;
