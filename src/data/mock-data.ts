@@ -1,4 +1,3 @@
-
 import { Task, TaskList, ScheduleItem, DepartmentProgress, User } from '@/types';
 
 export const mockUser: User = {
@@ -46,7 +45,9 @@ export const mockOpeningTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'role',
     recurrence: 'repeating',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'medium',
+    status: 'pending'
   },
   {
     id: '2',
@@ -57,7 +58,9 @@ export const mockOpeningTasks: Task[] = [
     type: 'role',
     recurrence: 'repeating',
     deadline: new Date(new Date().setHours(11, 0, 0, 0)).toISOString(),
-    isCompleted: false
+    isCompleted: false,
+    priority: 'high',
+    status: 'pending'
   },
   {
     id: '3',
@@ -67,7 +70,9 @@ export const mockOpeningTasks: Task[] = [
     completionMethod: 'photo',
     type: 'role',
     recurrence: 'repeating',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'low',
+    status: 'pending'
   },
   {
     id: '4',
@@ -77,7 +82,9 @@ export const mockOpeningTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'role',
     recurrence: 'repeating',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'medium',
+    status: 'pending'
   },
   {
     id: '5',
@@ -87,7 +94,9 @@ export const mockOpeningTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'role',
     recurrence: 'repeating',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'high',
+    status: 'pending'
   },
   {
     id: '6',
@@ -99,7 +108,9 @@ export const mockOpeningTasks: Task[] = [
     recurrence: 'repeating',
     quantityRequired: 17,
     quantityOnHand: 13,
-    isCompleted: false
+    isCompleted: false,
+    priority: 'medium',
+    status: 'pending'
   },
   {
     id: '7',
@@ -109,7 +120,9 @@ export const mockOpeningTasks: Task[] = [
     completionMethod: 'photo',
     type: 'role',
     recurrence: 'repeating',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'medium',
+    status: 'pending'
   }
 ];
 
@@ -122,7 +135,9 @@ export const mockManagerTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'role',
     recurrence: 'repeating',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'high',
+    status: 'pending'
   },
   {
     id: 'm2',
@@ -132,7 +147,9 @@ export const mockManagerTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'role',
     recurrence: 'repeating',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'medium',
+    status: 'pending'
   },
   {
     id: 'm3',
@@ -142,7 +159,9 @@ export const mockManagerTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'role',
     recurrence: 'repeating',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'high',
+    status: 'pending'
   },
   {
     id: 'm4',
@@ -152,7 +171,9 @@ export const mockManagerTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'role',
     recurrence: 'repeating',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'low',
+    status: 'pending'
   }
 ];
 
@@ -165,7 +186,9 @@ export const mockPersonalTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'personal',
     recurrence: 'one-time',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'medium',
+    status: 'pending'
   },
   {
     id: 'p2',
@@ -175,7 +198,9 @@ export const mockPersonalTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'personal',
     recurrence: 'one-time',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'low',
+    status: 'pending'
   },
   {
     id: 'p3',
@@ -185,7 +210,9 @@ export const mockPersonalTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'personal',
     recurrence: 'one-time',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'high',
+    status: 'pending'
   },
   {
     id: 'p4',
@@ -195,7 +222,9 @@ export const mockPersonalTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'personal',
     recurrence: 'one-time',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'medium',
+    status: 'pending'
   }
 ];
 
@@ -208,7 +237,9 @@ export const mockTeamTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'personal',
     recurrence: 'one-time',
-    isCompleted: true
+    isCompleted: true,
+    priority: 'low',
+    status: 'completed'
   },
   {
     id: 't2',
@@ -218,7 +249,9 @@ export const mockTeamTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'personal',
     recurrence: 'one-time',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'high',
+    status: 'pending'
   },
   {
     id: 't3',
@@ -228,7 +261,9 @@ export const mockTeamTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'personal',
     recurrence: 'one-time',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'low',
+    status: 'pending'
   },
   {
     id: 't4',
@@ -238,7 +273,9 @@ export const mockTeamTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'personal',
     recurrence: 'one-time',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'medium',
+    status: 'pending'
   }
 ];
 

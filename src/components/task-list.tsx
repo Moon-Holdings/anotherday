@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Task, TaskList, Department, TaskRecurrence } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -59,7 +58,9 @@ const exampleTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'role',
     recurrence: 'daily-schedule',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'medium',
+    status: 'pending'
   },
   {
     id: 'example-2',
@@ -70,7 +71,9 @@ const exampleTasks: Task[] = [
     completionMethod: 'checkmark',
     type: 'role',
     recurrence: 'daily-schedule',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'high',
+    status: 'pending'
   },
   {
     id: 'example-3',
@@ -81,7 +84,9 @@ const exampleTasks: Task[] = [
     completionMethod: 'photo',
     type: 'role',
     recurrence: 'daily-schedule',
-    isCompleted: false
+    isCompleted: false,
+    priority: 'medium',
+    status: 'pending'
   }
 ];
 
