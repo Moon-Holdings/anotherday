@@ -43,12 +43,94 @@ export type TaskRecurrence =
   | 'repeating' 
   | 'daily-schedule';
 
+export type TaskPriority = 
+  | 'low' 
+  | 'medium' 
+  | 'high' 
+  | 'urgent';
+
+export type TaskStatus = 
+  | 'pending' 
+  | 'in-progress' 
+  | 'completed' 
+  | 'overdue' 
+  | 'blocked';
+
 export interface User {
   id: string;
   name: string;
   employeeNumber: string;
   role: Role;
   department: Department;
+}
+
+export interface TaskDependency {
+  id: string;
+  prerequisiteTaskId: string;
+  dependentTaskId: string;
+  createdAt: string;
+}
+
+export interface TaskComment {
+  id: string;
+  taskId: string;
+  userId: string;
+  userName: string;
+  content: string;
+  createdAt: string;
+  updatedAt?: string;
+  parentId?: string; // For threaded replies
+}
+
+export interface TaskAttachment {
+  id: string;
+  taskId: string;
+  fileName: string;
+  fileSize: number;
+  fileType: string;
+  url: string;
+  uploadedBy: string;
+  uploadedAt: string;
+}
+
+export interface TaskTimeEntry {
+  id: string;
+  taskId: string;
+  userId: string;
+  startTime: string;
+  endTime?: string;
+  duration?: number; // in minutes
+  description?: string;
+  createdAt: string;
+}
+
+export interface TaskHistoryEntry {
+  id: string;
+  taskId: string;
+  userId: string;
+  userName: string;
+  action: string;
+  previousValue?: any;
+  newValue?: any;
+  timestamp: string;
+  description: string;
+}
+
+export interface TaskTemplate {
+  id: string;
+  name: string;
+  description?: string;
+  department: Department;
+  shift?: ShiftType;
+  shiftAction?: ShiftAction;
+  estimatedDuration?: number; // in minutes
+  priority: TaskPriority;
+  completionMethod: TaskCompletionMethod;
+  instructions?: string;
+  checklistItems?: string[];
+  createdBy: string;
+  createdAt: string;
+  isActive: boolean;
 }
 
 export interface Task {
@@ -73,6 +155,22 @@ export interface Task {
   quantityOnHand?: number;
   isHighPriority?: boolean;
   taskListId?: string;
+  // New Phase 3 properties
+  priority: TaskPriority;
+  status: TaskStatus;
+  estimatedDuration?: number; // in minutes
+  actualDuration?: number; // in minutes
+  templateId?: string;
+  dependencies?: string[]; // Array of prerequisite task IDs
+  comments?: TaskComment[];
+  attachments?: TaskAttachment[];
+  timeEntries?: TaskTimeEntry[];
+  history?: TaskHistoryEntry[];
+  delegatedFrom?: string; // userId who delegated this task
+  delegatedAt?: string;
+  tags?: string[];
+  isBlocked?: boolean;
+  blockReason?: string;
 }
 
 export interface TaskList {

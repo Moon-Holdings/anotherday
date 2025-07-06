@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import Header from '@/components/header';
 import { Card } from '@/components/ui/card';
@@ -20,6 +19,9 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { CalendarIcon, Filter, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import useKeyboardShortcuts from '@/hooks/use-keyboard-shortcuts';
+import TaskDetailModal from '@/components/task-detail-modal';
+import TaskTemplates from '@/components/task-templates';
+import { TaskComment, TaskTimeEntry, TaskDependency, TaskHistoryEntry, TaskAttachment, TaskTemplate, TaskPriority, TaskStatus } from '@/types';
 
 // Mock user data - in a real app this would come from an API/context
 const mockUserRoles = {
@@ -47,6 +49,47 @@ const Tasks = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
+  const [taskDetailModalOpen, setTaskDetailModalOpen] = useState(false);
+  const [selectedTaskForDetail, setSelectedTaskForDetail] = useState<Task | null>(null);
+  const [taskComments, setTaskComments] = useState<TaskComment[]>([]);
+  const [taskTimeEntries, setTaskTimeEntries] = useState<TaskTimeEntry[]>([]);
+  const [taskDependencies, setTaskDependencies] = useState<TaskDependency[]>([]);
+  const [taskHistory, setTaskHistory] = useState<TaskHistoryEntry[]>([]);
+  const [taskAttachments, setTaskAttachments] = useState<TaskAttachment[]>([]);
+  const [taskTemplates, setTaskTemplates] = useState<TaskTemplate[]>([
+    {
+      id: 'template-1',
+      name: 'Opening Checklist',
+      description: 'Standard opening procedures for restaurant',
+      department: 'floor',
+      shift: 'morning',
+      shiftAction: 'opening',
+      estimatedDuration: 30,
+      priority: 'high',
+      completionMethod: 'checkmark',
+      instructions: 'Complete all opening tasks before service begins',
+      checklistItems: ['Unlock doors', 'Turn on lights', 'Check cash register', 'Set up tables'],
+      createdBy: 'manager-1',
+      createdAt: new Date().toISOString(),
+      isActive: true
+    },
+    {
+      id: 'template-2',
+      name: 'Bar Setup',
+      description: 'Bar opening preparation tasks',
+      department: 'bar',
+      shift: 'afternoon',
+      shiftAction: 'opening',
+      estimatedDuration: 45,
+      priority: 'medium',
+      completionMethod: 'photo',
+      instructions: 'Prepare bar area for service',
+      checklistItems: ['Stock ice', 'Check garnishes', 'Clean glasses', 'Test equipment'],
+      createdBy: 'manager-1',
+      createdAt: new Date().toISOString(),
+      isActive: true
+    }
+  ]);
 
   // Keyboard shortcuts
   useKeyboardShortcuts({
@@ -95,7 +138,27 @@ const Tasks = () => {
   }, [selectedDepartment]);
 
   const handleAddTask = (newTask: Task) => {
-    setTasks([...tasks, newTask]);
+    // Enhance new task with Phase 3 properties
+    const enhancedTask = {
+      ...newTask,
+      priority: (newTask as any).priority || 'medium' as TaskPriority,
+      status: 'pending' as TaskStatus,
+      tags: [],
+      comments: [],
+      attachments: [],
+      timeEntries: [],
+      history: [{
+        id: Math.random().toString(36).substr(2, 9),
+        taskId: newTask.id,
+        userId: 'current-user',
+        userName: 'Current User',
+        action: 'created',
+        timestamp: new Date().toISOString(),
+        description: 'Task was created'
+      }]
+    };
+    
+    setTasks([...tasks, enhancedTask]);
     toast.success("Task added successfully");
   };
   
@@ -105,6 +168,22 @@ const Tasks = () => {
         task.id === taskId ? { ...task, ...updatedTask } : task
       )
     );
+    
+    // Add history entry for task updates
+    if (Object.keys(updatedTask).length > 0) {
+      const historyEntry: TaskHistoryEntry = {
+        id: Math.random().toString(36).substr(2, 9),
+        taskId,
+        userId: 'current-user',
+        userName: 'Current User',
+        action: 'updated',
+        newValue: updatedTask,
+        timestamp: new Date().toISOString(),
+        description: `Task was updated: ${Object.keys(updatedTask).join(', ')}`
+      };
+      setTaskHistory(prev => [...prev, historyEntry]);
+    }
+    
     toast.success("Task updated successfully");
   };
 
@@ -125,6 +204,98 @@ const Tasks = () => {
 
   const handleExportTasks = () => {
     toast.success("Task export functionality coming soon!");
+  };
+
+  // New Phase 3 handlers
+  const handleTaskClick = (task: Task) => {
+    setSelectedTaskForDetail(task);
+    setTaskDetailModalOpen(true);
+  };
+
+  const handleAddComment = (taskId: string, content: string, parentId?: string) => {
+    const newComment: TaskComment = {
+      id: Math.random().toString(36).substr(2, 9),
+      taskId,
+      userId: 'current-user',
+      userName: 'Current User',
+      content,
+      createdAt: new Date().toISOString(),
+      parentId
+    };
+    setTaskComments(prev => [...prev, newComment]);
+  };
+
+  const handleStartTimer = (taskId: string) => {
+    handleUpdateTask(taskId, { status: 'in-progress' });
+  };
+
+  const handleStopTimer = (taskId: string, duration: number, description?: string) => {
+    const timeEntry: TaskTimeEntry = {
+      id: Math.random().toString(36).substr(2, 9),
+      taskId,
+      userId: 'current-user',
+      startTime: new Date(Date.now() - duration * 60000).toISOString(),
+      endTime: new Date().toISOString(),
+      duration,
+      description,
+      createdAt: new Date().toISOString()
+    };
+    setTaskTimeEntries(prev => [...prev, timeEntry]);
+  };
+
+  const handleAddTimeEntry = (taskId: string, duration: number, description?: string) => {
+    const timeEntry: TaskTimeEntry = {
+      id: Math.random().toString(36).substr(2, 9),
+      taskId,
+      userId: 'current-user',
+      startTime: new Date().toISOString(),
+      duration,
+      description,
+      createdAt: new Date().toISOString()
+    };
+    setTaskTimeEntries(prev => [...prev, timeEntry]);
+  };
+
+  const handleAddDependency = (prerequisiteTaskId: string) => {
+    if (selectedTaskForDetail) {
+      const dependency: TaskDependency = {
+        id: Math.random().toString(36).substr(2, 9),
+        prerequisiteTaskId,
+        dependentTaskId: selectedTaskForDetail.id,
+        createdAt: new Date().toISOString()
+      };
+      setTaskDependencies(prev => [...prev, dependency]);
+    }
+  };
+
+  const handleRemoveDependency = (dependencyId: string) => {
+    setTaskDependencies(prev => prev.filter(dep => dep.id !== dependencyId));
+  };
+
+  const handleCreateFromTemplate = (template: TaskTemplate) => {
+    const newTask: Task = {
+      id: Math.random().toString(36).substr(2, 9),
+      name: template.name,
+      description: template.description,
+      department: template.department,
+      shift: template.shift,
+      shiftAction: template.shiftAction,
+      assignmentType: 'role',
+      completionMethod: template.completionMethod,
+      type: 'role',
+      recurrence: 'repeating',
+      isCompleted: false,
+      priority: template.priority,
+      status: 'pending',
+      estimatedDuration: template.estimatedDuration,
+      templateId: template.id,
+      tags: [],
+      comments: [],
+      attachments: [],
+      timeEntries: [],
+      history: []
+    };
+    handleAddTask(newTask);
   };
 
   // Filter tasks based on showCompleted state and search term
@@ -221,6 +392,15 @@ const Tasks = () => {
           </div>
         </div>
 
+        {/* Task Templates Section */}
+        <div className="mb-6">
+          <TaskTemplates
+            templates={taskTemplates}
+            selectedDepartment={selectedDepartment as any}
+            onCreateFromTemplate={handleCreateFromTemplate}
+          />
+        </div>
+
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-2 mb-4">
           <Button 
@@ -277,7 +457,11 @@ const Tasks = () => {
               </div>
             ) : (
               filteredTasks.map((task) => (
-                <div key={task.id} className="hover:bg-gray-50 transition-colors rounded-lg">
+                <div 
+                  key={task.id} 
+                  className="hover:bg-gray-50 transition-colors rounded-lg cursor-pointer"
+                  onClick={() => handleTaskClick(task)}
+                >
                   <TaskItem 
                     task={task} 
                     onUpdateTask={handleUpdateTask}
@@ -302,6 +486,31 @@ const Tasks = () => {
         isOpen={isAddTaskModalOpen}
         onClose={() => setIsAddTaskModalOpen(false)}
         onAddTask={handleAddTask}
+      />
+
+      <TaskDetailModal
+        isOpen={taskDetailModalOpen}
+        onClose={() => setTaskDetailModalOpen(false)}
+        task={selectedTaskForDetail}
+        allTasks={tasks}
+        comments={taskComments}
+        timeEntries={taskTimeEntries}
+        dependencies={taskDependencies}
+        history={taskHistory}
+        attachments={taskAttachments}
+        currentUserId="current-user"
+        currentUserName="Current User"
+        onUpdateTask={handleUpdateTask}
+        onAddComment={handleAddComment}
+        onStartTimer={handleStartTimer}
+        onStopTimer={handleStopTimer}
+        onAddTimeEntry={handleAddTimeEntry}
+        onAddDependency={handleAddDependency}
+        onRemoveDependency={handleRemoveDependency}
+        onEditTask={() => {
+          setTaskDetailModalOpen(false);
+          // This would open edit modal - for now just close detail modal
+        }}
       />
     </div>
   );
