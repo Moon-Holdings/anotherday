@@ -21,6 +21,7 @@ import { cn } from '@/lib/utils';
 import useKeyboardShortcuts from '@/hooks/use-keyboard-shortcuts';
 import TaskDetailModal from '@/components/task-detail-modal';
 import TaskTemplates from '@/components/task-templates';
+import BottomNav from '@/components/bottom-nav';
 import { TaskComment, TaskTimeEntry, TaskDependency, TaskHistoryEntry, TaskAttachment, TaskTemplate, TaskPriority, TaskStatus } from '@/types';
 
 // Mock user data - in a real app this would come from an API/context
@@ -512,6 +513,8 @@ const Tasks = () => {
           // This would open edit modal - for now just close detail modal
         }}
       />
+      
+      <BottomNav userRole="manager" />
     </div>
   );
 };

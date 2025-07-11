@@ -38,8 +38,8 @@ const TaskListCard = ({
       onClick={onClick}
     >
       <div className="flex justify-between items-center">
-        <h3 className="font-medium text-xs break-words max-w-[70%] pr-1">{title}</h3>
-        <span className="text-xs text-gray-600 whitespace-nowrap">{completed}/{total}</span>
+        <h3 className="font-medium text-sm break-words max-w-[70%] pr-1">{title}</h3>
+        <span className="text-sm text-gray-600 whitespace-nowrap font-medium">{completed}/{total}</span>
       </div>
       <div className="w-full mt-1">
         <div className="h-1.5 bg-gray-100 rounded-full w-full">

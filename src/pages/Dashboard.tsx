@@ -6,7 +6,8 @@ import TaskListComponent from '@/components/task-list';
 import AddButton from '@/components/add-button';
 import AddTaskModal from '@/components/add-task-modal';
 import DepartmentTasksCard from '@/components/department-tasks-card';
-import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks, mockTeamTasks } from '@/data/mock-data';
+import BottomNav from '@/components/bottom-nav';
+import { mockDepartmentProgress, mockOpeningTasks, mockPersonalTasks, mockTeamTasks, mockDepartmentTaskLists } from '@/data/mock-data';
 import { Task } from '@/types';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Switch } from '@/components/ui/switch';
@@ -14,27 +15,6 @@ import { ChefHat, Users, UsersRound, Package, Wine, ExternalLink } from 'lucide-
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 
-// Mock data for department task lists
-const mockDepartmentTaskLists = {
-  floor: [
-    { id: 'f1', title: 'Morning Opening', completed: 6, total: 12 },
-    { id: 'f2', title: 'Morning Closing', completed: 2, total: 8 },
-  ],
-  kitchen: [
-    { id: 'k1', title: 'Morning Opening', completed: 3, total: 7 },
-    { id: 'k2', title: 'Morning Closing', completed: 2, total: 5 },
-  ],
-  bar: [
-    { id: 'b1', title: 'Morning Closing', completed: 3, total: 5 },
-    { id: 'b2', title: 'Morning Closing', completed: 1, total: 4 },
-  ],
-  takeaway: [
-    { id: 't1', title: 'Afternoon Opening', completed: 1, total: 3 },
-  ],
-  management: [
-    { id: 'm1', title: 'Morning Check', completed: 4, total: 6 },
-  ],
-};
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -45,9 +25,9 @@ const Dashboard = () => {
   const [teamTasks, setTeamTasks] = useState<Task[]>(mockTeamTasks);
 
   // Selected department and task list state
-  const [selectedDepartment, setSelectedDepartment] = useState('floor');
-  const [selectedTaskListId, setSelectedTaskListId] = useState(mockDepartmentTaskLists.floor[0].id);
-  const [selectedTaskListTitle, setSelectedTaskListTitle] = useState(mockDepartmentTaskLists.floor[0].title);
+  const [selectedDepartment, setSelectedDepartment] = useState('Floor');
+  const [selectedTaskListId, setSelectedTaskListId] = useState(mockDepartmentTaskLists[0].taskLists[0].id);
+  const [selectedTaskListTitle, setSelectedTaskListTitle] = useState(mockDepartmentTaskLists[0].taskLists[0].title);
 
   // Maps the department cards to their corresponding filter values
   const departmentToFilterMap: Record<string, string> = {
@@ -137,13 +117,13 @@ const Dashboard = () => {
           {/* Departments carousel with task lists */}
           <div className="mb-6">
             <ScrollArea className="w-full pb-4" orientation="horizontal">
-              <div className="flex px-1 py-2">
-                {Object.entries(mockDepartmentTaskLists).map(([department, taskLists]) => (
+               <div className="flex px-1 py-2">
+                {mockDepartmentTaskLists.map((dept) => (
                   <DepartmentTasksCard
-                    key={department}
-                    department={departmentToFilterMap[department] || department}
-                    icon={getDepartmentIcon(department)}
-                    taskLists={taskLists}
+                    key={dept.department}
+                    department={dept.department}
+                    icon={getDepartmentIcon(dept.department.toLowerCase())}
+                    taskLists={dept.taskLists}
                     onSelectTaskList={handleSelectTaskList}
                     selectedTaskListId={selectedTaskListId}
                   />
@@ -217,6 +197,8 @@ const Dashboard = () => {
       </div>
 
       <AddTaskModal isOpen={isAddTaskModalOpen} onClose={() => setIsAddTaskModalOpen(false)} onAddTask={handleAddTask} />
+      
+      <BottomNav userRole="owner" />
     </div>
   );
 };

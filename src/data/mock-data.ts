@@ -279,6 +279,61 @@ export const mockTeamTasks: Task[] = [
   }
 ];
 
+export const mockDepartmentTaskLists = [
+  {
+    department: 'Floor',
+    taskLists: [
+      { id: '1', title: 'Opening Checklist', completed: 8, total: 12 },
+      { id: '2', title: 'Table Setup', completed: 15, total: 20 },
+      { id: '3', title: 'Cleaning Protocol', completed: 5, total: 8 },
+      { id: '4', title: 'Safety Checks', completed: 3, total: 6 },
+      { id: '5', title: 'Equipment Setup', completed: 7, total: 10 },
+      { id: '6', title: 'Inventory Count', completed: 2, total: 4 },
+      { id: '7', title: 'Customer Service Prep', completed: 6, total: 8 },
+      { id: '8', title: 'Daily Maintenance', completed: 1, total: 3 }
+    ]
+  },
+  {
+    department: 'Bar',
+    taskLists: [
+      { id: '9', title: 'Bar Opening', completed: 12, total: 15 },
+      { id: '10', title: 'Drink Prep', completed: 8, total: 10 },
+      { id: '11', title: 'Glass Cleaning', completed: 20, total: 25 },
+      { id: '12', title: 'Inventory Check', completed: 5, total: 8 },
+      { id: '13', title: 'Equipment Test', completed: 4, total: 6 },
+      { id: '14', title: 'Ice Station Setup', completed: 3, total: 4 },
+      { id: '15', title: 'Garnish Prep', completed: 7, total: 9 },
+      { id: '16', title: 'Register Setup', completed: 2, total: 3 }
+    ]
+  },
+  {
+    department: 'Kitchen',
+    taskLists: [
+      { id: '17', title: 'Prep Station Setup', completed: 15, total: 18 },
+      { id: '18', title: 'Food Safety Check', completed: 8, total: 10 },
+      { id: '19', title: 'Equipment Cleaning', completed: 12, total: 16 },
+      { id: '20', title: 'Inventory Review', completed: 6, total: 8 },
+      { id: '21', title: 'Storage Organization', completed: 4, total: 7 },
+      { id: '22', title: 'Sauce Preparation', completed: 9, total: 12 },
+      { id: '23', title: 'Grill Setup', completed: 5, total: 6 },
+      { id: '24', title: 'Temperature Checks', completed: 3, total: 4 }
+    ]
+  },
+  {
+    department: 'Takeaway',
+    taskLists: [
+      { id: '25', title: 'Packaging Station', completed: 7, total: 10 },
+      { id: '26', title: 'Order System Check', completed: 3, total: 4 },
+      { id: '27', title: 'Delivery Prep', completed: 5, total: 8 },
+      { id: '28', title: 'Menu Updates', completed: 2, total: 3 },
+      { id: '29', title: 'Phone System Test', completed: 1, total: 2 },
+      { id: '30', title: 'Bag Inventory', completed: 8, total: 12 },
+      { id: '31', title: 'Receipt Setup', completed: 4, total: 5 },
+      { id: '32', title: 'Quality Control', completed: 6, total: 9 }
+    ]
+  }
+];
+
 export const mockScheduleItems: ScheduleItem[] = [
   {
     id: 's1',

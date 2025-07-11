@@ -6,6 +6,7 @@ import RoleManagement from '@/components/admin/role-management';
 import ListManagement from '@/components/admin/list-management';
 import TaskTemplateManagement from '@/components/admin/task-template-management';
 import AnalyticsDashboard from '@/components/analytics/analytics-dashboard';
+import BottomNav from '@/components/bottom-nav';
 import { mockOpeningTasks, mockPersonalTasks, mockTeamTasks, mockManagerTasks } from '@/data/mock-data';
 
 const AdminPanel = () => {
@@ -54,6 +55,8 @@ const AdminPanel = () => {
           </TabsContent>
         </Tabs>
       </div>
+      
+      <BottomNav userRole="owner" />
     </div>
   );
 };

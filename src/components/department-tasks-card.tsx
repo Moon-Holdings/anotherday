@@ -24,15 +24,15 @@ const DepartmentTasksCard = ({
   onSelectTaskList,
   selectedTaskListId
 }: DepartmentTasksCardProps) => {
-  return <div className="bg-white rounded-lg p-2 shadow-sm w-[150px] mr-3 flex-shrink-0 py-[3px]">
-      <div className="flex items-center mb-2">
-        <div className="mr-1">
-          {React.cloneElement(icon as React.ReactElement, { size: 20 })}
+  return <div className="bg-white rounded-lg p-3 shadow-sm w-[200px] mr-4 flex-shrink-0">
+      <div className="flex items-center mb-3">
+        <div className="mr-2">
+          {React.cloneElement(icon as React.ReactElement, { size: 24 })}
         </div>
-        <h2 className="text-sm font-bold truncate w-full">{department}</h2>
+        <h2 className="text-base font-bold truncate w-full">{department}</h2>
       </div>
       
-      <div className="space-y-2">
+      <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
         {taskLists.map(taskList => <TaskListCard key={taskList.id} title={taskList.title} completed={taskList.completed} total={taskList.total} isSelected={taskList.id === selectedTaskListId} onClick={() => onSelectTaskList(department, taskList.id, taskList.title)} />)}
       </div>
     </div>;

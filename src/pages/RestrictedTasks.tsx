@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import TaskItem from '@/components/task-item';
+import BottomNav from '@/components/bottom-nav';
 import { mockOpeningTasks } from '@/data/mock-data';
 import { Task } from '@/types';
 
@@ -73,6 +74,8 @@ const RestrictedTasks = () => {
           </div>
         </Card>
       </div>
+      
+      <BottomNav userRole="cook" />
     </div>
   );
 };

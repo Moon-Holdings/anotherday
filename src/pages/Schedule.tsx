@@ -14,6 +14,7 @@ import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbP
 import { mockScheduleItems } from '@/data/mock-data';
 import { ScheduleItem } from '@/types';
 import useKeyboardShortcuts from '@/hooks/use-keyboard-shortcuts';
+import BottomNav from '@/components/bottom-nav';
 
 const Schedule = () => {
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
@@ -179,6 +180,8 @@ const Schedule = () => {
         time="12:00"
         description='"Calm Afternoon" Playlist'
       />
+      
+      <BottomNav userRole="manager" />
     </div>
   );
 };
