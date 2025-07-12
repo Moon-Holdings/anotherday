@@ -368,33 +368,39 @@ const Tasks = () => {
           />
 
           {/* Filter Controls */}
-          <div className="flex flex-wrap gap-2">
-            <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
-              <SelectTrigger className="w-40 bg-white">
-                <SelectValue placeholder="Select department" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border shadow-lg z-50">
-                {availableDepartments.map(department => (
-                  <SelectItem key={department} value={department}>
-                    {department}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col gap-1">
+              <label className="text-sm text-gray-600 font-medium">Department name</label>
+              <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
+                <SelectTrigger className="w-40 bg-white">
+                  <SelectValue placeholder="Select department" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border shadow-lg z-50">
+                  {availableDepartments.map(department => (
+                    <SelectItem key={department} value={department}>
+                      {department}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
             
-            <Select value={selectedShift} onValueChange={setSelectedShift}>
-              <SelectTrigger className="w-60 bg-white">
-                <SelectValue placeholder="Select shift" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border shadow-lg z-50">
-                <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
-                <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
-                <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
-                <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
-                <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
-                <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex flex-col gap-1">
+              <label className="text-sm text-gray-600 font-medium">Task list name</label>
+              <Select value={selectedShift} onValueChange={setSelectedShift}>
+                <SelectTrigger className="w-60 bg-white">
+                  <SelectValue placeholder="Select shift" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border shadow-lg z-50">
+                  <SelectItem value="Morning Shift | Opening">Morning Shift | Opening</SelectItem>
+                  <SelectItem value="Afternoon Shift | Opening">Afternoon Shift | Opening</SelectItem>
+                  <SelectItem value="Evening Shift | Opening">Evening Shift | Opening</SelectItem>
+                  <SelectItem value="Morning Shift | Closing">Morning Shift | Closing</SelectItem>
+                  <SelectItem value="Afternoon Shift | Closing">Afternoon Shift | Closing</SelectItem>
+                  <SelectItem value="Evening Shift | Closing">Evening Shift | Closing</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             
             <Popover>
               <PopoverTrigger asChild>

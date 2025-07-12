@@ -33,7 +33,7 @@ const DepartmentTasksCard = ({
       </div>
       
       <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-        {taskLists.map(taskList => <TaskListCard key={taskList.id} title={taskList.title} completed={taskList.completed} total={taskList.total} isSelected={taskList.id === selectedTaskListId} onClick={() => onSelectTaskList(department, taskList.id, taskList.title)} />)}
+        {taskLists.map(taskList => <TaskListCard key={taskList.id} title={taskList.title} completed={taskList.completed} total={taskList.total} isSelected={taskList.id === selectedTaskListId} />)}
       </div>
     </div>;
 };

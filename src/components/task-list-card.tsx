@@ -32,10 +32,9 @@ const TaskListCard = ({
   return (
     <div 
       className={`
-        bg-white border p-1.5 rounded-md cursor-pointer transition-all
+        bg-white border p-1.5 rounded-md transition-all
         ${isSelected ? 'border-rootina-teal shadow-sm' : 'border-gray-200'}
       `}
-      onClick={onClick}
     >
       <div className="flex justify-between items-center">
         <h3 className="font-medium text-sm break-words max-w-[70%] pr-1">{title}</h3>
