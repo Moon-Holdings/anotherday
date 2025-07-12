@@ -86,6 +86,8 @@ const UserDashboard = () => {
     setSelectedDepartment(departmentName);
     setSelectedTaskListId(taskListId);
     setSelectedTaskListTitle(taskListTitle);
+    // Navigate to tasks page with specific task list
+    window.location.href = `/tasks/${taskListId}`;
   };
 
   // Filter tasks based on the selected department

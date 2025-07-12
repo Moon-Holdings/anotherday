@@ -334,6 +334,44 @@ export const mockDepartmentTaskLists = [
   }
 ];
 
+// Generate tasks for each department task list
+export const mockTaskListTasks: Record<string, Task[]> = {
+  // Floor Department Tasks
+  '1': [ // Opening Checklist
+    { id: 'f1-1', name: 'Unlock main entrance', assignmentType: 'user', assignedTo: '1', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'high', status: 'completed' },
+    { id: 'f1-2', name: 'Turn on lights', assignmentType: 'user', assignedTo: '1', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'high', status: 'completed' },
+    { id: 'f1-3', name: 'Check temperature controls', assignmentType: 'user', assignedTo: '1', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'medium', status: 'completed' },
+    { id: 'f1-4', name: 'Test music system', assignmentType: 'user', assignedTo: '1', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'low', status: 'completed' },
+    { id: 'f1-5', name: 'Arrange seating area', assignmentType: 'user', assignedTo: '1', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'medium', status: 'completed' },
+    { id: 'f1-6', name: 'Stock napkins and cutlery', assignmentType: 'user', assignedTo: '1', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'medium', status: 'completed' },
+    { id: 'f1-7', name: 'Check restroom supplies', assignmentType: 'user', assignedTo: '1', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'high', status: 'completed' },
+    { id: 'f1-8', name: 'Set up menu boards', assignmentType: 'user', assignedTo: '1', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'medium', status: 'completed' },
+    { id: 'f1-9', name: 'Verify WiFi connection', assignmentType: 'user', assignedTo: '1', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: false, priority: 'low', status: 'pending' },
+    { id: 'f1-10', name: 'Turn on POS system', assignmentType: 'user', assignedTo: '1', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: false, priority: 'high', status: 'pending' },
+    { id: 'f1-11', name: 'Check emergency exits', assignmentType: 'user', assignedTo: '1', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: false, priority: 'high', status: 'pending' },
+    { id: 'f1-12', name: 'Unlock terrace doors', assignmentType: 'user', assignedTo: '1', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: false, priority: 'medium', status: 'pending' }
+  ],
+  '2': [ // Table Setup
+    { id: 'f2-1', name: 'Clean all tables', assignmentType: 'user', assignedTo: '2', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'high', status: 'completed' },
+    { id: 'f2-2', name: 'Set table linens', assignmentType: 'user', assignedTo: '2', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'medium', status: 'completed' }
+  ],
+  // Bar Department Tasks
+  '9': [ // Bar Opening
+    { id: 'b9-1', name: 'Stock beer taps', assignmentType: 'user', assignedTo: '3', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'high', status: 'completed' },
+    { id: 'b9-2', name: 'Check wine inventory', assignmentType: 'user', assignedTo: '3', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'medium', status: 'completed' }
+  ],
+  // Kitchen Department Tasks  
+  '17': [ // Prep Station Setup
+    { id: 'k17-1', name: 'Sanitize prep surfaces', assignmentType: 'user', assignedTo: '4', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'high', status: 'completed' },
+    { id: 'k17-2', name: 'Check knife sharpness', assignmentType: 'user', assignedTo: '4', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'medium', status: 'completed' }
+  ],
+  // Takeaway Department Tasks
+  '25': [ // Packaging Station
+    { id: 't25-1', name: 'Stock takeaway containers', assignmentType: 'user', assignedTo: '5', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'medium', status: 'completed' },
+    { id: 't25-2', name: 'Test receipt printer', assignmentType: 'user', assignedTo: '5', completionMethod: 'checkmark', type: 'schedule', recurrence: 'repeating', isCompleted: true, priority: 'high', status: 'completed' }
+  ]
+};
+
 export const mockScheduleItems: ScheduleItem[] = [
   {
     id: 's1',

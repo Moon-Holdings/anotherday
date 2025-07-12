@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Header from '@/components/header';
 import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -10,7 +11,7 @@ import AddTaskModal from '@/components/add-task-modal';
 import SearchInput from '@/components/search-input';
 import LoadingSpinner from '@/components/loading-spinner';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
-import { mockOpeningTasks } from '@/data/mock-data';
+import { mockOpeningTasks, mockTaskListTasks, mockDepartmentTaskLists } from '@/data/mock-data';
 import { Task } from '@/types';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
@@ -40,12 +41,20 @@ const mockDepartments = [
 ];
 
 const Tasks = () => {
+  const { taskListId } = useParams();
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedShift, setSelectedShift] = useState('Afternoon Shift | Opening');
   const [selectedDepartment, setSelectedDepartment] = useState('Waiters');
   const [showCompleted, setShowCompleted] = useState(true);
-  const [tasks, setTasks] = useState<Task[]>(mockOpeningTasks);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    // If taskListId is provided, load tasks for that specific list
+    if (taskListId && mockTaskListTasks[taskListId]) {
+      return mockTaskListTasks[taskListId];
+    }
+    return mockOpeningTasks;
+  });
+  const [taskListInfo, setTaskListInfo] = useState<{department: string, title: string} | null>(null);
   const [availableDepartments, setAvailableDepartments] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -119,8 +128,19 @@ const Tasks = () => {
     ]
   });
 
-  // Calculate available departments based on user roles
+  // Calculate available departments and handle task list routing
   useEffect(() => {
+    // If taskListId is provided, find the corresponding task list info
+    if (taskListId) {
+      for (const deptGroup of mockDepartmentTaskLists) {
+        const taskList = deptGroup.taskLists.find(list => list.id === taskListId);
+        if (taskList) {
+          setTaskListInfo({ department: deptGroup.department, title: taskList.title });
+          break;
+        }
+      }
+    }
+
     // Filter departments that the user has access to
     const userDepartments = mockDepartments.filter(dept => 
       // User is in department management role
@@ -136,7 +156,7 @@ const Tasks = () => {
     if (userDepartments.length > 0 && !userDepartments.includes(selectedDepartment)) {
       setSelectedDepartment(userDepartments[0]);
     }
-  }, [selectedDepartment]);
+  }, [selectedDepartment, taskListId]);
 
   const handleAddTask = (newTask: Task) => {
     // Enhance new task with Phase 3 properties
@@ -322,8 +342,16 @@ const Tasks = () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>Tasks</BreadcrumbPage>
+              <BreadcrumbLink href="/tasks">Tasks</BreadcrumbLink>
             </BreadcrumbItem>
+            {taskListInfo && (
+              <>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{taskListInfo.department} - {taskListInfo.title}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </>
+            )}
           </BreadcrumbList>
         </Breadcrumb>
 
